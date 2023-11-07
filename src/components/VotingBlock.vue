@@ -3,20 +3,25 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "VoteUi",
+  data() {
+    return {
+      info: "",
+    };
+  },
   computed: {
     ...mapGetters(["config"]),
   },
   methods: {
     castVote(val) {
-      console.log("casting vote", val);
-      console.log("casting vote", process.env.VUE_APP_API_TOKEN);
+      this.$store.dispatch("castVoteOnIssue", val);
     },
   },
 };
 </script>
 
 <template>
-  <div>
+  <div class="border">
+    <h3>Voting block</h3>
     <v-btn
       v-for="(vote, i) in config.voteValues"
       :key="i"
@@ -24,6 +29,7 @@ export default {
     >
       <span v-html="vote.label"></span>
     </v-btn>
+    {{ info }}
   </div>
 </template>
 

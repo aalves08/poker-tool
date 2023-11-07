@@ -1,5 +1,11 @@
 export default {
-  updateCreateClusterElements(state, val) {
-    state.createClusterElements = val;
+  updateConnection(state, val) {
+    state.connection = val;
+  },
+  updateLocalUser(state, val) {
+    state.localUser = val;
+  },
+  updateUsers(state, val) {
+    state.users = val;
   },
 };

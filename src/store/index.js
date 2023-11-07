@@ -9,6 +9,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     config: {
+      roles: [
+        {
+          label: "Admin",
+          value: "admin",
+        },
+        {
+          label: "Simple user",
+          value: "user",
+        },
+      ],
       voteValues: [
         {
           label: 0,
@@ -40,10 +50,9 @@ export default new Vuex.Store({
         },
       ],
     },
-    users: {
-      master: [],
-      user: [],
-    },
+    localUser: null,
+    connection: null,
+    users: [],
   },
   getters: { ...getters },
   mutations: { ...mutations },
