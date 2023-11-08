@@ -84,8 +84,14 @@ export default {
       }
       console.log("removeIssue", issueNumber);
     },
-    goToVote(issueNumber) {
-      console.log("goToVote", issueNumber);
+    goToIssue(issueNumber) {
+      this.$router.push({
+        name: "issue",
+        params: {
+          roomId: this.$route.params.roomId,
+          issueId: issueNumber,
+        },
+      });
     },
   },
 };
@@ -129,7 +135,7 @@ export default {
             <v-btn v-if="isUserAdmin" @click="removeIssue(issue.number)">
               Delete
             </v-btn>
-            <v-btn @click="goToVote(issue.number)"> Check / Vote </v-btn>
+            <v-btn @click="goToIssue(issue.number)"> Check / Vote </v-btn>
           </div>
         </v-card-actions>
       </v-card>

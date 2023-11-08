@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import RoomPage from "../views/RoomPage.vue";
+import IssuePage from "../views/IssuePage.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/:roomId",
     name: "room",
     component: RoomPage,
+  },
+  {
+    path: "/:roomId/:issueId",
+    name: "issue",
+    component: IssuePage,
   },
   // {
   //   path: "/about",

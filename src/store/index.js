@@ -49,6 +49,18 @@ export default new Vuex.Store({
           label: 8,
           value: 8,
         },
+        {
+          label: 13,
+          value: 13,
+        },
+        {
+          label: "?",
+          value: "?",
+        },
+        {
+          label: "inf",
+          value: "inf",
+        },
       ],
     },
     localUser: null,
