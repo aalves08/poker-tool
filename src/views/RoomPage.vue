@@ -1,69 +1,21 @@
 <script>
-import { mapGetters } from "vuex";
+import NotLoggedDialog from "../components/NotLoggedDialog.vue";
 import UserList from "../components/UserList.vue";
 import IssuesList from "../components/IssuesList.vue";
 import SessionBlock from "../components/SessionBlock.vue";
-import { STORAGE_UID, ROLES } from "../utils/constants";
+
+import HandleAuth from "../mixins/HandleAuth";
 
 export default {
   name: "RoomPage",
   components: {
+    NotLoggedDialog,
     UserList,
     IssuesList,
     SessionBlock,
   },
-  data() {
-    return {
-      sessionName: "",
-      username: "",
-      userId: localStorage.getItem(STORAGE_UID) || crypto.randomUUID(),
-      loading: true,
-      roomNotFound: false,
-      showNotLoggedDialog: false,
-    };
-  },
-  computed: {
-    ...mapGetters(["localUser", "connection"]),
-    room() {
-      return this.$route.params.roomId;
-    },
-  },
-  async mounted() {
-    // check if room exists first...
-    const res = await this.$axios({
-      method: "post",
-      url: "http://localhost:8080/checkRoom",
-      data: {
-        room: this.room,
-      },
-    });
 
-    this.loading = false;
-
-    if (!res.data) {
-      this.roomNotFound = true;
-    } else {
-      this.sessionName = res.data.sessionName;
-      const userFound = res.data.users.find(
-        (user) => user.userId === this.userId
-      );
-
-      // reconnect user if he has been there
-      if (userFound && !this.connection) {
-        this.$store.dispatch("connectUser", {
-          role: userFound.role,
-          username: userFound.username,
-          userId: this.userId,
-          room: this.room,
-        });
-
-        localStorage.setItem(STORAGE_UID, this.userId);
-        // you're a new user... setup your user info for connection
-      } else if (!this.connection) {
-        this.showNotLoggedDialog = true;
-      }
-    }
-  },
+  mixins: [HandleAuth],
   methods: {
     backToHomepage() {
       this.roomNotFound = false;
@@ -71,21 +23,8 @@ export default {
 
       this.$router.push({ name: "home" });
     },
-    enterRoom() {
-      if (this.username) {
-        // connect new user with 'user' role
-        this.$store.dispatch("connectUser", {
-          role: ROLES.USER,
-          username: this.username,
-          userId: this.userId,
-          sessionName: this.sessionName,
-          room: this.room,
-        });
-
-        localStorage.setItem(STORAGE_UID, this.userId);
-
-        this.showNotLoggedDialog = false;
-      }
+    updateDialogVisibility(val) {
+      this.showNotLoggedDialog = val;
     },
   },
 };
@@ -104,15 +43,12 @@ export default {
     </div>
     <!-- welcome to room -->
     <div v-else-if="!loading">
-      <div>
-        <v-dialog v-model="showNotLoggedDialog" width="500">
-          <div class="not-logged-dialog">
-            <h3>Who are you?</h3>
-            <v-text-field v-model="username" label="Username"></v-text-field>
-            <v-btn @click="enterRoom">Enter Session</v-btn>
-          </div>
-        </v-dialog>
-      </div>
+      <NotLoggedDialog
+        :showNotLoggedDialog="showNotLoggedDialog"
+        :sessionName="sessionName"
+        :userId="userId"
+        @updateShowNotLoggedDialog="updateDialogVisibility"
+      />
       <div>
         <SessionBlock />
         <UserList />
@@ -122,9 +58,4 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.not-logged-dialog {
-  background-color: white;
-  padding: 20px;
-}
-</style>
+<style lang="scss" scoped></style>
