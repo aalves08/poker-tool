@@ -16,7 +16,7 @@ export default {
     <div class="flex title-block">
       <p style="margin-right: 10px">{{ issue.state }}</p>
       <p style="margin-right: 10px">
-        {{ issue.user.login }} on
+        {{ issue.user?.login }} on
         <span>{{ issue.parsedCreationDate }}</span>
       </p>
       <a
@@ -41,11 +41,7 @@ export default {
         </div>
         <div class="small-block">
           <h3>Milestone</h3>
-          <p>{{ issue.milestone.title }}</p>
-        </div>
-        <div class="small-block">
-          <h3>Participants</h3>
-          <p>{{ issue.milestone.title }}</p>
+          <p>{{ issue.milestone?.title }}</p>
         </div>
         <div class="small-block">
           <h3>Comments</h3>
