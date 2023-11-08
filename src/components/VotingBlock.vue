@@ -7,25 +7,42 @@ export default {
   components: {
     UserVotes,
   },
-  data() {
-    return {
-      voteStarted: false,
-    };
-  },
   computed: {
-    ...mapGetters(["config"]),
+    ...mapGetters(["config", "isUserAdmin", "issues", "localUser"]),
+    currentIssue() {
+      if (this.issues && this.issues.length) {
+        return this.issues?.find(
+          // loose equality because issueId is a string and issue.number is a number....
+          (issue) => issue.number == this.$route.params.issueId
+        );
+      }
+      return {};
+    },
+    votes() {
+      return this.currentIssue.votes || [];
+    },
+    userVote() {
+      return this.votes.find((v) => v.userId === this.localUser.userId);
+    },
   },
   methods: {
-    startVoting() {
-      console.log("startVoting!");
-      this.voteStarted = true;
+    startVotingIssue() {
+      this.$store.dispatch("updateVotingIssueStatus", {
+        issueId: this.currentIssue?.number,
+        started: true,
+      });
     },
-    stopVoting() {
-      console.log("stopVoting!");
-      this.voteStarted = false;
+    stopVotingIssue() {
+      this.$store.dispatch("updateVotingIssueStatus", {
+        issueId: this.currentIssue?.number,
+        stopped: true,
+      });
     },
-    castVote(val) {
-      this.$store.dispatch("castVoteOnIssue", val);
+    castVote(vote) {
+      this.$store.dispatch("castVoteOnIssue", {
+        issueId: this.currentIssue?.number,
+        vote,
+      });
     },
   },
 };
@@ -33,21 +50,61 @@ export default {
 
 <template>
   <div>
-    <h3>ESTIMATION</h3>
-    <v-btn @click="startVoting" v-if="!voteStarted">START VOTING</v-btn>
-    <v-btn @click="stopVoting" v-else>STOP VOTING</v-btn>
+    <h3 class="area-title">ESTIMATION</h3>
+    <div class="admin-controls" v-if="isUserAdmin">
+      <v-btn @click="startVotingIssue" v-if="!currentIssue.votingInProgress"
+        >START VOTING</v-btn
+      >
+      <v-btn @click="stopVotingIssue" v-else>STOP VOTING</v-btn>
+    </div>
+    <div v-else>
+      <p v-if="!currentIssue.votingInProgress">
+        <img class="text-icon" src="@/assets/hourglass.svg" />
+        Wait for the admin to start the voting
+      </p>
+      <p v-else>
+        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        You can vote now!!!
+      </p>
+    </div>
     <div class="voting-controls">
       <v-btn
         v-for="(vote, i) in config.voteValues"
         :key="i"
         @click="castVote(vote.value)"
-        :disabled="!voteStarted"
+        :disabled="!currentIssue.votingInProgress"
+        class="vote-btn"
+        :class="{ hasVoted: userVote.vote == vote.value }"
       >
         <span v-html="vote.label"></span>
       </v-btn>
     </div>
-    <UserVotes />
+    <UserVotes
+      class="mt"
+      v-if="currentIssue.votingInProgress || currentIssue.finishedVoting"
+    />
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.area-title {
+  margin-bottom: 16px;
+}
+.admin-controls {
+  margin-bottom: 20px;
+}
+.text-icon {
+  margin-right: 10px;
+}
+
+.vote-btn {
+  margin-right: 16px;
+}
+.mt {
+  margin-top: 20px;
+}
+
+.hasVoted {
+  border: 2px solid;
+}
+</style>

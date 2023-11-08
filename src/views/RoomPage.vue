@@ -3,6 +3,7 @@ import NotLoggedDialog from "../components/NotLoggedDialog.vue";
 import UserList from "../components/UserList.vue";
 import IssuesList from "../components/IssuesList.vue";
 import SessionBlock from "../components/SessionBlock.vue";
+import EstimatedIssues from "../components/EstimatedIssues.vue";
 
 import HandleAuth from "../mixins/HandleAuth";
 
@@ -13,6 +14,7 @@ export default {
     UserList,
     IssuesList,
     SessionBlock,
+    EstimatedIssues,
   },
 
   mixins: [HandleAuth],
@@ -52,6 +54,7 @@ export default {
       <div>
         <SessionBlock />
         <UserList />
+        <EstimatedIssues />
         <IssuesList />
       </div>
     </div>

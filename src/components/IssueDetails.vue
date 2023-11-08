@@ -68,7 +68,11 @@ export default {
 .text-details-block {
   .issue-text,
   .labels-block {
-    width: 50%;
+    width: calc(50% - 20px);
+  }
+
+  .issue-text {
+    margin-right: 40px;
   }
 
   .small-block {
