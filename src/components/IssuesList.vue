@@ -92,19 +92,21 @@ export default {
 </script>
 
 <template>
-  <div class="border">
-    <h3>ISSUES</h3>
+  <div class="content-block">
+    <h2>ISSUES</h2>
     <div v-if="isUserAdmin" class="add-issues-block">
       <v-text-field
         class="issues-input"
         v-model="issuesString"
         label="Search by issue number (comma separated)"
       ></v-text-field>
-      <v-btn @click="fetchIssues">Add issue(s)</v-btn>
+      <v-btn class="btn-primary" outlined @click="fetchIssues">
+        Add issue(s)
+      </v-btn>
     </div>
 
     <div class="issues-container" v-if="issues && issues.length">
-      <v-card max-width="374" v-for="(issue, i) in issues" :key="i">
+      <v-card class="issue-card" outlined v-for="(issue, i) in issues" :key="i">
         <v-card-title>
           <a
             :href="`https://github.com/rancher/dashboard/issues/${issue.number}`"
@@ -114,10 +116,12 @@ export default {
             >#{{ issue.number }}</a
           >
           <h3>{{ issue.title }}</h3>
-          <p>
+          <span class="author-date">
             {{ issue.user.login }} on
-            <span>{{ issue.parsedCreationDate }}</span>
-          </p>
+            <span class="author-date__date">{{
+              issue.parsedCreationDate
+            }}</span>
+          </span>
         </v-card-title>
 
         <v-card-text class="issue-text-block">
@@ -126,10 +130,21 @@ export default {
 
         <v-card-actions>
           <div class="card-actions-block">
-            <v-btn v-if="isUserAdmin" @click="removeIssue(issue.number)">
+            <v-btn
+              outlined
+              class="btn-danger"
+              v-if="isUserAdmin"
+              @click="removeIssue(issue.number)"
+            >
               Delete
             </v-btn>
-            <v-btn @click="goToVote(issue.number)"> Check / Vote </v-btn>
+            <v-btn
+              outlined
+              class="btn-secondary"
+              @click="goToVote(issue.number)"
+            >
+              Check / Vote
+            </v-btn>
           </div>
         </v-card-actions>
       </v-card>
@@ -138,6 +153,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "./src/styles/global.scss";
 .add-issues-block {
   display: flex;
   align-items: center;
@@ -149,30 +165,64 @@ export default {
 }
 
 .issues-container {
-  padding: 20px 0;
+  padding: 1rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  column-gap: 20px;
-  row-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2rem 1.5rem;
+
+  .v-card.issue-card {
+    width: 100%;
+    border-radius: 0;
+    border-color: $grey-82;
+  }
 
   .v-card__title {
-    display: block;
+    word-break: normal;
+
+    h3 {
+      line-height: 20px;
+      margin-bottom: 0.5rem;
+    }
+
+    .issue-number {
+      text-decoration: none;
+      margin-bottom: 0.25rem;
+    }
+
+    .author-date {
+      color: $grey-46;
+      font-size: 14px;
+      line-height: 14px;
+      font-weight: 400;
+      .author-date__date {
+        font-weight: 600;
+      }
+    }
+
+    > * {
+      letter-spacing: 0;
+    }
   }
 
   .issue-text {
-    height: 240px;
-    overflow: hidden;
-
+    height: 200px;
+    overflow: auto;
+    color: $body-text;
+    font-weight: 300;
+    margin-bottom: 0;
     .issue-text {
       text-overflow: ellipsis;
     }
   }
-
+  .v-card__actions {
+    padding: 0;
+  }
   .card-actions-block {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 0 8px 16px 8px;
+    padding: 1rem;
+    padding-top: 0;
   }
 }
 </style>
