@@ -4,14 +4,11 @@ import { mapGetters } from "vuex";
 export default {
   name: "UsersList",
   computed: {
-    ...mapGetters(["localUser", "users"]),
-    isUserAdmin() {
-      return this.localUser?.role === "admin";
-    },
+    ...mapGetters(["localUser", "users", "isUserAdmin"]),
   },
   methods: {
-    removeUser(id) {
-      this.$store.dispatch("forceRemoveUser", id);
+    removeUser(socketId) {
+      this.$store.dispatch("forceRemoveUser", socketId);
     },
   },
 };
@@ -23,9 +20,9 @@ export default {
     <ul>
       <li v-for="(user, i) in users" :key="i">
         <span v-if="isUserAdmin"
-          ><v-btn @click="removeUser(user.id)">Remove</v-btn></span
+          ><v-btn @click="removeUser(user.socketId)">Remove</v-btn></span
         >
-        <span>{{ user.username }} - {{ user.id }}</span>
+        <span>{{ user.username }} - {{ user.socketId }}</span>
       </li>
     </ul>
   </div>

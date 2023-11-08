@@ -1,19 +1,27 @@
 <template>
   <v-app>
-    <v-main>
+    <HeaderBlock></HeaderBlock>
+    <v-main class="router-block">
       <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import HeaderBlock from "./components/HeaderBlock.vue";
 import "@/styles/global.scss";
 
 export default {
   name: "App",
-
-  data: () => ({
-    //
-  }),
+  components: {
+    HeaderBlock,
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.router-block {
+  padding: 28px 32px !important;
+  border: 1px solid red;
+}
+</style>

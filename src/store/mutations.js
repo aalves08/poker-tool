@@ -5,7 +5,7 @@ export default {
   updateLocalUser(state, val) {
     state.localUser = val;
   },
-  updateUsers(state, val) {
-    state.users = val;
+  updateSessionInfo(state, val) {
+    state.session = val;
   },
 };

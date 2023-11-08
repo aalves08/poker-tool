@@ -3,10 +3,9 @@ import io from "socket.io-client";
 function registerWsEvents(data) {
   const { socketInstance, dispatch, commit } = data;
 
-  // event to update users list on store
-  socketInstance.on("updateUsers", (data) => {
-    console.log("updateUsers ws ev", data);
-    dispatch("updateUsers", data);
+  // event to update session on store
+  socketInstance.on("updateSession", (data) => {
+    dispatch("updateSessionInfo", data);
   });
 
   // event received after client emmited "disconnectFromRoom"
@@ -18,22 +17,25 @@ function registerWsEvents(data) {
 
       socketInstance.disconnect();
 
-      // reset connection and localUser on store
+      // reset data on store
       commit("updateConnection", null);
       commit("updateLocalUser", null);
+      commit("updateSessionInfo", {});
     }
   });
 }
 
 export default {
   connectUser({ commit, dispatch }, userData) {
-    const { username, room, role } = userData;
+    const { role, username, userId, sessionName, room } = userData;
 
     const socketInstance = io("http://localhost:8080", {
       query: {
-        username,
-        room,
         role,
+        username,
+        userId,
+        sessionName,
+        room,
       },
     });
 
@@ -54,13 +56,16 @@ export default {
   disconnectFromRoom({ state }) {
     state.connection.emit("disconnectFromRoom", state.connection.id);
   },
-  forceRemoveUser({ state }, userId) {
-    state.connection.emit("forceRemoveUser", userId);
+  forceRemoveUser({ state }, socketId) {
+    state.connection.emit("forceRemoveUser", socketId);
+  },
+  updateIssuesList({ state }, issues) {
+    state.connection.emit("updateIssuesList", issues);
   },
   castVoteOnIssue({ state }, val) {
     state.connection.emit("castVoteOnIssue", val);
   },
-  updateUsers({ commit }, val) {
-    commit("updateUsers", val);
+  updateSessionInfo({ commit }, val) {
+    commit("updateSessionInfo", val);
   },
 };

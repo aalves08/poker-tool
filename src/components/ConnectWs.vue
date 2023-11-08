@@ -1,5 +1,6 @@
 <script>
 import { mapGetters } from "vuex";
+import { ROLES } from "../utils/constants";
 
 export default {
   name: "ConnectWs",
@@ -7,7 +8,7 @@ export default {
     return {
       socketInstance: null,
       myData: {
-        role: "admin",
+        role: ROLES.ADMIN,
         username: "",
         room: "",
       },
@@ -24,7 +25,7 @@ export default {
 
       // reset data
       this.myData = {
-        role: "admin",
+        role: ROLES.ADMIN,
         username: "",
         room: "",
       };

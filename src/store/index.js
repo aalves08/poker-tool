@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
+import { ROLES } from "../utils/constants";
 
 Vue.use(Vuex);
 
@@ -12,11 +13,11 @@ export default new Vuex.Store({
       roles: [
         {
           label: "Admin",
-          value: "admin",
+          value: ROLES.ADMIN,
         },
         {
           label: "Simple user",
-          value: "user",
+          value: ROLES.USER,
         },
       ],
       voteValues: [
@@ -52,7 +53,7 @@ export default new Vuex.Store({
     },
     localUser: null,
     connection: null,
-    users: [],
+    session: {},
   },
   getters: { ...getters },
   mutations: { ...mutations },
