@@ -17,7 +17,7 @@ export default {
     </div>
     <div class="flex">
       <img src="@/assets/user-icon.svg" />
-      <h2>{{ localUser?.username }}</h2>
+      <span>{{ localUser?.username }}</span>
     </div>
   </div>
 </template>
@@ -26,15 +26,14 @@ export default {
 .header-container {
   display: flex;
   justify-content: space-between;
-  padding: 28px 32px;
-  border: 1px solid blue;
+  padding: 24px 32px;
   .flex {
     display: flex;
     align-items: center;
   }
 
   img {
-    margin-right: 16px;
+    margin-right: 0.5rem;
   }
 }
 </style>

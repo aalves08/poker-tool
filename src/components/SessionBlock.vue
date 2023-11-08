@@ -10,11 +10,9 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div>
-      <h3>SESSION</h3>
-      <h2>{{ session?.sessionName }}</h2>
-    </div>
+  <div class="content-block">
+    <h2>SESSION</h2>
+    <h3>{{ session?.sessionName }}</h3>
   </div>
 </template>
 

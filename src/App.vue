@@ -22,6 +22,5 @@ export default {
 <style lang="scss" scoped>
 .router-block {
   padding: 28px 32px !important;
-  border: 1px solid red;
 }
 </style>
