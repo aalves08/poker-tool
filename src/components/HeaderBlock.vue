@@ -23,7 +23,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
 .header-container {
   display: flex;
   justify-content: space-between;

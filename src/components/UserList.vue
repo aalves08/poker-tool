@@ -16,7 +16,7 @@ export default {
 
 <template>
   <div class="content-block">
-    <h2>PARTICIPANTS</h2>
+    <h2 class="section-title">PARTICIPANTS</h2>
     <ul class="participants-list">
       <li v-for="(user, i) in users" :key="i">
         <v-chip
@@ -41,5 +41,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
+.section-title {
+  margin-bottom: 1rem;
+}
 </style>

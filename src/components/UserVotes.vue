@@ -49,31 +49,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
-
 .votes-block {
   margin-bottom: 2rem;
-}
-.area-title {
-  margin-bottom: 16px;
-}
-
-.name {
-  margin-right: 10px;
-}
-
-ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-
-  li {
-    margin: 0 20px 0 0;
-    border: 1px solid;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-  }
 }
 </style>

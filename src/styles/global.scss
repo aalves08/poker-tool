@@ -1,19 +1,22 @@
 /* Color variables */
-$primary: #2F68DF;
-$primary-hover: #3472F7;
-$secondary-hover: #dbeaff;
-$body-text: #141419;
+:root {
+  --primary: #2F68DF;
+  --primary-hover: #3472F7;
+  --secondary-hover: #dbeaff;
+  --body-text: #141419;
 
-$grey-95: #eeeff4;
-$grey-91: #DCDEE7;
-$grey-82: #B3C1D2;
-$grey-46: #6C6C76;
+  --grey-95: #eeeff4;
+  --grey-91: #DCDEE7;
+  --grey-82: #B3C1D2;
+  --grey-46: #6C6C76;
 
-$danger-foreground: #b30000;
-$danger-background: #fbe2dc;
+  --danger-foreground: #b30000;
+  --danger-background: #fbe2dc;
 
-$success-foreground: #034A35;
-$success-background: #DAEFE9;
+  --success-foreground: #034A35;
+  --success-background: #DAEFE9;
+}
+
 
 .v-application {
   max-width: 1800px;
@@ -69,37 +72,37 @@ p {
 }
 
 .btn-danger {
-  background-color: $danger-background;
-  color: $danger-foreground;
-  border-color: $danger-background;
+  background-color: var(--danger-background) !important;
+  color: var(--danger-foreground) !important;
+  border-color: var(--danger-background) !important;
 }
 
 .v-btn.btn-primary {
-  background-color: $primary;
-  color: white;
-  border-color: $primary;
+  background-color: var(--primary) !important;
+  color: white !important;
+  border-color: var(--primary) !important;
 }
 
 .v-btn.btn-secondary {
-  color: $primary;
-  border-color: $grey-91;
-  border-width: 2px;
+  color: var(--primary) !important;
+  border-color: var(--grey-91) !important;
+  border-width: 2px !important;
 }
 
 .v-chip.user-chip {
-  position: relative;
-  background-color: $grey-95 !important;
-  border: solid 1px $body-text;
-  color: $body-text;
+  position: relative !important;
+  background-color: var(--grey-95) !important;
+  border: solid 1px var(--body-text) !important;
+  color: var(--body-text) !important;
 }
 
 .participants-list {
-  list-style: none;
-  display: flex;
-  padding: 0;
-  gap: 0.5rem;
+  list-style: none !important;
+  display: flex !important;
+  padding: 0 !important;
+  gap: 0.5rem !important;
 }
 
 .content-block {
-  margin-bottom: 2rem;
+  margin-bottom: 2rem !important;
 }

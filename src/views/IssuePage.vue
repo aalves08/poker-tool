@@ -75,8 +75,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
-
 h1 {
   font-size: 20px;
   margin-bottom: 0.5rem;

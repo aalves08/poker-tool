@@ -1,5 +1,6 @@
 <script>
 import { mapGetters } from "vuex";
+import { getContrastedColor } from "../utils/utils";
 
 export default {
   name: "IssueDetails",
@@ -15,25 +16,9 @@ export default {
       return {};
     },
   },
-  props: {
-    issue: {
-      type: Object,
-      default: () => {},
-    },
-  },
   methods: {
-    getContrastedColor(originalColor) {
-      const halfHex = "777777";
-      const octetsRegex = /^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
-      const m1 = originalColor.match(octetsRegex);
-      const m2 = halfHex.match(octetsRegex);
-      let result = [1, 2, 3]
-        .map((i) => {
-          const sum = parseInt(m1[i], 16) + parseInt(m2[i], 16);
-          return sum.toString(16).padStart(2, "0");
-        })
-        .join("");
-      return result.slice(result.length - 6, result.length);
+    contrastedColor(color) {
+      return getContrastedColor(color);
     },
   },
 };
@@ -44,11 +29,13 @@ export default {
     <h2>ISSUE DETAILS</h2>
     <div class="flex title-block">
       <v-chip class="status-chip">
-        {{ issue.state }}
+        {{ currentIssue.state }}
       </v-chip>
       <span class="author-date">
-        {{ issue.user?.login }} on
-        <span class="author-date__date">{{ issue.parsedCreationDate }}</span>
+        {{ currentIssue.user?.login }} on
+        <span class="author-date__date">{{
+          currentIssue.parsedCreationDate
+        }}</span>
       </span>
       <a
         :href="`https://github.com/rancher/dashboard/issues/${currentIssue.number}`"
@@ -59,18 +46,18 @@ export default {
       >
     </div>
     <div class="issue-details-block">
-      <p class="issue-text" v-html="issue.body"></p>
+      <p class="issue-text" v-html="currentIssue.body"></p>
       <div class="labels-block">
         <div class="small-block">
           <h3>Labels</h3>
           <div class="labels-list">
             <div
               class="label-chip"
-              v-for="label in issue.labels"
+              v-for="label in currentIssue.labels"
               :key="label.id"
               :style="{
                 color: `#${label.color}`,
-                background: `#${getContrastedColor(label.color)}`,
+                background: `#${contrastedColor(label.color)}`,
                 borderColor: `#${label.color}`,
               }"
             >
@@ -92,7 +79,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
 .flex {
   display: flex;
 }
@@ -106,7 +92,7 @@ export default {
   }
 
   .author-date {
-    color: $grey-46;
+    color: var(--grey-46);
     font-size: 14px;
     line-height: 14px;
     font-weight: 400;
@@ -151,8 +137,8 @@ export default {
 }
 .status-chip {
   text-transform: capitalize;
-  color: $success-foreground;
-  background-color: $success-background !important;
+  color: var(--success-foreground);
+  background-color: var(--success-background) !important;
   font-weight: 600;
 }
 </style>

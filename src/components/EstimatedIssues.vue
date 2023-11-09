@@ -14,7 +14,7 @@ export default {
 
 <template>
   <div>
-    <h3>ESTIMATED ISSUES</h3>
+    <h3 class="section-title">ESTIMATED ISSUES</h3>
     <div class="estimated-issues-block">
       <div class="estimated-issues-card">
         <h3>#9584</h3>
@@ -111,6 +111,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.section-title {
+  margin-bottom: 1rem;
+}
 .estimated-issues-block {
   padding: 1rem 0;
   display: grid;

@@ -19,6 +19,10 @@ export default {
 };
 </script>
 
+<style lang="scss">
+@import "./styles/global.scss";
+</style>
+
 <style lang="scss" scoped>
 .router-block {
   padding: 28px 32px !important;
