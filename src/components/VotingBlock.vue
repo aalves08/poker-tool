@@ -146,19 +146,25 @@ export default {
     <!-- *** user-only *** -->
     <div v-else>
       <p v-if="!isUserVotingInProgress && !isUserVotingFinished">
-        <img class="text-icon" src="@/assets/hourglass.svg" />
+        <img class="text-icon wait-icon" src="@/assets/hourglass.svg" />
         Wait for the admin to start the voting
       </p>
       <p v-else-if="isUserVotingInProgress">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img
+          class="text-icon checkmark-icon"
+          src="@/assets/start-voting-icon.svg"
+        />
         You can vote now!!!
       </p>
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img class="text-icon wait-icon" src="@/assets/start-voting-icon.svg" />
         Waiting for FINAL ESTIMATION from the Admin
       </p>
       <p v-else-if="isFinalVoteCast">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img
+          class="text-icon checkmark-icon"
+          src="@/assets/start-voting-icon.svg"
+        />
         Voting is closed!
       </p>
     </div>
@@ -245,7 +251,15 @@ export default {
   margin-bottom: 20px;
 }
 .text-icon {
+  position: relative;
   margin-right: 10px;
+
+  &.wait-icon {
+    top: 2px;
+  }
+  &.checkmark-icon {
+    top: 4px;
+  }
 }
 
 .vote-btn {
