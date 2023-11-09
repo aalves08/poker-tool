@@ -149,21 +149,25 @@ export default {
 
         <v-card-actions>
           <div class="card-actions-block">
-            <v-btn
-              outlined
-              class="btn-danger"
-              v-if="isUserAdmin"
-              @click="removeIssue(issue.number)"
-            >
-              Delete
-            </v-btn>
-            <v-btn
-              outlined
-              class="btn-secondary"
-              @click="goToIssue(issue.number)"
-            >
-              Check / Vote
-            </v-btn>
+            <div>
+              <v-btn
+                outlined
+                class="btn-danger"
+                v-if="isUserAdmin"
+                @click="removeIssue(issue.number)"
+              >
+                Delete
+              </v-btn>
+            </div>
+            <div>
+              <v-btn
+                outlined
+                class="btn-secondary"
+                @click="goToIssue(issue.number)"
+              >
+                Check / Vote
+              </v-btn>
+            </div>
           </div>
         </v-card-actions>
       </v-card>

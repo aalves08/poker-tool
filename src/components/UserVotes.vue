@@ -59,14 +59,12 @@ export default {
           :class="{ hasVoted: hasUserVoted(user.userId) }"
           variant="outlined"
         >
-          <span class="user-n-points">
-            {{ user.username }}
-          </span>
+          {{ user.username }}
           <span v-if="showUserVotes(user.userId)" class="user-voted-points">
             {{ userVote(user.userId) }}
           </span>
           <img
-            v-else-if="!isUserAdmin && hasUserVoted(user.userId)"
+            v-if="hasUserVoted(user.userId)"
             class="vote-checkmark"
             src="@/assets/voted.svg"
           />
