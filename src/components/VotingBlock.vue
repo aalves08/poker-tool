@@ -44,18 +44,32 @@ export default {
         vote,
       });
     },
+    getCardText(voteValue) {
+      let cardText = "";
+      if (typeof voteValue === "number") {
+        cardText = voteValue === 1 || voteValue === 0.5 ? "point" : "points";
+      }
+      return cardText;
+    },
   },
 };
 </script>
 
 <template>
   <div>
-    <h3 class="area-title">ESTIMATION</h3>
+    <h3>ESTIMATION</h3>
     <div class="admin-controls" v-if="isUserAdmin">
-      <v-btn @click="startVotingIssue" v-if="!currentIssue.votingInProgress"
-        >START VOTING</v-btn
+      <v-btn
+        class="btn-primary"
+        outlined
+        @click="startVotingIssue"
+        v-if="!currentIssue.votingInProgress"
       >
-      <v-btn @click="stopVotingIssue" v-else>STOP VOTING</v-btn>
+        <v-icon start icon="mdi-play"></v-icon> START VOTING</v-btn
+      >
+      <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
+        >STOP VOTING</v-btn
+      >
     </div>
     <div v-else>
       <p v-if="!currentIssue.votingInProgress">
@@ -71,12 +85,16 @@ export default {
       <v-btn
         v-for="(vote, i) in config.voteValues"
         :key="i"
+        class="btn-secondary voting-card"
+        outlined
         @click="castVote(vote.value)"
         :disabled="!currentIssue.votingInProgress"
-        class="vote-btn"
         :class="{ hasVoted: userVote.vote == vote.value }"
       >
-        <span v-html="vote.label"></span>
+        <div class="vote-content">
+          <span class="vote-number" v-html="vote.label"></span>
+          <span class="vote-text">{{ getCardText(vote.value) }}</span>
+        </div>
       </v-btn>
     </div>
     <UserVotes
@@ -87,6 +105,37 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "./src/styles/global.scss";
+.voting-controls {
+  margin: 1rem 0 2rem 0;
+  display: flex;
+  gap: 0.5rem;
+
+  .voting-card {
+    height: auto;
+    background: white;
+    border-width: 1px;
+    border-color: $grey-82;
+    border-radius: 0;
+    padding: 1rem 1rem 0.75rem;
+
+    .vote-content {
+      display: flex;
+      align-items: end;
+      gap: 0.25rem;
+    }
+
+    .vote-number {
+      font-size: 48px;
+      line-height: 36px;
+    }
+    .vote-text {
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+}
+
 .area-title {
   margin-bottom: 16px;
 }
@@ -99,9 +148,6 @@ export default {
 
 .vote-btn {
   margin-right: 16px;
-}
-.mt {
-  margin-top: 20px;
 }
 
 .hasVoted {

@@ -23,10 +23,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "./src/styles/global.scss";
 .header-container {
   display: flex;
   justify-content: space-between;
-  padding: 24px 32px;
+  padding: 24px 32px 0;
   .flex {
     display: flex;
     align-items: center;

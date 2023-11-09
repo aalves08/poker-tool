@@ -12,6 +12,9 @@ $grey-46: #6C6C76;
 $danger-foreground: #b30000;
 $danger-background: #fbe2dc;
 
+$success-foreground: #034A35;
+$success-background: #DAEFE9;
+
 .v-application {
   max-width: 1800px;
   margin: 0 auto;
@@ -60,36 +63,41 @@ p {
   padding: 20px;
 }
 
-.theme--light {
-  &.v-btn {
-    letter-spacing: 0.75px;
-    text-transform: none;
-  }
+.v-btn {
+  letter-spacing: 0.75px;
+  text-transform: none;
+}
 
-  &.btn-danger {
-    background-color: $danger-background !important;
-    color: $danger-foreground !important;
-    border-color: $danger-background !important;
-  }
+.btn-danger {
+  background-color: $danger-background;
+  color: $danger-foreground;
+  border-color: $danger-background;
+}
 
-  &.v-btn.btn-primary {
-    background-color: $primary !important;
-    color: white;
-    border-color: $primary !important;
-  }
+.v-btn.btn-primary {
+  background-color: $primary;
+  color: white;
+  border-color: $primary;
+}
 
-  &.v-btn.btn-secondary {
-    color: $primary;
-    border-color: $grey-91 !important;
-    border-width: 2px;
-  }
+.v-btn.btn-secondary {
+  color: $primary;
+  border-color: $grey-91;
+  border-width: 2px;
+}
 
-  &.v-chip.user-chip {
-    position: relative;
-    background-color: $grey-95 !important;
-    border: solid 1px $body-text;
-    color: $body-text;
-  }
+.v-chip.user-chip {
+  position: relative;
+  background-color: $grey-95 !important;
+  border: solid 1px $body-text;
+  color: $body-text;
+}
+
+.participants-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  gap: 0.5rem;
 }
 
 .content-block {

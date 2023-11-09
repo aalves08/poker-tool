@@ -62,17 +62,26 @@ export default {
         @updateShowNotLoggedDialog="updateDialogVisibility"
       />
       <div v-if="currentIssue">
-        <v-btn class="mb" @click="backToPlanning">Back to Planning</v-btn>
-        <h3 class="mb">#{{ currentIssue.number }} {{ currentIssue.title }}</h3>
-        <VotingBlock class="mb" />
-        <IssueDetails class="mb" :issue="currentIssue" />
+        <v-btn class="btn-secondary btn-back" outlined @click="backToPlanning">
+          <v-icon start icon="mdi-arrow-left"></v-icon>
+          Back to Planning
+        </v-btn>
+        <h1>#{{ currentIssue.number }} {{ currentIssue.title }}</h1>
+        <VotingBlock />
+        <IssueDetails :issue="currentIssue" />
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.mb {
-  margin-bottom: 20px;
+@import "./src/styles/global.scss";
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+.btn-back {
+  margin-bottom: 1rem;
 }
 </style>

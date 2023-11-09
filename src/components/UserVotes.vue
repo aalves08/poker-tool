@@ -32,21 +32,28 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h3 class="area-title">VOTES</h3>
-    <ul>
+  <div class="votes-block">
+    <h2>VOTES</h2>
+    <ul class="participants-list">
       <li v-for="(user, i) in users" :key="i">
-        <span class="name">{{ user.username }}</span>
-        <span v-if="hasUserVoted(user.userId)"
-          ><img src="@/assets/voted.svg"
-        /></span>
-        <span v-else> ... </span>
+        <v-chip class="user-chip" variant="outlined">
+          {{ user.username }}
+          <span v-if="hasUserVoted(user.userId)"
+            ><img src="@/assets/voted.svg"
+          /></span>
+          <span v-else> ... </span>
+        </v-chip>
       </li>
     </ul>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@import "./src/styles/global.scss";
+
+.votes-block {
+  margin-bottom: 2rem;
+}
 .area-title {
   margin-bottom: 16px;
 }

@@ -180,10 +180,16 @@ export default {
     width: 100%;
     border-radius: 0;
     border-color: $grey-82;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .v-card__title {
     word-break: normal;
+    flex-direction: column;
+    align-items: start;
 
     h3 {
       line-height: 20px;
@@ -210,8 +216,11 @@ export default {
     }
   }
 
+  .issue-text-block {
+    flex: 1;
+  }
   .issue-text {
-    height: 200px;
+    max-height: 200px;
     overflow: auto;
     color: $body-text;
     font-weight: 300;
