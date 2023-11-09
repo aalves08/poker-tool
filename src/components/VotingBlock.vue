@@ -91,10 +91,10 @@ export default {
         return this.finalVote === vote.value;
       }
     },
-    finalizeVoting(vote) {
+    finalizeVoting() {
       this.$store.dispatch("finalizeVoting", {
         issueId: this.currentIssue?.number,
-        vote,
+        vote: this.finalVote,
       });
 
       this.finalVote = null;

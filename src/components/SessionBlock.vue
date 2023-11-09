@@ -1,11 +1,11 @@
 <script>
 import { mapGetters } from "vuex";
-import StatsBlock from "./StatsBlock.vue";
+import SessionStatsBlock from "./SessionStatsBlock.vue";
 
 export default {
   name: "SessionBlock",
   components: {
-    StatsBlock,
+    SessionStatsBlock,
   },
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
           >SAVE</v-btn
         >
       </div>
-      <StatsBlock class="stats" />
+      <SessionStatsBlock class="stats" />
     </div>
   </div>
 </template>
