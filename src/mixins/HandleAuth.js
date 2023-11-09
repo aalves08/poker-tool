@@ -1,5 +1,5 @@
 import { mapGetters } from "vuex";
-import { STORAGE_UID } from "../utils/constants";
+import { STORAGE_UID, SERVER_URL } from "../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
@@ -24,7 +24,7 @@ export default {
     // check if room exists first...
     const res = await this.$axios({
       method: "post",
-      url: `http://146.190.150.213:8080/api/checkRoom`,
+      url: `${SERVER_URL}/api/checkRoom`,
       data: {
         room: this.room,
       },
