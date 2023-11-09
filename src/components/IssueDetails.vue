@@ -47,7 +47,7 @@ export default {
     <div class="issue-details-block">
       <p class="issue-text" v-html="issue.body"></p>
       <div class="labels-block">
-        <div class="small-block">
+        <div class="issue-metadata-block">
           <h3>Labels</h3>
           <div class="labels-list">
             <div
@@ -57,18 +57,17 @@ export default {
               :style="{
                 color: `#${label.color}`,
                 background: `#${getContrastedColor(label.color)}`,
-                borderColor: `#${label.color}`,
               }"
             >
               {{ label.name }}
             </div>
           </div>
         </div>
-        <div class="small-block">
+        <div class="issue-metadata-block">
           <h3>Milestone</h3>
           <p>{{ issue.milestone?.title }}</p>
         </div>
-        <div class="small-block">
+        <div class="issue-metadata-block">
           <h3>Comments</h3>
           <p>{{ issue.comments }}</p>
         </div>
@@ -111,12 +110,8 @@ export default {
     line-height: 1.5rem;
   }
 
-  .small-block {
-    margin-bottom: 20px;
-
-    span {
-      margin-right: 10px;
-    }
+  .issue-metadata-block {
+    margin-bottom: 2rem;
   }
 }
 
@@ -127,7 +122,6 @@ export default {
 }
 
 .label-chip {
-  border: solid 1px;
   border-radius: 30px;
   height: 30px;
   padding: 0 1rem;
@@ -140,5 +134,9 @@ export default {
   color: $success-foreground;
   background-color: $success-background !important;
   font-weight: 600;
+}
+
+h3 {
+  margin-bottom: 0.25rem;
 }
 </style>

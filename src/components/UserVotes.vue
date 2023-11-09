@@ -38,10 +38,12 @@ export default {
       <li v-for="(user, i) in users" :key="i">
         <v-chip class="user-chip" variant="outlined">
           {{ user.username }}
-          <span v-if="hasUserVoted(user.userId)"
-            ><img src="@/assets/voted.svg"
-          /></span>
-          <span v-else> ... </span>
+          <img
+            v-if="!hasUserVoted(user.userId)"
+            class="vote-checkmark"
+            src="@/assets/voted.svg"
+          />
+          <span v-else class="pending-vote-dots"> ··· </span>
         </v-chip>
       </li>
     </ul>
@@ -62,18 +64,14 @@ export default {
   margin-right: 10px;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
+.pending-vote-dots {
+  font-size: 24px;
+  margin-left: 4px;
+}
 
-  li {
-    margin: 0 20px 0 0;
-    border: 1px solid;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-  }
+.vote-checkmark {
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
 }
 </style>

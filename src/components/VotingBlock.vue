@@ -19,10 +19,11 @@ export default {
       return {};
     },
     votes() {
+      console.log("this.currentIssue", this.currentIssue);
       return this.currentIssue.votes || [];
     },
     userVote() {
-      return this.votes.find((v) => v.userId === this.localUser.userId);
+      return this.votes.find((v) => v.userId === this.localUser.userId) || {};
     },
   },
   methods: {
@@ -57,7 +58,7 @@ export default {
 
 <template>
   <div>
-    <h3>ESTIMATION</h3>
+    <h2>ESTIMATION</h2>
     <div class="admin-controls" v-if="isUserAdmin">
       <v-btn
         class="btn-primary"
@@ -65,8 +66,8 @@ export default {
         @click="startVotingIssue"
         v-if="!currentIssue.votingInProgress"
       >
-        <v-icon start icon="mdi-play"></v-icon> START VOTING</v-btn
-      >
+        <v-icon start icon="mdi-play"></v-icon> START VOTING
+      </v-btn>
       <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
         >STOP VOTING</v-btn
       >
