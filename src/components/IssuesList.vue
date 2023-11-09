@@ -172,6 +172,9 @@ export default {
         </v-card-actions>
       </v-card>
     </div>
+    <div class="placeholder-block" v-else>
+      <h1 class="placeholder-text">Add issues from GitHub to estimate</h1>
+    </div>
   </div>
 </template>
 
@@ -259,5 +262,9 @@ export default {
     padding: 1rem;
     padding-top: 0;
   }
+}
+
+.placeholder-block {
+  margin-top: 2rem;
 }
 </style>

@@ -135,7 +135,7 @@ export default {
           >STOP VOTING</v-btn
         >
       </div>
-      <!-- -->
+      <!-- general copy -->
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
         Voting is closed! Now choose the FINAL ESTIMATION
@@ -178,6 +178,7 @@ export default {
       :show-full-names="true"
       :space-between="false"
       :highlightText="isFinalVoteCast"
+      :show-tip="true"
     />
     <!-- voting cards -->
     <div v-if="displayVotingCardsArea">

@@ -49,15 +49,38 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h1>Welcome to the planning tool!</h1>
-    <v-text-field v-model="username" label="Username"></v-text-field>
-    <v-text-field v-model="sessionName" label="Session name"></v-text-field>
-    <v-btn @click="createRoom" :disabled="createDisabled"
-      >Create a new room</v-btn
-    >
-    <v-overlay :value="showOverlay">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+  <div class="homepage-container">
+    <div class="homepage-content">
+      <h1>Welcome to the UX/UI planning tool! Create a session:</h1>
+      <div>
+        <v-text-field v-model="username" label="Username"></v-text-field>
+        <v-text-field v-model="sessionName" label="Session name"></v-text-field>
+        <v-btn
+          class="btn-primary"
+          @click="createRoom"
+          :disabled="createDisabled"
+          >Create a new room</v-btn
+        >
+      </div>
+      <v-overlay :value="showOverlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.homepage-container {
+  display: flex;
+  justify-content: center;
+
+  .homepage-content {
+    margin-top: 4rem;
+    width: 500px;
+
+    .btn-primary {
+      margin-top: 1.5rem;
+    }
+  }
+}
+</style>

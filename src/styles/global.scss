@@ -8,6 +8,7 @@
   --grey-95: #eeeff4;
   --grey-91: #DCDEE7;
   --grey-82: #B3C1D2;
+  --grey-80: #BDBDBE;
   --grey-46: #6C6C76;
 
   --danger-foreground: #b30000;
@@ -107,4 +108,18 @@ p {
 .content-block {
   margin-top: 1rem !important;
   margin-bottom: 2rem !important;
+}
+
+.placeholder-block {
+  display: flex;
+  justify-content: center;
+}
+
+.placeholder-text {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 60px;
+  letter-spacing: 1.25px;
+  text-align: left;
+  color: var(--grey-80);
 }
