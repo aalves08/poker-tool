@@ -64,7 +64,7 @@ export default {
             {{ userVote(user.userId) }}
           </span>
           <img
-            v-else-if="!isUserAdmin && hasUserVoted(user.userId)"
+            v-if="hasUserVoted(user.userId)"
             class="vote-checkmark"
             src="@/assets/voted.svg"
           />
