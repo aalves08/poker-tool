@@ -37,7 +37,7 @@ export default {
     <ul class="participants-list">
       <li v-for="(user, i) in users" :key="i">
         <v-chip class="user-chip" variant="outlined">
-          {{ user.username }} 
+          {{ user.username }}
           <span v-if="hasUserVoted(user.userId)"
             ><img src="@/assets/voted.svg"
           /></span>

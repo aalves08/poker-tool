@@ -51,13 +51,6 @@ export default {
       }
       return cardText;
     },
-    getCardText(voteValue) {
-      let cardText = "";
-      if (typeof voteValue === "number") {
-        cardText = voteValue === 1 || voteValue === 0.5 ? "point" : "points";
-      }
-      return cardText;
-    },
   },
 };
 </script>
@@ -66,9 +59,17 @@ export default {
   <div>
     <h3>ESTIMATION</h3>
     <div class="admin-controls" v-if="isUserAdmin">
-      <v-btn class="btn-primary"
-        outlined @click="startVotingIssue" v-if="!currentIssue.votingInProgress"<v-icon start icon="mdi-play"></v-icon> START VOTING</v-btn>
-      <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else>STOP VOTING</v-btn>
+      <v-btn
+        class="btn-primary"
+        outlined
+        @click="startVotingIssue"
+        v-if="!currentIssue.votingInProgress"
+      >
+        <v-icon start icon="mdi-play"></v-icon> START VOTING</v-btn
+      >
+      <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
+        >STOP VOTING</v-btn
+      >
     </div>
     <div v-else>
       <p v-if="!currentIssue.votingInProgress">

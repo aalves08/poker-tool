@@ -63,9 +63,9 @@ export default {
       />
       <div v-if="currentIssue">
         <v-btn class="btn-secondary btn-back" outlined @click="backToPlanning">
-      <v-icon start icon="mdi-arrow-left"></v-icon>
-      Back to Planning
-    </v-btn>
+          <v-icon start icon="mdi-arrow-left"></v-icon>
+          Back to Planning
+        </v-btn>
         <h1>#{{ currentIssue.number }} {{ currentIssue.title }}</h1>
         <VotingBlock />
         <IssueDetails :issue="currentIssue" />

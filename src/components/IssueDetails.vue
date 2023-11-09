@@ -44,7 +44,7 @@ export default {
         >Check on Github</a
       >
     </div>
-    <div class="flex issue-details-block">
+    <div class="issue-details-block">
       <p class="issue-text" v-html="issue.body"></p>
       <div class="labels-block">
         <div class="small-block">
@@ -103,14 +103,12 @@ export default {
 }
 
 .issue-details-block {
-  gap: 1rem;
-  .issue-text,
-  .labels-block {
-    width: calc(50% - 20px);
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
 
   .issue-text {
-    margin-right: 40px;
+    line-height: 1.5rem;
   }
 
   .small-block {
