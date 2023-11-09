@@ -247,5 +247,4 @@ export default {
 .vote-btn {
   margin-right: 16px;
 }
-
 </style>
