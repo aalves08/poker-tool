@@ -4,7 +4,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "UserVotes",
   computed: {
-    ...mapGetters(["issues", "users"]),
+    ...mapGetters(["issues", "users", "isUserAdmin"]),
     currentIssue() {
       if (this.issues && this.issues.length) {
         return this.issues?.find(
@@ -41,9 +41,17 @@ export default {
           :class="{ hasVoted: hasUserVoted(user.userId) }"
           variant="outlined"
         >
-          {{ user.username }}
+          <span class="user-n-points">
+            {{ user.username }}
+          </span>
+          <span
+            v-if="isUserAdmin && hasUserVoted(user.userId)"
+            class="user-voted-points"
+          >
+            3
+          </span>
           <img
-            v-if="!hasUserVoted(user.userId)"
+            v-if="hasUserVoted(user.userId)"
             class="vote-checkmark"
             src="@/assets/voted.svg"
           />
@@ -75,5 +83,19 @@ export default {
   width: 20px;
   height: 20px;
   margin-left: 4px;
+}
+
+.hasVoted {
+  background: var(--success-background) !important;
+  border-color: transparent !important;
+  color: var(--success-foreground) !important;
+  font-weight: 500;
+
+  .user-voted-points {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 4px;
+    margin-right: 2px;
+  }
 }
 </style>
