@@ -6,17 +6,17 @@ export default {
 
 <template>
   <div class="stats-block">
-    <div>
-      <h1>22</h1>
-      <span>sprint points</span>
+    <div class="stat">
+      <span class="stat-value">22</span>
+      <span class="stat-text">sprint points</span>
     </div>
-    <div>
-      <h1>2.75</h1>
-      <span>average points</span>
+    <div class="stat">
+      <span class="stat-value">2.75</span>
+      <span class="stat-text">average points</span>
     </div>
-    <div>
-      <h1>8</h1>
-      <span>issues estimated</span>
+    <div class="stat">
+      <span class="stat-value">8</span>
+      <span class="stat-text">issues estimated</span>
     </div>
   </div>
 </template>
@@ -24,14 +24,22 @@ export default {
 <style lang="scss" scoped>
 .stats-block {
   display: flex;
+  gap: 2rem;
 
-  > div {
-    margin-right: 25px;
+  .stat {
     display: flex;
     align-items: flex-end;
+    color: var(--body-text);
 
-    h1 {
-      margin: 0 8px -4px 0;
+    .stat-value {
+      font-size: 48px;
+      line-height: 42px;
+      font-weight: 200;
+      margin-right: 8px;
+    }
+    .stat-text {
+      font-size: 1rem;
+      font-weight: 300;
     }
   }
 }

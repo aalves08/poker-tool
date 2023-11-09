@@ -33,7 +33,7 @@ export default {
   }
 
   img {
-    margin-right: 0.5rem;
+    margin-right: 24px;
   }
 }
 </style>
