@@ -9,7 +9,6 @@
 
 <script>
 import HeaderBlock from "./components/HeaderBlock.vue";
-import "@/styles/global.scss";
 
 export default {
   name: "App",
@@ -18,6 +17,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "./styles/global.scss";
+</style>
 
 <style lang="scss" scoped>
 .router-block {

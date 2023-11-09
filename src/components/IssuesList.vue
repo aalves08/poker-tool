@@ -159,7 +159,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
 .add-issues-block {
   display: flex;
   align-items: center;
@@ -179,7 +178,7 @@ export default {
   .v-card.issue-card {
     width: 100%;
     border-radius: 0;
-    border-color: $grey-82;
+    border-color: var(--grey-82);
     display: grid;
     grid-template-rows: auto 1fr auto;
     display: flex;
@@ -202,7 +201,7 @@ export default {
     }
 
     .author-date {
-      color: $grey-46;
+      color: var(--grey-46);
       font-size: 14px;
       line-height: 14px;
       font-weight: 400;
@@ -222,7 +221,7 @@ export default {
   .issue-text {
     max-height: 200px;
     overflow: auto;
-    color: $body-text;
+    color: var(--body-text);
     font-weight: 300;
     margin-bottom: 0;
     .issue-text {

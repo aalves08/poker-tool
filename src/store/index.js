@@ -28,30 +28,37 @@ export default new Vuex.Store({
         {
           label: "&#189;",
           value: 0.5,
+          deterministic: true,
         },
         {
           label: 1,
           value: 1,
+          deterministic: true,
         },
         {
           label: 2,
           value: 2,
+          deterministic: true,
         },
         {
           label: 3,
           value: 3,
+          deterministic: true,
         },
         {
           label: 5,
           value: 5,
+          deterministic: true,
         },
         {
           label: 8,
           value: 8,
+          deterministic: true,
         },
         {
           label: 13,
           value: 13,
+          deterministic: true,
         },
         {
           label: "?",

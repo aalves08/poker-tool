@@ -1,25 +1,24 @@
 <script>
+import { mapGetters } from "vuex";
+import { getContrastedColor } from "../utils/utils";
+
 export default {
   name: "IssueDetails",
-  props: {
-    issue: {
-      type: Object,
-      default: () => {},
+  computed: {
+    ...mapGetters(["issues"]),
+    currentIssue() {
+      if (this.issues && this.issues.length) {
+        return this.issues?.find(
+          // loose equality because issueId is a string and issue.number is a number....
+          (issue) => issue.number == this.$route.params.issueId
+        );
+      }
+      return {};
     },
   },
   methods: {
-    getContrastedColor(originalColor) {
-      const halfHex = "777777";
-      const octetsRegex = /^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
-      const m1 = originalColor.match(octetsRegex);
-      const m2 = halfHex.match(octetsRegex);
-      let result = [1, 2, 3]
-        .map((i) => {
-          const sum = parseInt(m1[i], 16) + parseInt(m2[i], 16);
-          return sum.toString(16).padStart(2, "0");
-        })
-        .join("");
-      return result.slice(result.length - 6, result.length);
+    contrastedColor(color) {
+      return getContrastedColor(color);
     },
   },
 };
@@ -30,14 +29,16 @@ export default {
     <h2>ISSUE DETAILS</h2>
     <div class="flex title-block">
       <v-chip class="status-chip">
-        {{ issue.state }}
+        {{ currentIssue.state }}
       </v-chip>
       <span class="author-date">
-        {{ issue.user?.login }} on
-        <span class="author-date__date">{{ issue.parsedCreationDate }}</span>
+        {{ currentIssue.user?.login }} on
+        <span class="author-date__date">{{
+          currentIssue.parsedCreationDate
+        }}</span>
       </span>
       <a
-        :href="`https://github.com/rancher/dashboard/issues/${issue.number}`"
+        :href="`https://github.com/rancher/dashboard/issues/${currentIssue.number}`"
         target="_blank"
         rel="noopener noreferrer nofollow"
         class="issue-number"
@@ -45,31 +46,35 @@ export default {
       >
     </div>
     <div class="issue-details-block">
-      <p class="issue-text" v-html="issue.body"></p>
+      <p class="issue-text" v-html="currentIssue.body"></p>
       <div class="labels-block">
         <div class="issue-metadata-block">
           <h3>Labels</h3>
-          <div class="labels-list">
+          <div class="labels-list" v-if="currentIssue.labels?.length">
             <div
               class="label-chip"
-              v-for="label in issue.labels"
+              v-for="label in currentIssue.labels"
               :key="label.id"
               :style="{
                 color: `#${label.color}`,
-                background: `#${getContrastedColor(label.color)}`,
+                background: `#${contrastedColor(label.color)}`,
               }"
             >
               {{ label.name }}
             </div>
           </div>
+          <p v-else>No labels set</p>
         </div>
         <div class="issue-metadata-block">
           <h3>Milestone</h3>
-          <p>{{ issue.milestone?.title }}</p>
+          <p v-if="currentIssue.milestone?.title">
+            {{ currentIssue.milestone?.title }}
+          </p>
+          <p v-else>No milestone set</p>
         </div>
         <div class="issue-metadata-block">
           <h3>Comments</h3>
-          <p>{{ issue.comments }}</p>
+          <p>{{ currentIssue.comments }}</p>
         </div>
       </div>
     </div>
@@ -77,7 +82,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
 .flex {
   display: flex;
 }
@@ -91,7 +95,7 @@ export default {
   }
 
   .author-date {
-    color: $grey-46;
+    color: var(--grey-46);
     font-size: 14px;
     line-height: 14px;
     font-weight: 400;
@@ -131,8 +135,8 @@ export default {
 }
 .status-chip {
   text-transform: capitalize;
-  color: $success-foreground;
-  background-color: $success-background !important;
+  color: var(--success-foreground);
+  background-color: var(--success-background) !important;
   font-weight: 600;
 }
 

@@ -67,16 +67,14 @@ export default {
           Back to Planning
         </v-btn>
         <h1>#{{ currentIssue.number }} {{ currentIssue.title }}</h1>
-        <VotingBlock />
-        <IssueDetails :issue="currentIssue" />
+        <VotingBlock class="mb" />
+        <IssueDetails class="mb" />
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
-
 h1 {
   font-size: 20px;
   margin-bottom: 0.5rem;

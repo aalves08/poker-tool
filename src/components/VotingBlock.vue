@@ -66,8 +66,8 @@ export default {
         @click="startVotingIssue"
         v-if="!currentIssue.votingInProgress"
       >
-        <v-icon start icon="mdi-play"></v-icon> START VOTING
-      </v-btn>
+        <v-icon start icon="mdi-play"></v-icon>START VOTING</v-btn
+      >
       <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
         >STOP VOTING</v-btn
       >
@@ -106,23 +106,23 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
 .voting-controls {
   margin: 1rem 0 2rem 0;
   display: flex;
   gap: 0.5rem;
 
   .voting-card {
+    box-sizing: border-box;
     height: auto;
     background: white;
     border-width: 1px;
-    border-color: $grey-82;
+    border-color: var(--grey-82);
     border-radius: 0;
     padding: 1rem 1rem 0.75rem;
 
     .vote-content {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       gap: 0.25rem;
     }
 
@@ -152,6 +152,6 @@ export default {
 }
 
 .hasVoted {
-  border: 2px solid;
+  border-width: 4px !important;
 }
 </style>

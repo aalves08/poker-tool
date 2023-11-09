@@ -36,7 +36,7 @@ export default {
     <h2>VOTES</h2>
     <ul class="participants-list">
       <li v-for="(user, i) in users" :key="i">
-        <v-chip class="user-chip" variant="outlined">
+        <v-chip class="user-chip" :class="{hasVoted: hasUserVoted(user.userId)}" variant="outlined">
           {{ user.username }}
           <img
             v-if="!hasUserVoted(user.userId)"
@@ -51,8 +51,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
-
 .votes-block {
   margin-bottom: 2rem;
 }

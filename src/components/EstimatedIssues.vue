@@ -13,8 +13,8 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h2>ESTIMATED ISSUES</h2>
+  <div class="content-block">
+    <h2 class="section-title">ESTIMATED ISSUES</h2>
     <div class="estimated-issues-block">
       <div class="estimated-issues-card">
         <h3 class="estimated-card__title">
@@ -131,8 +131,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "./src/styles/global.scss";
-
+.section-title {
+  margin-bottom: 1rem;
+}
 .estimated-issues-block {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

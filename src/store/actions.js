@@ -60,6 +60,9 @@ export default {
   forceRemoveUser({ state }, socketId) {
     state.connection.emit("forceRemoveUser", socketId);
   },
+  updateSessionName({ state }, newSessionName) {
+    state.connection.emit("updateSessionName", newSessionName);
+  },
   updateIssuesList({ state }, issues) {
     state.connection.emit("updateIssuesList", issues);
   },
