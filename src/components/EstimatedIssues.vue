@@ -6,110 +6,36 @@ export default {
   computed: {
     ...mapGetters(["issues"]),
     estimatedIssues() {
-      return this.issues.filter((issue) => issue.finishedVoting);
+      return this.issues.filter((issue) => issue.finalVote);
+    },
+  },
+  methods: {
+    openIssue(issueId) {
+      this.$router.push({
+        name: "issue",
+        params: {
+          roomId: this.$route.params.roomId,
+          issueId,
+        },
+      });
     },
   },
 };
 </script>
 
 <template>
-  <div class="content-block">
+  <div class="content-block" v-if="estimatedIssues.length">
     <h2 class="section-title">ESTIMATED ISSUES</h2>
     <div class="estimated-issues-block">
-      <div class="estimated-issues-card">
+      <div
+        class="estimated-issues-card"
+        v-for="(issue, i) in estimatedIssues"
+        :key="i"
+        @click="openIssue(issue.number)"
+      >
         <h3 class="estimated-card__title">
-          <span class="issue-number">#9584</span>
-          <span class="issue-name"
-            >Cluster Explorer adjustments for smaller screens</span
-          >
-        </h3>
-        <div class="points-block">
-          <div class="points total-points">
-            <span class="points-number">3</span>
-            <span class="points-text">points</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">3.7</span>
-            <span class="points-text">avg.</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">4.9</span>
-            <span class="points-text">var.</span>
-          </div>
-        </div>
-      </div>
-      <div class="estimated-issues-card">
-        <h3 class="estimated-card__title">
-          <span class="issue-number">#9584</span>
-          <span class="issue-name"
-            >Cluster Explorer adjustments for smaller screens</span
-          >
-        </h3>
-        <div class="points-block">
-          <div class="points total-points">
-            <span class="points-number">3</span>
-            <span class="points-text">points</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">3.7</span>
-            <span class="points-text">avg.</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">4.9</span>
-            <span class="points-text">var.</span>
-          </div>
-        </div>
-      </div>
-      <div class="estimated-issues-card">
-        <h3 class="estimated-card__title">
-          <span class="issue-number">#9584</span>
-          <span class="issue-name"
-            >Cluster Explorer adjustments for smaller screens</span
-          >
-        </h3>
-        <div class="points-block">
-          <div class="points total-points">
-            <span class="points-number">3</span>
-            <span class="points-text">points</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">3.7</span>
-            <span class="points-text">avg.</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">4.9</span>
-            <span class="points-text">var.</span>
-          </div>
-        </div>
-      </div>
-      <div class="estimated-issues-card">
-        <h3 class="estimated-card__title">
-          <span class="issue-number">#9584</span>
-          <span class="issue-name"
-            >Cluster Explorer adjustments for smaller screens</span
-          >
-        </h3>
-        <div class="points-block">
-          <div class="points total-points">
-            <span class="points-number">3</span>
-            <span class="points-text">points</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">3.7</span>
-            <span class="points-text">avg.</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">4.9</span>
-            <span class="points-text">var.</span>
-          </div>
-        </div>
-      </div>
-      <div class="estimated-issues-card">
-        <h3 class="estimated-card__title">
-          <span class="issue-number">#9584</span>
-          <span class="issue-name"
-            >Cluster Explorer adjustments for smaller screens</span
-          >
+          <span class="issue-number">#{{ issue.number }}</span>
+          <span class="issue-name">{{ issue.title }}</span>
         </h3>
         <div class="points-block">
           <div class="points total-points">
@@ -146,6 +72,11 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid red !important;
+    }
 
     .estimated-card__title {
       display: flex;

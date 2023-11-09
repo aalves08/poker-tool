@@ -43,7 +43,7 @@ export default {
         >
           {{ user.username }}
           <img
-            v-if="!hasUserVoted(user.userId)"
+            v-if="hasUserVoted(user.userId)"
             class="vote-checkmark"
             src="@/assets/voted.svg"
           />

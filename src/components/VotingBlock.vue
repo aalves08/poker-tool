@@ -7,6 +7,11 @@ export default {
   components: {
     UserVotes,
   },
+  data() {
+    return {
+      finalVote: null,
+    };
+  },
   computed: {
     ...mapGetters(["config", "isUserAdmin", "issues", "localUser"]),
     currentIssue() {
@@ -19,19 +24,58 @@ export default {
       return {};
     },
     votes() {
-      console.log("this.currentIssue", this.currentIssue);
       return this.currentIssue.votes || [];
     },
     userVote() {
       return this.votes.find((v) => v.userId === this.localUser.userId) || {};
     },
+    isUserVotingInProgress() {
+      return this.currentIssue.votingInProgress;
+    },
+    isUserVotingFinished() {
+      return (
+        !this.isUserVotingInProgress &&
+        this.currentIssue.finishedUserVoting &&
+        !this.currentIssue.finalVote
+      );
+    },
+    isFinalVoteCast() {
+      return (
+        !this.isUserVotingInProgress &&
+        this.currentIssue.finishedUserVoting &&
+        this.currentIssue.finalVote
+      );
+    },
   },
   methods: {
+    isVotingBtnDisabled(vote) {
+      if (!this.isUserVotingInProgress && !this.isUserVotingFinished) {
+        return true;
+      }
+
+      if (this.isUserVotingInProgress && !this.isUserVotingFinished) {
+        return false;
+      }
+
+      if (!this.isUserVotingInProgress && this.isUserVotingFinished) {
+        return !vote.deterministic;
+      }
+    },
     startVotingIssue() {
       this.$store.dispatch("updateVotingIssueStatus", {
         issueId: this.currentIssue?.number,
         started: true,
       });
+    },
+    castVote(vote) {
+      if (!this.isUserVotingFinished) {
+        this.$store.dispatch("castVoteOnIssue", {
+          issueId: this.currentIssue?.number,
+          vote,
+        });
+      } else {
+        this.finalVote = vote.value;
+      }
     },
     stopVotingIssue() {
       this.$store.dispatch("updateVotingIssueStatus", {
@@ -39,16 +83,22 @@ export default {
         stopped: true,
       });
     },
-    castVote(vote) {
-      this.$store.dispatch("castVoteOnIssue", {
+    finalizeVoting(vote) {
+      this.$store.dispatch("finalizeVoting", {
         issueId: this.currentIssue?.number,
         vote,
       });
+
+      this.finalVote = null;
     },
-    getCardText(voteValue) {
+    getCardText(vote) {
       let cardText = "";
-      if (typeof voteValue === "number") {
-        cardText = voteValue === 1 || voteValue === 0.5 ? "point" : "points";
+      if (typeof vote.value === "number") {
+        if (vote.value > 0 && vote.value <= 1) {
+          cardText = "point";
+        } else {
+          cardText = "points";
+        }
       }
       return cardText;
     },
@@ -59,48 +109,85 @@ export default {
 <template>
   <div>
     <h2>ESTIMATION</h2>
+    <!-- *** admin-only *** -->
     <div class="admin-controls" v-if="isUserAdmin">
-      <v-btn
-        class="btn-primary"
-        outlined
-        @click="startVotingIssue"
-        v-if="!currentIssue.votingInProgress"
-      >
-        <v-icon start icon="mdi-play"></v-icon>START VOTING</v-btn
-      >
-      <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
-        >STOP VOTING</v-btn
-      >
+      <!-- start and stop voting on issue -->
+      <div v-if="!isUserVotingFinished">
+        <v-btn
+          class="btn-primary"
+          outlined
+          @click="startVotingIssue"
+          v-if="!isUserVotingInProgress"
+        >
+          <v-icon start icon="mdi-play"></v-icon>START VOTING</v-btn
+        >
+        <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
+          >STOP VOTING</v-btn
+        >
+      </div>
+      <!-- -->
+      <p v-else-if="isUserVotingFinished">
+        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        Voting is closed! Now choose the FINAL ESTIMATION
+      </p>
+      <p v-else-if="isFinalVoteCast">
+        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        Voting is closed!
+      </p>
     </div>
+    <!-- *** user-only *** -->
     <div v-else>
-      <p v-if="!currentIssue.votingInProgress">
+      <p v-if="!isUserVotingInProgress">
         <img class="text-icon" src="@/assets/hourglass.svg" />
         Wait for the admin to start the voting
       </p>
-      <p v-else>
+      <p v-else-if="isUserVotingInProgress">
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
         You can vote now!!!
       </p>
+      <p v-else-if="isUserVotingFinished">
+        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        Waiting for FINAL ESTIMATION from admin...
+      </p>
+      <p v-else-if="isFinalVoteCast">
+        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        Voting is closed!
+      </p>
     </div>
-    <div class="voting-controls">
+    <!-- voting cards -->
+    <div
+      v-if="
+        (!isFinalVoteCast && isUserAdmin) ||
+        (!isUserVotingFinished && !isUserAdmin)
+      "
+      class="voting-controls"
+    >
+      <h3 v-if="isUserVotingFinished">FINAL ESTIMATION</h3>
       <v-btn
         v-for="(vote, i) in config.voteValues"
         :key="i"
         class="btn-secondary voting-card"
         outlined
-        @click="castVote(vote.value)"
-        :disabled="!currentIssue.votingInProgress"
-        :class="{ hasVoted: userVote.vote == vote.value }"
+        @click="castVote(vote)"
+        :disabled="isVotingBtnDisabled(vote)"
+        :class="{ hasVoted: userVote.vote?.value == vote.value }"
       >
         <div class="vote-content">
           <span class="vote-number" v-html="vote.label"></span>
-          <span class="vote-text">{{ getCardText(vote.value) }}</span>
+          <span class="vote-text">{{ getCardText(vote) }}</span>
         </div>
       </v-btn>
+      <v-btn
+        v-if="isUserVotingFinished"
+        class="btn-primary"
+        @click="finalizeVoting"
+        >Close estimation</v-btn
+      >
     </div>
+    <!-- user votes pills -->
     <UserVotes
       class="mt"
-      v-if="currentIssue.votingInProgress || currentIssue.finishedVoting"
+      v-if="isUserVotingInProgress || isUserVotingFinished || isFinalVoteCast"
     />
   </div>
 </template>
@@ -152,6 +239,6 @@ export default {
 }
 
 .hasVoted {
-  border-width: 4px !important;
+  border-width: 8px !important;
 }
 </style>

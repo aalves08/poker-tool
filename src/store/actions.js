@@ -79,6 +79,12 @@ export default {
       vote,
     });
   },
+  finalizeVoting({ state }, { issueId, vote }) {
+    state.connection.emit("finalizeVoting", {
+      issueId,
+      vote,
+    });
+  },
   updateSessionInfo({ commit }, val) {
     commit("updateSessionInfo", val);
   },

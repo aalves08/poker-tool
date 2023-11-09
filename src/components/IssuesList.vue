@@ -11,6 +11,9 @@ export default {
   },
   computed: {
     ...mapGetters(["issues", "localUser", "isUserAdmin"]),
+    issuesToEstimate() {
+      return this.issues.filter((issue) => !issue.finalVote);
+    },
   },
   methods: {
     parseISODate(ISODate) {
@@ -111,8 +114,16 @@ export default {
       </v-btn>
     </div>
 
-    <div class="issues-container" v-if="issues && issues.length">
-      <v-card class="issue-card" outlined v-for="(issue, i) in issues" :key="i">
+    <div
+      class="issues-container"
+      v-if="issuesToEstimate && issuesToEstimate.length"
+    >
+      <v-card
+        class="issue-card"
+        outlined
+        v-for="(issue, i) in issuesToEstimate"
+        :key="i"
+      >
         <v-card-title>
           <a
             :href="`https://github.com/rancher/dashboard/issues/${issue.number}`"
