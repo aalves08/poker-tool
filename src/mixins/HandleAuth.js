@@ -1,5 +1,6 @@
 import { mapGetters } from "vuex";
-import { STORAGE_UID } from "../utils/constants";
+import { STORAGE_UID, SERVER_URL } from "../utils/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   name: "HandleAuthMixin",
@@ -7,7 +8,7 @@ export default {
     return {
       sessionName: "",
       username: "",
-      userId: localStorage.getItem(STORAGE_UID) || crypto.randomUUID(),
+      userId: localStorage.getItem(STORAGE_UID) || uuidv4(),
       loading: true,
       roomNotFound: false,
       showNotLoggedDialog: false,
@@ -23,7 +24,7 @@ export default {
     // check if room exists first...
     const res = await this.$axios({
       method: "post",
-      url: "http://localhost:8080/checkRoom",
+      url: `${SERVER_URL}/api/checkRoom`,
       data: {
         room: this.room,
       },
