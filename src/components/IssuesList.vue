@@ -12,7 +12,10 @@ export default {
   computed: {
     ...mapGetters(["issues", "localUser", "isUserAdmin"]),
     issuesToEstimate() {
-      return this.issues.filter((issue) => !issue.finalVote);
+      if (this.issues?.length) {
+        return this.issues?.filter((issue) => !issue.finalVote);
+      }
+      return [];
     },
   },
   methods: {
