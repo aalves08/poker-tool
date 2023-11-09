@@ -39,7 +39,7 @@ export default {
         <v-chip class="user-chip" variant="outlined">
           {{ user.username }}
           <span v-if="hasUserVoted(user.userId)"
-            ><img src="@/assets/voted.svg"
+            ><img class="check-icon" src="@/assets/voted.svg"
           /></span>
           <span v-else> ... </span>
         </v-chip>
@@ -51,5 +51,18 @@ export default {
 <style lang="scss" scoped>
 .votes-block {
   margin-bottom: 2rem;
+
+  span {
+    margin-left: 6px;
+  }
+
+  img {
+    margin-top: 5px;
+  }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+  }
 }
 </style>

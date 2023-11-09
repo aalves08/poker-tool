@@ -50,7 +50,7 @@ export default {
       <div class="labels-block">
         <div class="small-block">
           <h3>Labels</h3>
-          <div class="labels-list">
+          <div class="labels-list" v-if="currentIssue.labels?.length">
             <div
               class="label-chip"
               v-for="label in currentIssue.labels"
@@ -64,10 +64,14 @@ export default {
               {{ label.name }}
             </div>
           </div>
+          <p v-else>No labels set</p>
         </div>
         <div class="small-block">
           <h3>Milestone</h3>
-          <p>{{ currentIssue.milestone?.title }}</p>
+          <p v-if="currentIssue.milestone?.title">
+            {{ currentIssue.milestone?.title }}
+          </p>
+          <p v-else>No milestone set</p>
         </div>
         <div class="small-block">
           <h3>Comments</h3>
@@ -112,7 +116,11 @@ export default {
   }
 
   .small-block {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
+
+    h3 {
+      margin-bottom: 5px;
+    }
 
     span {
       margin-right: 10px;
