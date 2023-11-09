@@ -1,13 +1,37 @@
+function getRGB(c) {
+  return parseInt(c, 16) || c;
+}
+
+function getsRGB(c) {
+  return getRGB(c) / 255 <= 0.03928
+    ? getRGB(c) / 255 / 12.92
+    : Math.pow((getRGB(c) / 255 + 0.055) / 1.055, 2.4);
+}
+
+function getLuminance(hexColor) {
+  return (
+    0.2126 * getsRGB(hexColor.substr(1, 2)) +
+    0.7152 * getsRGB(hexColor.substr(3, 2)) +
+    0.0722 * getsRGB(hexColor.substr(-2))
+  );
+}
+
+function getContrast(f, b) {
+  const L1 = getLuminance(f);
+  const L2 = getLuminance(b);
+  return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.2);
+}
+
+function getTextColor(bgColor) {
+  const whiteContrast = getContrast(bgColor, "#ffffff");
+  const blackContrast = getContrast(bgColor, "#000000");
+
+  console.log("whiteContrast", whiteContrast);
+  console.log("blackContrast", blackContrast);
+
+  return whiteContrast > blackContrast ? "ffffff" : "000000";
+}
+
 export function getContrastedColor(originalColor) {
-  const halfHex = "777777";
-  const octetsRegex = /^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
-  const m1 = originalColor.match(octetsRegex);
-  const m2 = halfHex.match(octetsRegex);
-  let result = [1, 2, 3]
-    .map((i) => {
-      const sum = parseInt(m1[i], 16) + parseInt(m2[i], 16);
-      return sum.toString(16).padStart(2, "0");
-    })
-    .join("");
-  return result.slice(result.length - 6, result.length);
+  return getTextColor(originalColor);
 }

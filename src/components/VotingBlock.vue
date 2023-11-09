@@ -1,10 +1,12 @@
 <script>
 import { mapGetters } from "vuex";
+import IssueStatsBlock from "./IssueStatsBlock";
 import UserVotes from "./UserVotes";
 
 export default {
   name: "VotingBlock",
   components: {
+    IssueStatsBlock,
     UserVotes,
   },
   data() {
@@ -133,7 +135,7 @@ export default {
           >STOP VOTING</v-btn
         >
       </div>
-      <!-- -->
+      <!-- general copy -->
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
         Voting is closed! Now choose the FINAL ESTIMATION
@@ -168,6 +170,16 @@ export default {
         Voting is closed!
       </p>
     </div>
+    <!-- issue stats -->
+    <IssueStatsBlock
+      v-if="isUserVotingFinished"
+      class="issue-stats"
+      :issue="currentIssue"
+      :show-full-names="true"
+      :space-between="false"
+      :highlightText="isFinalVoteCast"
+      :show-tip="true"
+    />
     <!-- voting cards -->
     <div v-if="displayVotingCardsArea">
       <h3 v-if="isUserVotingFinished">FINAL ESTIMATION</h3>
@@ -251,6 +263,11 @@ export default {
 .admin-controls {
   margin-bottom: 20px;
 }
+
+.issue-stats {
+  margin-bottom: 2rem;
+}
+
 .text-icon {
   position: relative;
   margin-right: 10px;

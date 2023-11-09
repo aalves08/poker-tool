@@ -55,11 +55,11 @@ export default {
 
 <template>
   <div>
-    <v-dialog v-model="dialogVisibility" width="500">
+    <v-dialog v-model="dialogVisibility" width="500" persistent>
       <div class="not-logged-dialog">
         <h3>Who are you?</h3>
         <v-text-field v-model="username" label="Username"></v-text-field>
-        <v-btn @click="enterRoom">Enter Session</v-btn>
+        <v-btn class="btn-primary" @click="enterRoom">Enter Session</v-btn>
       </div>
     </v-dialog>
   </div>

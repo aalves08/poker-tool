@@ -1,4 +1,5 @@
 <script>
+import { mapGetters } from "vuex";
 import NotLoggedDialog from "../components/NotLoggedDialog.vue";
 import UserList from "../components/UserList.vue";
 import IssuesList from "../components/IssuesList.vue";
@@ -18,6 +19,15 @@ export default {
   },
 
   mixins: [HandleAuth],
+  computed: {
+    ...mapGetters(["isUserAdmin", "issues"]),
+    estimatedIssues() {
+      if (this.issues?.length) {
+        return this.issues?.filter((issue) => issue.finalVote);
+      }
+      return [];
+    },
+  },
   methods: {
     backToHomepage() {
       this.roomNotFound = false;
@@ -53,6 +63,9 @@ export default {
       />
       <div>
         <SessionBlock />
+        <div class="placeholder-block" v-if="!estimatedIssues.length">
+          <h1 class="placeholder-text">Start voting to see some stats</h1>
+        </div>
         <UserList />
         <EstimatedIssues />
         <IssuesList />

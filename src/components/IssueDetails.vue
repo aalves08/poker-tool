@@ -42,8 +42,8 @@ export default {
         target="_blank"
         rel="noopener noreferrer nofollow"
         class="issue-number"
-        >Check on Github</a
-      >
+        ><span>Check in Github</span> <img src="@/assets/icon-link.svg"
+      /></a>
     </div>
     <div class="issue-details-block">
       <p class="issue-text" v-html="currentIssue.body"></p>
@@ -56,8 +56,8 @@ export default {
               v-for="label in currentIssue.labels"
               :key="label.id"
               :style="{
-                color: `#${label.color}`,
-                background: `#${contrastedColor(label.color)}`,
+                background: `#${label.color}`,
+                color: `#${contrastedColor(label.color)}`,
               }"
             >
               {{ label.name }}
@@ -103,6 +103,20 @@ export default {
       font-weight: 600;
     }
   }
+
+  .issue-number {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      margin-left: 6px;
+    }
+  }
 }
 
 .issue-details-block {
@@ -131,7 +145,7 @@ export default {
   padding: 0 1rem;
   display: flex;
   align-items: center;
-  font-weight: 900;
+  font-weight: 500;
 }
 .status-chip {
   text-transform: capitalize;
