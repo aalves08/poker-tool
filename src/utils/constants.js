@@ -5,7 +5,7 @@ export const ROLES = {
 };
 let SERVER_URL;
 if (process.env.NODE_ENV === "production") {
-  SERVER_URL = process.env.SERVER_URL;
+  SERVER_URL = "http://146.190.150.213:8080";
 } else {
   SERVER_URL = "http://localhost:8080";
 }
