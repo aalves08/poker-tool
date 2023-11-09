@@ -36,7 +36,7 @@ export default {
         });
         variance /= this.issue.votes.length;
 
-        return variance;
+        return Math.round(variance * 10) / 10;
       }
 
       return 0;
