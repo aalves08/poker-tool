@@ -1,8 +1,12 @@
 <script>
 import { mapGetters } from "vuex";
+import IssueStatsBlock from "./IssueStatsBlock.vue";
 
 export default {
   name: "EstimatedIssues",
+  components: {
+    IssueStatsBlock,
+  },
   computed: {
     ...mapGetters(["issues"]),
     estimatedIssues() {
@@ -40,20 +44,8 @@ export default {
           <span class="issue-number">#{{ issue.number }}</span>
           <span class="issue-name">{{ issue.title }}</span>
         </h3>
-        <div class="points-block">
-          <div class="points total-points">
-            <span class="points-number">3</span>
-            <span class="points-text">points</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">3.7</span>
-            <span class="points-text">avg.</span>
-          </div>
-          <div class="points stats">
-            <span class="points-number">4.9</span>
-            <span class="points-text">var.</span>
-          </div>
-        </div>
+
+        <IssueStatsBlock :issue="issue" />
       </div>
     </div>
   </div>
@@ -92,32 +84,6 @@ export default {
         font-size: 14px;
         font-weight: 300;
         line-height: 20px;
-      }
-    }
-
-    .points-block {
-      flex: 1;
-      display: flex;
-      justify-content: space-between;
-
-      .points {
-        display: flex;
-        align-items: flex-end;
-        color: var(--grey-46);
-
-        .points-number {
-          font-size: 20px;
-          margin-right: 4px;
-        }
-        .points-text {
-          font-size: 1rem;
-        }
-      }
-      .total-points {
-        .points-number {
-          font-size: 48px;
-          line-height: 40px;
-        }
       }
     }
   }
