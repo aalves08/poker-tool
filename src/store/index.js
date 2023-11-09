@@ -58,7 +58,7 @@ export default new Vuex.Store({
           value: "?",
         },
         {
-          label: "inf",
+          label: "&infin;",
           value: "inf",
         },
       ],

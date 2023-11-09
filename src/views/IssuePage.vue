@@ -32,11 +32,24 @@ export default {
 
 <template>
   <div>
-    <v-btn @click="backToPlanning">Back to Planning</v-btn>
-    <h3>#{{ currentIssue.number }} {{ currentIssue.title }}</h3>
+    <v-btn class="btn-secondary btn-back" outlined @click="backToPlanning">
+      <v-icon start icon="mdi-arrow-left"></v-icon>
+      Back to Planning
+    </v-btn>
+    <h1>#{{ currentIssue.number }} {{ currentIssue.title }}</h1>
     <VotingBlock />
     <IssueDetails :issue="currentIssue" />
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "./src/styles/global.scss";
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+.btn-back {
+  margin-bottom: 1rem;
+}
+</style>

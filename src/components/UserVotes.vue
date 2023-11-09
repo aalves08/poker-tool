@@ -15,14 +15,22 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h3>VOTES</h3>
-    <ul>
+  <div class="votes-block">
+    <h2>VOTES</h2>
+    <ul class="participants-list">
       <li v-for="(user, i) in users" :key="i">
-        <span>{{ user.username }}</span>
+        <v-chip class="user-chip" variant="outlined">
+          {{ user.username }}
+        </v-chip>
       </li>
     </ul>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "./src/styles/global.scss";
+
+.votes-block {
+  margin-bottom: 2rem;
+}
+</style>

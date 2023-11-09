@@ -41,10 +41,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.participants-list {
-  list-style: none;
-  display: flex;
-  padding: 0;
-  gap: 0.5rem;
-}
+@import "./src/styles/global.scss";
 </style>

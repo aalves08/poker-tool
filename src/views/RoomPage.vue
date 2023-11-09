@@ -123,6 +123,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "./src/styles/global.scss";
 .not-logged-dialog {
   background-color: white;
   padding: 20px;
