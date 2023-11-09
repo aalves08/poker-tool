@@ -1,6 +1,20 @@
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "IssueDetails",
+  computed: {
+    ...mapGetters(["issues"]),
+    currentIssue() {
+      if (this.issues && this.issues.length) {
+        return this.issues?.find(
+          // loose equality because issueId is a string and issue.number is a number....
+          (issue) => issue.number == this.$route.params.issueId
+        );
+      }
+      return {};
+    },
+  },
   props: {
     issue: {
       type: Object,
@@ -37,7 +51,7 @@ export default {
         <span class="author-date__date">{{ issue.parsedCreationDate }}</span>
       </span>
       <a
-        :href="`https://github.com/rancher/dashboard/issues/${issue.number}`"
+        :href="`https://github.com/rancher/dashboard/issues/${currentIssue.number}`"
         target="_blank"
         rel="noopener noreferrer nofollow"
         class="issue-number"
@@ -66,11 +80,11 @@ export default {
         </div>
         <div class="small-block">
           <h3>Milestone</h3>
-          <p>{{ issue.milestone?.title }}</p>
+          <p>{{ currentIssue.milestone?.title }}</p>
         </div>
         <div class="small-block">
           <h3>Comments</h3>
-          <p>{{ issue.comments }}</p>
+          <p>{{ currentIssue.comments }}</p>
         </div>
       </div>
     </div>

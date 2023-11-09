@@ -29,10 +29,8 @@ export default {
       this.isEditing = true;
     },
     updateSessionName() {
-      console.log("clicked");
-
       if (this.currSessionName !== this.session?.sessionName) {
-        console.log("UPDATE!!!", this.currSessionName);
+        this.$store.dispatch("updateSessionName", this.currSessionName);
       }
 
       this.isEditing = false;

@@ -19,10 +19,11 @@ export default {
       return {};
     },
     votes() {
+      console.log("this.currentIssue", this.currentIssue);
       return this.currentIssue.votes || [];
     },
     userVote() {
-      return this.votes.find((v) => v.userId === this.localUser.userId);
+      return this.votes.find((v) => v.userId === this.localUser.userId) || {};
     },
   },
   methods: {

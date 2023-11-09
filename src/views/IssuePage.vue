@@ -67,8 +67,8 @@ export default {
           Back to Planning
         </v-btn>
         <h1>#{{ currentIssue.number }} {{ currentIssue.title }}</h1>
-        <VotingBlock />
-        <IssueDetails :issue="currentIssue" />
+        <VotingBlock class="mb" />
+        <IssueDetails class="mb" />
       </div>
     </div>
   </div>
