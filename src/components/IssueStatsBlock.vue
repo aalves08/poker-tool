@@ -76,6 +76,8 @@ export default {
     .points-number {
       font-size: 20px;
       margin-right: 4px;
+      line-height: 26px;
+      font-weight: 500;
     }
     .points-text {
       font-size: 1rem;

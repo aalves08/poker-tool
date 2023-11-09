@@ -68,9 +68,12 @@ export default {
     flex-direction: column;
     gap: 1rem;
     cursor: pointer;
+    box-shadow: 0px 0px 0px 0px var(--grey-82);
+    transition: box-shadow ease 150ms;
 
     &:hover {
-      border: 1px solid red !important;
+      box-shadow: 0px 2px 10px 0px var(--grey-82),
+        0px 1px 1px 0px var(--grey-46);
     }
 
     .estimated-card__title {
