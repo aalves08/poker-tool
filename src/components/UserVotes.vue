@@ -36,12 +36,18 @@ export default {
     <h2>VOTES</h2>
     <ul class="participants-list">
       <li v-for="(user, i) in users" :key="i">
-        <v-chip class="user-chip" variant="outlined">
+        <v-chip
+          class="user-chip"
+          :class="{ hasVoted: hasUserVoted(user.userId) }"
+          variant="outlined"
+        >
           {{ user.username }}
-          <span v-if="hasUserVoted(user.userId)"
-            ><img class="check-icon" src="@/assets/voted.svg"
-          /></span>
-          <span v-else> ... </span>
+          <img
+            v-if="!hasUserVoted(user.userId)"
+            class="vote-checkmark"
+            src="@/assets/voted.svg"
+          />
+          <span v-else class="pending-vote-dots"> ··· </span>
         </v-chip>
       </li>
     </ul>
@@ -51,18 +57,23 @@ export default {
 <style lang="scss" scoped>
 .votes-block {
   margin-bottom: 2rem;
+}
+.area-title {
+  margin-bottom: 16px;
+}
 
-  span {
-    margin-left: 6px;
-  }
+.name {
+  margin-right: 10px;
+}
 
-  img {
-    margin-top: 5px;
-  }
+.pending-vote-dots {
+  font-size: 24px;
+  margin-left: 4px;
+}
 
-  .check-icon {
-    width: 18px;
-    height: 18px;
-  }
+.vote-checkmark {
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
 }
 </style>

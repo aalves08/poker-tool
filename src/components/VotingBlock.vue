@@ -58,7 +58,7 @@ export default {
 
 <template>
   <div>
-    <h3 class="section-title">ESTIMATION</h3>
+    <h2>ESTIMATION</h2>
     <div class="admin-controls" v-if="isUserAdmin">
       <v-btn
         class="btn-primary"
@@ -106,9 +106,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.section-title {
-  margin-bottom: 1rem;
-}
 .voting-controls {
   margin: 1rem 0 2rem 0;
   display: flex;

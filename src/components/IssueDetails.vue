@@ -48,7 +48,7 @@ export default {
     <div class="issue-details-block">
       <p class="issue-text" v-html="currentIssue.body"></p>
       <div class="labels-block">
-        <div class="small-block">
+        <div class="issue-metadata-block">
           <h3>Labels</h3>
           <div class="labels-list" v-if="currentIssue.labels?.length">
             <div
@@ -58,7 +58,6 @@ export default {
               :style="{
                 color: `#${label.color}`,
                 background: `#${contrastedColor(label.color)}`,
-                borderColor: `#${label.color}`,
               }"
             >
               {{ label.name }}
@@ -66,14 +65,14 @@ export default {
           </div>
           <p v-else>No labels set</p>
         </div>
-        <div class="small-block">
+        <div class="issue-metadata-block">
           <h3>Milestone</h3>
           <p v-if="currentIssue.milestone?.title">
             {{ currentIssue.milestone?.title }}
           </p>
           <p v-else>No milestone set</p>
         </div>
-        <div class="small-block">
+        <div class="issue-metadata-block">
           <h3>Comments</h3>
           <p>{{ currentIssue.comments }}</p>
         </div>
@@ -115,16 +114,8 @@ export default {
     line-height: 1.5rem;
   }
 
-  .small-block {
+  .issue-metadata-block {
     margin-bottom: 2rem;
-
-    h3 {
-      margin-bottom: 5px;
-    }
-
-    span {
-      margin-right: 10px;
-    }
   }
 }
 
@@ -135,7 +126,6 @@ export default {
 }
 
 .label-chip {
-  border: solid 1px;
   border-radius: 30px;
   height: 30px;
   padding: 0 1rem;
@@ -148,5 +138,9 @@ export default {
   color: var(--success-foreground);
   background-color: var(--success-background) !important;
   font-weight: 600;
+}
+
+h3 {
+  margin-bottom: 0.25rem;
 }
 </style>
