@@ -88,7 +88,6 @@ export default {
 
         this.$store.dispatch("updateIssuesList", this.issuesData);
       }
-      console.log("removeIssue", issueNumber);
     },
     goToIssue(issueNumber) {
       this.$router.push({

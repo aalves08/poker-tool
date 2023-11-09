@@ -32,18 +32,19 @@ export default {
     isUserVotingInProgress() {
       return this.currentIssue.votingInProgress;
     },
+    isFinalVoteCast() {
+      return !!this.currentIssue.finalVote;
+    },
     isUserVotingFinished() {
       return (
-        !this.isUserVotingInProgress &&
-        this.currentIssue.finishedUserVoting &&
-        !this.currentIssue.finalVote
+        !this.isUserVotingInProgress && this.currentIssue.finishedUserVoting
       );
     },
-    isFinalVoteCast() {
+    displayVotingCardsArea() {
       return (
-        !this.isUserVotingInProgress &&
-        this.currentIssue.finishedUserVoting &&
-        this.currentIssue.finalVote
+        ((!this.isFinalVoteCast && this.isUserAdmin) ||
+          (!this.isUserVotingFinished && !this.isUserAdmin)) &&
+        !this.isFinalVoteCast
       );
     },
   },
@@ -83,6 +84,13 @@ export default {
         stopped: true,
       });
     },
+    checkVote(vote) {
+      if (!this.isUserVotingFinished) {
+        return this.userVote.vote?.value == vote.value;
+      } else {
+        return this.finalVote === vote.value;
+      }
+    },
     finalizeVoting(vote) {
       this.$store.dispatch("finalizeVoting", {
         issueId: this.currentIssue?.number,
@@ -107,7 +115,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="content-block">
     <h2>ESTIMATION</h2>
     <!-- *** admin-only *** -->
     <div class="admin-controls" v-if="isUserAdmin">
@@ -126,7 +134,7 @@ export default {
         >
       </div>
       <!-- -->
-      <p v-else-if="isUserVotingFinished">
+      <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
         Voting is closed! Now choose the FINAL ESTIMATION
       </p>
@@ -137,7 +145,7 @@ export default {
     </div>
     <!-- *** user-only *** -->
     <div v-else>
-      <p v-if="!isUserVotingInProgress">
+      <p v-if="!isUserVotingInProgress && !isUserVotingFinished">
         <img class="text-icon" src="@/assets/hourglass.svg" />
         Wait for the admin to start the voting
       </p>
@@ -145,9 +153,9 @@ export default {
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
         You can vote now!!!
       </p>
-      <p v-else-if="isUserVotingFinished">
+      <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
-        Waiting for FINAL ESTIMATION from admin...
+        Waiting for FINAL ESTIMATION from the Admin
       </p>
       <p v-else-if="isFinalVoteCast">
         <img class="text-icon" src="@/assets/start-voting-icon.svg" />
@@ -155,28 +163,24 @@ export default {
       </p>
     </div>
     <!-- voting cards -->
-    <div
-      v-if="
-        (!isFinalVoteCast && isUserAdmin) ||
-        (!isUserVotingFinished && !isUserAdmin)
-      "
-      class="voting-controls"
-    >
+    <div v-if="displayVotingCardsArea">
       <h3 v-if="isUserVotingFinished">FINAL ESTIMATION</h3>
-      <v-btn
-        v-for="(vote, i) in config.voteValues"
-        :key="i"
-        class="btn-secondary voting-card"
-        outlined
-        @click="castVote(vote)"
-        :disabled="isVotingBtnDisabled(vote)"
-        :class="{ hasVoted: userVote.vote?.value == vote.value }"
-      >
-        <div class="vote-content">
-          <span class="vote-number" v-html="vote.label"></span>
-          <span class="vote-text">{{ getCardText(vote) }}</span>
-        </div>
-      </v-btn>
+      <div class="voting-controls">
+        <v-btn
+          v-for="(vote, i) in config.voteValues"
+          :key="i"
+          class="btn-secondary voting-card"
+          outlined
+          @click="castVote(vote)"
+          :disabled="isVotingBtnDisabled(vote)"
+          :class="{ hasVoted: checkVote(vote) }"
+        >
+          <div class="vote-content">
+            <span class="vote-number" v-html="vote.label"></span>
+            <span class="vote-text">{{ getCardText(vote) }}</span>
+          </div>
+        </v-btn>
+      </div>
       <v-btn
         v-if="isUserVotingFinished"
         class="btn-primary"
@@ -186,7 +190,7 @@ export default {
     </div>
     <!-- user votes pills -->
     <UserVotes
-      class="mt"
+      class="user-votes-block"
       v-if="isUserVotingInProgress || isUserVotingFinished || isFinalVoteCast"
     />
   </div>
@@ -246,5 +250,9 @@ export default {
 
 .vote-btn {
   margin-right: 16px;
+}
+
+.user-votes-block {
+  margin-top: 2rem !important;
 }
 </style>

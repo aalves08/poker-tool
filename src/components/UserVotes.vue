@@ -4,7 +4,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "UserVotes",
   computed: {
-    ...mapGetters(["issues", "users", "isUserAdmin"]),
+    ...mapGetters(["issues", "users", "isUserAdmin", "localUser"]),
     currentIssue() {
       if (this.issues && this.issues.length) {
         return this.issues?.find(
@@ -17,15 +17,33 @@ export default {
     votes() {
       return this.currentIssue.votes || {};
     },
+    isUserVotingInProgress() {
+      return this.currentIssue.votingInProgress;
+    },
+    isUserVotingFinished() {
+      return (
+        !this.isUserVotingInProgress && this.currentIssue.finishedUserVoting
+      );
+    },
   },
   methods: {
-    removeUser(socketId) {
-      this.$store.dispatch("forceRemoveUser", socketId);
+    showUserVotes(userId) {
+      return (
+        (this.isUserAdmin ||
+          (!this.isUserAdmin && this.isUserVotingFinished)) &&
+        this.hasUserVoted(userId)
+      );
     },
     hasUserVoted(userId) {
       const vote = this.votes.find((v) => v.userId === userId);
-
       return !!vote;
+    },
+    userVote(userId) {
+      const vote = this.votes.find((v) => v.userId === userId);
+
+      if (vote) {
+        return vote.vote?.value;
+      }
     },
   },
 };
@@ -44,14 +62,11 @@ export default {
           <span class="user-n-points">
             {{ user.username }}
           </span>
-          <span
-            v-if="isUserAdmin && hasUserVoted(user.userId)"
-            class="user-voted-points"
-          >
-            3
+          <span v-if="showUserVotes(user.userId)" class="user-voted-points">
+            {{ userVote(user.userId) }}
           </span>
           <img
-            v-if="hasUserVoted(user.userId)"
+            v-else-if="!isUserAdmin && hasUserVoted(user.userId)"
             class="vote-checkmark"
             src="@/assets/voted.svg"
           />
