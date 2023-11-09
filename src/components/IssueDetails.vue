@@ -42,8 +42,8 @@ export default {
         target="_blank"
         rel="noopener noreferrer nofollow"
         class="issue-number"
-        >Check on Github</a
-      >
+        ><span>Check in Github</span> <img src="@/assets/icon-link.svg"
+      /></a>
     </div>
     <div class="issue-details-block">
       <p class="issue-text" v-html="currentIssue.body"></p>
@@ -101,6 +101,20 @@ export default {
     font-weight: 400;
     .author-date__date {
       font-weight: 600;
+    }
+  }
+
+  .issue-number {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      margin-left: 6px;
     }
   }
 }
