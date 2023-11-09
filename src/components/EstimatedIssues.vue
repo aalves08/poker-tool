@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="content-block">
     <h3 class="section-title">ESTIMATED ISSUES</h3>
     <div class="estimated-issues-block">
       <div class="estimated-issues-card">

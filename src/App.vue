@@ -9,7 +9,6 @@
 
 <script>
 import HeaderBlock from "./components/HeaderBlock.vue";
-import "@/styles/global.scss";
 
 export default {
   name: "App",

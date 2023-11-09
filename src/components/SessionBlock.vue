@@ -45,15 +45,24 @@ export default {
     <div class="flex">
       <div>
         <h3 v-if="!isEditing">{{ session?.sessionName }}</h3>
-        <v-text-field
-          v-else
-          v-model="currSessionName"
-          label="Session Name"
-        ></v-text-field>
+        <v-text-field v-else v-model="currSessionName"></v-text-field>
       </div>
       <div>
-        <v-btn v-if="isUserAdmin && !isEditing" @click="startEdit">EDIT</v-btn>
-        <v-btn v-else-if="isUserAdmin" @click="updateSessionName">SAVE</v-btn>
+        <v-btn
+          v-if="isUserAdmin && !isEditing"
+          @click="startEdit"
+          elevation="2"
+          fab
+          class="edit-btn"
+        >
+          <img src="@/assets/pencil.svg" />
+        </v-btn>
+        <v-btn
+          class="btn-primary"
+          v-else-if="isUserAdmin"
+          @click="updateSessionName"
+          >SAVE</v-btn
+        >
       </div>
       <StatsBlock class="stats" />
     </div>
@@ -63,10 +72,21 @@ export default {
 <style lang="scss" scoped>
 .flex {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+
+  .edit-btn {
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    margin-left: 1rem;
+  }
+
+  .btn-primary {
+    margin-left: 1rem;
+  }
 
   .stats {
-    margin-left: 30px;
+    margin-left: 3rem;
   }
 }
 </style>
