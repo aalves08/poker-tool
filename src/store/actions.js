@@ -29,7 +29,7 @@ export default {
   connectUser({ commit, dispatch }, userData) {
     const { role, username, userId, sessionName, room } = userData;
 
-    const socketInstance = io("http://localhost:8080", {
+    const socketInstance = io("http://146.190.150.213:8080", {
       query: {
         role,
         username,
