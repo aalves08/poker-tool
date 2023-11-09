@@ -215,6 +215,10 @@ export default {
     .issue-number {
       text-decoration: none;
       margin-bottom: 0.25rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .author-date {

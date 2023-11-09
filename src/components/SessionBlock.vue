@@ -22,7 +22,13 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["isUserAdmin", "session"]),
+    ...mapGetters(["isUserAdmin", "session", "issues"]),
+    estimatedIssues() {
+      if (this.issues?.length) {
+        return this.issues?.filter((issue) => issue.finalVote);
+      }
+      return [];
+    },
   },
   methods: {
     startEdit() {
@@ -67,7 +73,11 @@ export default {
           >SAVE</v-btn
         >
       </div>
-      <SessionStatsBlock class="stats" />
+      <SessionStatsBlock
+        v-if="estimatedIssues.length"
+        class="stats"
+        :estimated-issues="estimatedIssues"
+      />
     </div>
   </div>
 </template>
