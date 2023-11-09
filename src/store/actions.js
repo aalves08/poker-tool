@@ -45,6 +45,7 @@ export default {
       username,
       room,
       role,
+      userId,
     });
 
     registerWsEvents({
@@ -62,8 +63,18 @@ export default {
   updateIssuesList({ state }, issues) {
     state.connection.emit("updateIssuesList", issues);
   },
-  castVoteOnIssue({ state }, val) {
-    state.connection.emit("castVoteOnIssue", val);
+  updateVotingIssueStatus({ state }, { issueId, started, stopped }) {
+    state.connection.emit("updateVotingIssueStatus", {
+      issueId,
+      started,
+      stopped,
+    });
+  },
+  castVoteOnIssue({ state }, { issueId, vote }) {
+    state.connection.emit("castVoteOnIssue", {
+      issueId,
+      vote,
+    });
   },
   updateSessionInfo({ commit }, val) {
     commit("updateSessionInfo", val);

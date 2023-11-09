@@ -12,11 +12,11 @@ export default {
 <template>
   <div class="header-container">
     <div class="flex">
-      <img src="rancher-icon.svg" />
+      <img src="@/assets/rancher-icon.svg" />
       <h1>Container UX/UI Team Planning Poker</h1>
     </div>
     <div class="flex">
-      <img src="user-icon.svg" />
+      <img src="@/assets/user-icon.svg" />
       <span>{{ localUser?.username }}</span>
     </div>
   </div>

@@ -7,25 +7,49 @@ export default {
   components: {
     UserVotes,
   },
-  data() {
-    return {
-      voteStarted: true,
-    };
-  },
   computed: {
-    ...mapGetters(["config"]),
+    ...mapGetters(["config", "isUserAdmin", "issues", "localUser"]),
+    currentIssue() {
+      if (this.issues && this.issues.length) {
+        return this.issues?.find(
+          // loose equality because issueId is a string and issue.number is a number....
+          (issue) => issue.number == this.$route.params.issueId
+        );
+      }
+      return {};
+    },
+    votes() {
+      return this.currentIssue.votes || [];
+    },
+    userVote() {
+      return this.votes.find((v) => v.userId === this.localUser.userId);
+    },
   },
   methods: {
-    startVoting() {
-      console.log("startVoting!");
-      this.voteStarted = true;
+    startVotingIssue() {
+      this.$store.dispatch("updateVotingIssueStatus", {
+        issueId: this.currentIssue?.number,
+        started: true,
+      });
     },
-    stopVoting() {
-      console.log("stopVoting!");
-      this.voteStarted = false;
+    stopVotingIssue() {
+      this.$store.dispatch("updateVotingIssueStatus", {
+        issueId: this.currentIssue?.number,
+        stopped: true,
+      });
     },
-    castVote(val) {
-      this.$store.dispatch("castVoteOnIssue", val);
+    castVote(vote) {
+      this.$store.dispatch("castVoteOnIssue", {
+        issueId: this.currentIssue?.number,
+        vote,
+      });
+    },
+    getCardText(voteValue) {
+      let cardText = "";
+      if (typeof voteValue === "number") {
+        cardText = voteValue === 1 || voteValue === 0.5 ? "point" : "points";
+      }
+      return cardText;
     },
     getCardText(voteValue) {
       let cardText = "";
@@ -40,19 +64,22 @@ export default {
 
 <template>
   <div>
-    <h2>ESTIMATION</h2>
-    <v-btn
-      class="btn-primary"
-      outlined
-      @click="startVoting"
-      v-if="!voteStarted"
-    >
-      <v-icon start icon="mdi-play"></v-icon>
-      START VOTING
-    </v-btn>
-    <v-btn class="btn-secondary" outlined @click="stopVoting" v-else
-      ><v-icon start icon="mdi-stop"></v-icon>STOP VOTING</v-btn
-    >
+    <h3>ESTIMATION</h3>
+    <div class="admin-controls" v-if="isUserAdmin">
+      <v-btn class="btn-primary"
+        outlined @click="startVotingIssue" v-if="!currentIssue.votingInProgress"<v-icon start icon="mdi-play"></v-icon> START VOTING</v-btn>
+      <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else>STOP VOTING</v-btn>
+    </div>
+    <div v-else>
+      <p v-if="!currentIssue.votingInProgress">
+        <img class="text-icon" src="@/assets/hourglass.svg" />
+        Wait for the admin to start the voting
+      </p>
+      <p v-else>
+        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        You can vote now!!!
+      </p>
+    </div>
     <div class="voting-controls">
       <v-btn
         v-for="(vote, i) in config.voteValues"
@@ -60,7 +87,8 @@ export default {
         class="btn-secondary voting-card"
         outlined
         @click="castVote(vote.value)"
-        :disabled="!voteStarted"
+        :disabled="!currentIssue.votingInProgress"
+        :class="{ hasVoted: userVote.vote == vote.value }"
       >
         <div class="vote-content">
           <span class="vote-number" v-html="vote.label"></span>
@@ -68,7 +96,10 @@ export default {
         </div>
       </v-btn>
     </div>
-    <UserVotes />
+    <UserVotes
+      class="mt"
+      v-if="currentIssue.votingInProgress || currentIssue.finishedVoting"
+    />
   </div>
 </template>
 
@@ -102,5 +133,23 @@ export default {
       font-weight: 300;
     }
   }
+}
+
+.area-title {
+  margin-bottom: 16px;
+}
+.admin-controls {
+  margin-bottom: 20px;
+}
+.text-icon {
+  margin-right: 10px;
+}
+
+.vote-btn {
+  margin-right: 16px;
+}
+
+.hasVoted {
+  border: 2px solid;
 }
 </style>

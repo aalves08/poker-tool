@@ -33,7 +33,7 @@ export default {
         {{ issue.state }}
       </v-chip>
       <span class="author-date">
-        {{ issue.user.login }} on
+        {{ issue.user?.login }} on
         <span class="author-date__date">{{ issue.parsedCreationDate }}</span>
       </span>
       <a
@@ -66,11 +66,7 @@ export default {
         </div>
         <div class="small-block">
           <h3>Milestone</h3>
-          <p>{{ issue.milestone.title }}</p>
-        </div>
-        <div class="small-block">
-          <h3>Participants</h3>
-          <p>{{ issue.milestone.title }}</p>
+          <p>{{ issue.milestone?.title }}</p>
         </div>
         <div class="small-block">
           <h3>Comments</h3>
@@ -110,7 +106,11 @@ export default {
   gap: 1rem;
   .issue-text,
   .labels-block {
-    width: 50%;
+    width: calc(50% - 20px);
+  }
+
+  .issue-text {
+    margin-right: 40px;
   }
 
   .small-block {
