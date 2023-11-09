@@ -132,7 +132,17 @@ export default {
     }
     .vote-text {
       font-size: 14px;
-      font-weight: 300;
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    &.hasVoted {
+      border-color: transparent !important;
+      background-color: var(--primary);
+
+      .vote-content {
+        color: white;
+      }
     }
   }
 }
@@ -149,9 +159,5 @@ export default {
 
 .vote-btn {
   margin-right: 16px;
-}
-
-.hasVoted {
-  border-width: 4px !important;
 }
 </style>
