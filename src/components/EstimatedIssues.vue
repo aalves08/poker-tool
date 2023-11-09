@@ -142,7 +142,7 @@ export default {
 
   .estimated-issues-card {
     padding: 16px;
-    border: 1px solid $grey-82;
+    border: 1px solid var(--grey-82);
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -169,7 +169,7 @@ export default {
       .points {
         display: flex;
         align-items: flex-end;
-        color: $grey-46;
+        color: var(--grey-46);
 
         .points-number {
           font-size: 20px;
