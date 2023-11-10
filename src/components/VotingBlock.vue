@@ -2,16 +2,22 @@
 import { mapGetters } from "vuex";
 import IssueStatsBlock from "./IssueStatsBlock";
 import UserVotes from "./UserVotes";
+import ConfirmStopVotingDialog from "./ConfirmStopVotingDialog";
+import ResetIssueDialog from "./ResetIssueDialog";
 
 export default {
   name: "VotingBlock",
   components: {
     IssueStatsBlock,
+    ResetIssueDialog,
+    ConfirmStopVotingDialog,
     UserVotes,
   },
   data() {
     return {
       finalVote: null,
+      showStopVotingDialog: false,
+      showResetIssueDialog: false,
     };
   },
   computed: {
@@ -51,6 +57,12 @@ export default {
     },
   },
   methods: {
+    updateStopVotingDialogVisibility(val) {
+      this.showStopVotingDialog = val;
+    },
+    updateResetIssueDialogVisibility(val) {
+      this.showResetIssueDialog = val;
+    },
     isVotingBtnDisabled(vote) {
       if (!this.isUserVotingInProgress && !this.isUserVotingFinished) {
         return true;
@@ -81,10 +93,10 @@ export default {
       }
     },
     stopVotingIssue() {
-      this.$store.dispatch("updateVotingIssueStatus", {
-        issueId: this.currentIssue?.number,
-        stopped: true,
-      });
+      this.showStopVotingDialog = true;
+    },
+    resetIssue() {
+      this.showResetIssueDialog = true;
     },
     checkVote(vote) {
       if (!this.isUserVotingFinished) {
@@ -119,6 +131,16 @@ export default {
 <template>
   <div class="content-block">
     <h2>ESTIMATION</h2>
+    <ConfirmStopVotingDialog
+      :showStopVotingDialog="showStopVotingDialog"
+      :issueId="currentIssue?.number"
+      @updateShowStopVotingDialog="updateStopVotingDialogVisibility"
+    />
+    <ResetIssueDialog
+      :showResetIssueDialog="showResetIssueDialog"
+      :issueId="currentIssue?.number"
+      @updateShowResetIssueDialog="updateResetIssueDialogVisibility"
+    />
     <!-- *** admin-only *** -->
     <div class="admin-controls" v-if="isUserAdmin">
       <!-- start and stop voting on issue -->
@@ -186,13 +208,12 @@ export default {
       :highlightText="isFinalVoteCast"
       :show-tip="true"
     />
-    <v-btn
-      v-if="isUserAdmin && isUserVotingFinished"
-      class="btn-danger reset-issue-btn"
-      outlined
-    >
-      Reset issue
-    </v-btn>
+    <!-- reset issue action -->
+    <div v-if="isFinalVoteCast && isUserAdmin">
+      <v-btn class="btn-danger" outlined @click="resetIssue">
+        Reset issue
+      </v-btn>
+    </div>
     <!-- voting cards -->
     <div v-if="displayVotingCardsArea">
       <h3 v-if="isUserVotingFinished">FINAL ESTIMATION</h3>

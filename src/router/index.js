@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import RoomPage from "../views/RoomPage.vue";
 import IssuePage from "../views/IssuePage.vue";
+import NotFoundPage from "../views/NotFoundPage.vue";
 
 Vue.use(VueRouter);
 
@@ -11,6 +12,11 @@ const routes = [
     path: "/",
     name: "home",
     component: HomePage,
+  },
+  {
+    path: "/notFound",
+    name: "notFound",
+    component: NotFoundPage,
   },
   {
     path: "/:roomId",

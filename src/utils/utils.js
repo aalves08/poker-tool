@@ -25,10 +25,6 @@ function getContrast(f, b) {
 function getTextColor(bgColor) {
   const whiteContrast = getContrast(bgColor, "#ffffff");
   const blackContrast = getContrast(bgColor, "#000000");
-
-  console.log("whiteContrast", whiteContrast);
-  console.log("blackContrast", blackContrast);
-
   return whiteContrast > blackContrast ? "ffffff" : "000000";
 }
 

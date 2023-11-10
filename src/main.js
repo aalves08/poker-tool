@@ -8,7 +8,7 @@ import axios from "./plugins/axios";
 
 Vue.config.productionTip = false;
 
-new Vue({
+export const app = new Vue({
   router,
   store,
   vuetify,

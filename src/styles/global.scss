@@ -104,6 +104,12 @@ p {
   padding: 0 !important;
   gap: 0.5rem !important;
   flex-wrap: wrap;
+
+  .admin-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+  }
 }
 
 .content-block {
@@ -123,4 +129,18 @@ p {
   letter-spacing: 1.25px;
   text-align: left;
   color: var(--grey-80);
+}
+
+.dialog-content {
+  background-color: white;
+  padding: 20px;
+
+  p {
+    margin: 1rem 0 2rem 0;
+  }
+
+  .dialog-controls {
+    display: flex;
+    justify-content: space-between;
+  }
 }

@@ -56,18 +56,15 @@ export default {
 <template>
   <div>
     <v-dialog v-model="dialogVisibility" width="500" persistent>
-      <div class="not-logged-dialog">
+      <div class="dialog-content">
         <h3>Who are you?</h3>
-        <v-text-field v-model="username" label="Username"></v-text-field>
+        <v-text-field
+          @keydown.enter.prevent="enterRoom"
+          v-model="username"
+          label="Username"
+        ></v-text-field>
         <v-btn class="btn-primary" @click="enterRoom">Enter Session</v-btn>
       </div>
     </v-dialog>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.not-logged-dialog {
-  background-color: white;
-  padding: 20px;
-}
-</style>

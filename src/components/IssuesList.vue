@@ -1,8 +1,12 @@
 <script>
 import { mapGetters } from "vuex";
+import Markdown from "./Markdown.vue";
 
 export default {
   name: "IssuesList",
+  components: {
+    Markdown,
+  },
   data() {
     return {
       issuesString: "",
@@ -146,7 +150,8 @@ export default {
         </v-card-title>
 
         <v-card-text class="issue-text-block">
-          <p class="issue-text" v-html="issue.body"></p>
+          <Markdown :text="issue?.body"></Markdown>
+          <!-- <p class="issue-text" v-html="issue.body"></p> -->
         </v-card-text>
 
         <v-card-actions>

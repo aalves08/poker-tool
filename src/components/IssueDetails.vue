@@ -1,8 +1,12 @@
 <script>
 import { mapGetters } from "vuex";
+import Markdown from "./Markdown.vue";
 
 export default {
   name: "IssueDetails",
+  components: {
+    Markdown,
+  },
   computed: {
     ...mapGetters(["issues"]),
     currentIssue() {
@@ -48,7 +52,7 @@ export default {
       /></a>
     </div>
     <div class="issue-details-block">
-      <p class="issue-text" v-html="currentIssue.body"></p>
+      <Markdown :text="currentIssue?.body"></Markdown>
       <div class="labels-block">
         <div class="issue-metadata-block">
           <h3>Labels</h3>
@@ -123,12 +127,8 @@ export default {
 
 .issue-details-block {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.4fr 0.6fr;
   gap: 3rem;
-
-  .issue-text {
-    line-height: 1.5rem;
-  }
 
   .issue-metadata-block {
     margin-bottom: 2rem;
