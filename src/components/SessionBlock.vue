@@ -87,6 +87,11 @@ export default {
   display: flex;
   align-items: center;
 
+  h3 {
+    position: relative;
+    top: 2px;
+  }
+
   .v-text-field {
     padding-top: 4px;
   }

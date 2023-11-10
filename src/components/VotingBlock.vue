@@ -137,11 +137,17 @@ export default {
       </div>
       <!-- general copy -->
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img
+          class="text-icon checkmark-icon"
+          src="@/assets/start-voting-icon.svg"
+        />
         Voting is closed! Now choose the FINAL ESTIMATION
       </p>
       <p v-else-if="isFinalVoteCast">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img
+          class="text-icon checkmark-icon"
+          src="@/assets/start-voting-icon.svg"
+        />
         Voting is closed!
       </p>
     </div>
@@ -180,6 +186,13 @@ export default {
       :highlightText="isFinalVoteCast"
       :show-tip="true"
     />
+    <v-btn
+      v-if="isUserAdmin && isUserVotingFinished"
+      class="btn-danger reset-issue-btn"
+      outlined
+    >
+      Reset issue
+    </v-btn>
     <!-- voting cards -->
     <div v-if="displayVotingCardsArea">
       <h3 v-if="isUserVotingFinished">FINAL ESTIMATION</h3>
