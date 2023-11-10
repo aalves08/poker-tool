@@ -68,8 +68,9 @@ p {
 }
 
 .v-btn {
-  letter-spacing: 0.75px;
-  text-transform: none;
+  letter-spacing: 0.75px !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
 }
 
 .btn-danger {

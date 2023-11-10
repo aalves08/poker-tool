@@ -1,7 +1,6 @@
 <script>
 import { mapGetters } from "vuex";
 import Markdown from "./Markdown.vue";
-import { getContrastedColor } from "../utils/utils";
 
 export default {
   name: "IssueDetails",
@@ -21,8 +20,11 @@ export default {
     },
   },
   methods: {
-    contrastedColor(color) {
-      return getContrastedColor(color);
+    getLabelBorderColor(bgColor) {
+      console.log(bgColor);
+      return bgColor.toUpperCase() === "ffffff".toUpperCase()
+        ? "141414"
+        : "transparent";
     },
   },
 };
@@ -60,8 +62,8 @@ export default {
               v-for="label in currentIssue.labels"
               :key="label.id"
               :style="{
-                background: `#${label.color}`,
-                color: `#${contrastedColor(label.color)}`,
+                background: `#${label.color}40`,
+                borderColor: `#${getLabelBorderColor(label.color)}`,
               }"
             >
               {{ label.name }}
@@ -146,6 +148,8 @@ export default {
   display: flex;
   align-items: center;
   font-weight: 500;
+  border: solid 1px transparent;
+  color: #000000;
 }
 .status-chip {
   text-transform: capitalize;

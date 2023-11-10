@@ -159,11 +159,17 @@ export default {
       </div>
       <!-- general copy -->
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img
+          class="text-icon checkmark-icon"
+          src="@/assets/start-voting-icon.svg"
+        />
         Voting is closed! Now choose the FINAL ESTIMATION
       </p>
       <p v-else-if="isFinalVoteCast">
-        <img class="text-icon" src="@/assets/start-voting-icon.svg" />
+        <img
+          class="text-icon checkmark-icon"
+          src="@/assets/start-voting-icon.svg"
+        />
         Voting is closed!
       </p>
     </div>
