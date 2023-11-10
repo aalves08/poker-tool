@@ -72,6 +72,7 @@ export default {
 
         // update data via WS to all clients
         this.$store.dispatch("updateIssuesList", this.issuesData);
+        this.issuesString = "";
       }
     },
     removeIssue(issueNumber) {
@@ -109,6 +110,7 @@ export default {
       <v-text-field
         class="issues-input"
         v-model="issuesString"
+        @keydown.enter.prevent="fetchIssues"
         label="Search by issue number (comma separated)"
       ></v-text-field>
       <v-btn class="btn-primary" outlined @click="fetchIssues">
@@ -192,7 +194,7 @@ export default {
 .issues-container {
   padding: 1rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 2rem 1.5rem;
 
   .v-card.issue-card {
