@@ -1,3 +1,4 @@
+import { SERVER_URL } from "@/utils/constants";
 import io from "socket.io-client";
 
 function registerWsEvents(data) {
@@ -29,7 +30,7 @@ export default {
   connectUser({ commit, dispatch }, userData) {
     const { role, username, userId, sessionName, room } = userData;
 
-    const socketInstance = io("http://localhost:8080", {
+    const socketInstance = io(SERVER_URL, {
       query: {
         role,
         username,

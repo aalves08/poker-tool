@@ -1,5 +1,6 @@
 <script>
 import { STORAGE_UID, ROLES } from "../utils/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   name: "HomePage",
@@ -16,8 +17,8 @@ export default {
       if (!this.createDisabled && this.username) {
         this.createDisabled = true;
         this.showOverlay = true;
-        const room = crypto.randomUUID();
-        const userId = localStorage.getItem(STORAGE_UID) || crypto.randomUUID();
+        const room = uuidv4();
+        const userId = localStorage.getItem(STORAGE_UID) || uuidv4();
 
         this.$store.dispatch("connectUser", {
           role: ROLES.ADMIN,
