@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "dompurify": "^3.0.6",
+    "marked": "^9.1.6",
     "socket.io-client": "^4.7.2",
     "uuid": "9.0.1",
     "vue": "^2.6.14",

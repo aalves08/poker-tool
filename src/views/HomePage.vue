@@ -10,11 +10,12 @@ export default {
       sessionName: "",
       createDisabled: false,
       showOverlay: false,
+      disconnected: this.$route.query.disconnected,
     };
   },
   methods: {
     createRoom() {
-      if (!this.createDisabled && this.username) {
+      if (!this.createDisabled && this.username && this.sessionName) {
         this.createDisabled = true;
         this.showOverlay = true;
         const room = uuidv4();
@@ -52,10 +53,22 @@ export default {
 <template>
   <div class="homepage-container">
     <div class="homepage-content">
-      <h1>Welcome to the UX/UI planning tool! Create a session:</h1>
+      <h1 v-if="disconnected">
+        You have been disconnected from your previous session! Create a new
+        session:
+      </h1>
+      <h1 v-else>Welcome to the UX/UI planning tool! Create a session:</h1>
       <div>
-        <v-text-field v-model="username" label="Username"></v-text-field>
-        <v-text-field v-model="sessionName" label="Session name"></v-text-field>
+        <v-text-field
+          @keydown.enter.prevent="createRoom"
+          v-model="username"
+          label="Username"
+        ></v-text-field>
+        <v-text-field
+          @keydown.enter.prevent="createRoom"
+          v-model="sessionName"
+          label="Session name"
+        ></v-text-field>
         <v-btn
           class="btn-primary"
           @click="createRoom"

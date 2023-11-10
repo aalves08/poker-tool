@@ -1,11 +1,28 @@
 import { SERVER_URL } from "@/utils/constants";
 import io from "socket.io-client";
+import { app } from "../main";
 
 function registerWsEvents(data) {
-  const { socketInstance, dispatch, commit } = data;
+  const { socketInstance, dispatch, state, commit } = data;
 
   // event to update session on store
   socketInstance.on("updateSession", (data) => {
+    const localUser = state.localUser;
+
+    const currUserUpdate = data.users.find(
+      (u) => u.userId === localUser.userId
+    );
+
+    // update localUser if role has changed
+    if (currUserUpdate && currUserUpdate.role !== localUser.role) {
+      commit("updateLocalUser", {
+        username: localUser.username,
+        room: localUser.room,
+        role: currUserUpdate.role,
+        userId: localUser.userId,
+      });
+    }
+
     dispatch("updateSessionInfo", data);
   });
 
@@ -24,10 +41,15 @@ function registerWsEvents(data) {
       commit("updateSessionInfo", {});
     }
   });
+
+  // on disconnect, redirect user to homepage
+  socketInstance.on("disconnect", () => {
+    app.$router.push({ name: "home", query: { disconnected: true } });
+  });
 }
 
 export default {
-  connectUser({ commit, dispatch }, userData) {
+  connectUser({ commit, dispatch, state }, userData) {
     const { role, username, userId, sessionName, room } = userData;
 
     const socketInstance = io(SERVER_URL, {
@@ -52,6 +74,7 @@ export default {
     registerWsEvents({
       socketInstance,
       dispatch,
+      state,
       commit,
     });
   },
@@ -74,6 +97,11 @@ export default {
       stopped,
     });
   },
+  resetIssue({ state }, { issueId }) {
+    state.connection.emit("resetIssue", {
+      issueId,
+    });
+  },
   castVoteOnIssue({ state }, { issueId, vote }) {
     state.connection.emit("castVoteOnIssue", {
       issueId,
@@ -84,6 +112,11 @@ export default {
     state.connection.emit("finalizeVoting", {
       issueId,
       vote,
+    });
+  },
+  makeAdmin({ state }, { user }) {
+    state.connection.emit("makeAdmin", {
+      user,
     });
   },
   updateSessionInfo({ commit }, val) {

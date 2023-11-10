@@ -10,7 +10,6 @@ export default {
       username: "",
       userId: localStorage.getItem(STORAGE_UID) || uuidv4(),
       loading: true,
-      roomNotFound: false,
       showNotLoggedDialog: false,
     };
   },
@@ -33,7 +32,8 @@ export default {
     this.loading = false;
 
     if (!res.data) {
-      this.roomNotFound = true;
+      this.loading = true;
+      this.$router.push({ name: "notFound" });
     } else {
       // update session name
       this.sessionName = res.data.sessionName;
