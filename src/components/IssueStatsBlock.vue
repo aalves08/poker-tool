@@ -26,14 +26,14 @@ export default {
   computed: {
     calculateAverage() {
       if (this.issue?.votes?.length) {
-        let total = 0;
-        this.issue.votes.forEach((v) => {
-          total += v.vote.value;
-        });
+        const filtered = this.issue.votes.filter(
+          (v) => v.vote.value !== "" && !isNaN(v.vote.value)
+        );
+        const total = filtered.reduce((acc, v) => {
+          return acc + v.vote.value;
+        }, 0);
 
-        const average = total / this.issue.votes.length;
-
-        return Math.round(average * 10) / 10;
+        return Math.round(total / filtered.length);
       }
 
       return 0;
