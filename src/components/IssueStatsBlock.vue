@@ -27,13 +27,19 @@ export default {
     calculateAverage() {
       if (this.issue?.votes?.length) {
         let total = 0;
+        let validVotesCount = 0;
+
         this.issue.votes.forEach((v) => {
-          total += v.vote.value;
+          if (typeof v.vote.value === "number") {
+            total += v.vote.value;
+            validVotesCount++;
+          }
         });
 
-        const average = total / this.issue.votes.length;
-
-        return Math.round(average * 10) / 10;
+        if (validVotesCount > 0) {
+          const average = total / validVotesCount;
+          return Math.round(average * 10) / 10;
+        }
       }
 
       return 0;
@@ -41,18 +47,28 @@ export default {
     calculateVariance() {
       if (this.issue?.votes?.length) {
         let total = 0;
-        this.issue.votes.forEach((v) => {
-          total += v.vote.value;
-        });
-        const median = total / this.issue.votes.length;
-        let variance = 0;
+        let validVotesCount = 0;
 
         this.issue.votes.forEach((v) => {
-          variance += (v.vote.value - median) * (v.vote.value - median);
+          if (typeof v.vote.value === "number") {
+            total += v.vote.value;
+            validVotesCount++;
+          }
         });
-        variance /= this.issue.votes.length;
 
-        return Math.round(variance * 10) / 10;
+        if (validVotesCount > 0) {
+          const median = total / validVotesCount;
+          let variance = 0;
+
+          this.issue.votes.forEach((v) => {
+            if (typeof v.vote.value === "number") {
+              variance += (v.vote.value - median) * (v.vote.value - median);
+            }
+          });
+
+          variance /= validVotesCount;
+          return Math.round(variance * 10) / 10;
+        }
       }
 
       return 0;

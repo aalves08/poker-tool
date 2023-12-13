@@ -11,7 +11,9 @@ export default {
     ...mapGetters(["issues"]),
     estimatedIssues() {
       if (this.issues?.length) {
-        return this.issues?.filter((issue) => issue.finalVote);
+        return this.issues.filter(
+          (issue) => typeof issue.finalVote === "number"
+        );
       }
       return [];
     },
