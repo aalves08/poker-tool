@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     getLabelBorderColor(bgColor) {
-      console.log(bgColor);
       return bgColor.toUpperCase() === "ffffff".toUpperCase()
         ? "141414"
         : "transparent";
