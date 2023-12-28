@@ -7,4 +7,5 @@ export default {
   users: (state) => state.session.users,
   issues: (state) => state.session.issues,
   localUser: (state) => state.localUser,
+  isVotingHidden: (state) => state.isVotingHidden,
 };

@@ -8,4 +8,7 @@ export default {
   updateSessionInfo(state, val) {
     state.session = val;
   },
+  toggleVotingVisibility(state, val) {
+    state.isVotingHidden = val;
+  },
 };

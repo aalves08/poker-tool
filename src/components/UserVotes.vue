@@ -4,7 +4,13 @@ import { mapGetters } from "vuex";
 export default {
   name: "UserVotes",
   computed: {
-    ...mapGetters(["issues", "users", "isUserAdmin", "localUser"]),
+    ...mapGetters([
+      "issues",
+      "users",
+      "isUserAdmin",
+      "localUser",
+      "isVotingHidden",
+    ]),
     currentIssue() {
       if (this.issues && this.issues.length) {
         return this.issues?.find(
@@ -25,15 +31,26 @@ export default {
         !this.isUserVotingInProgress && this.currentIssue.finishedUserVoting
       );
     },
-  },
-  methods: {
-    showUserVotes(userId) {
+    showVotesForAdminWhileVoting() {
       return (
-        (this.isUserAdmin ||
-          (!this.isUserAdmin && this.isUserVotingFinished)) &&
-        this.hasUserVoted(userId)
+        this.isUserAdmin && !this.isVotingHidden && this.isUserVotingInProgress
       );
     },
+    showVotesForAdminAfterVoting() {
+      return this.isUserAdmin && !this.isUserVotingInProgress;
+    },
+    showVotesForNonAdmins() {
+      return !this.isUserAdmin && this.isUserVotingFinished;
+    },
+    showUserVotes() {
+      return (
+        this.showVotesForAdminWhileVoting ||
+        this.showVotesForAdminAfterVoting ||
+        this.showVotesForNonAdmins
+      );
+    },
+  },
+  methods: {
     hasUserVoted(userId) {
       const vote = this.votes.find((v) => v.userId === userId);
       return !!vote;
@@ -60,7 +77,7 @@ export default {
           variant="outlined"
         >
           {{ user.username }}
-          <span v-if="showUserVotes(user.userId)" class="user-voted-points">
+          <span v-if="showUserVotes" class="user-voted-points">
             {{ userVote(user.userId) }}
           </span>
           <img

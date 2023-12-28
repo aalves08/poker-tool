@@ -73,6 +73,7 @@ export default new Vuex.Store({
     localUser: null,
     connection: null,
     session: {},
+    isVotingHidden: true,
   },
   getters: { ...getters },
   mutations: { ...mutations },

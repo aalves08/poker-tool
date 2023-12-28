@@ -15,7 +15,7 @@ export default {
   },
   mixins: [HandleAuth],
   computed: {
-    ...mapGetters(["issues", "isUserAdmin"]),
+    ...mapGetters(["issues", "isUserAdmin", "isVotingHidden"]),
     currentIssue() {
       if (this.issues && this.issues.length) {
         return this.issues?.find(
@@ -24,6 +24,14 @@ export default {
         );
       }
       return {};
+    },
+    votingHidden: {
+      get: function () {
+        return this.isVotingHidden;
+      },
+      set: function (neu) {
+        this.$store.dispatch("toggleVotingVisibility", neu);
+      },
     },
   },
   methods: {
@@ -57,10 +65,25 @@ export default {
         @updateShowNotLoggedDialog="updateDialogVisibility"
       />
       <div v-if="currentIssue">
-        <v-btn class="btn-secondary btn-back" outlined @click="backToPlanning">
-          <v-icon start icon="mdi-arrow-left"></v-icon>
-          Back to Planning
-        </v-btn>
+        <div class="controls-block">
+          <v-btn
+            class="btn-secondary btn-back"
+            outlined
+            @click="backToPlanning"
+          >
+            <v-icon start icon="mdi-arrow-left"></v-icon>
+            Back to Planning
+          </v-btn>
+          <v-switch
+            v-if="isUserAdmin"
+            v-model="votingHidden"
+            class="toggle"
+            hide-details
+            :true-value="true"
+            :false-value="false"
+            label="Hide votes"
+          ></v-switch>
+        </div>
         <h1>#{{ currentIssue.number }} {{ currentIssue.title }}</h1>
         <VotingBlock />
         <IssueDetails />
@@ -74,7 +97,15 @@ h1 {
   font-size: 20px;
   margin-bottom: 0.5rem;
 }
-.btn-back {
+
+.controls-block {
+  display: flex;
+  align-items: center;
   margin-bottom: 1rem;
+
+  .toggle {
+    margin-top: 0;
+    padding: 0 0 0 1rem;
+  }
 }
 </style>

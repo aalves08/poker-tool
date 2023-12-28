@@ -78,6 +78,9 @@ export default {
       commit,
     });
   },
+  toggleVotingVisibility({ commit }, votingVisibility) {
+    commit("toggleVotingVisibility", votingVisibility);
+  },
   disconnectFromRoom({ state }) {
     state.connection.emit("disconnectFromRoom", state.connection.id);
   },
