@@ -75,8 +75,27 @@ export default {
 </template>
 
 <style lang="scss">
-.issue-text img {
-  max-width: 100%;
+.issue-text {
+  img {
+    max-width: 100%;
+  }
+
+  pre {
+    overflow-x: auto;
+    background: rgb(246, 248, 250);
+    color: #000;
+    padding: 2rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+
+    code {
+      padding: 0;
+      margin: 0;
+      line-height: 1rem;
+      word-wrap: normal;
+      background-color: transparent !important;
+    }
+  }
 }
 </style>
 

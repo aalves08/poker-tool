@@ -51,7 +51,7 @@ export default {
       /></a>
     </div>
     <div class="issue-details-block">
-      <Markdown :text="currentIssue?.body"></Markdown>
+      <Markdown class="issue-description" :text="currentIssue?.body"></Markdown>
       <div class="labels-block">
         <div class="issue-metadata-block">
           <h3>Labels</h3>
@@ -125,12 +125,19 @@ export default {
 }
 
 .issue-details-block {
-  display: grid;
-  grid-template-columns: 1.4fr 0.6fr;
-  gap: 3rem;
+  display: flex;
 
-  .issue-metadata-block {
-    margin-bottom: 2rem;
+  .issue-description {
+    width: 80%;
+  }
+
+  .labels-block {
+    width: 20%;
+    padding-left: 2rem;
+
+    .issue-metadata-block {
+      margin-bottom: 2rem;
+    }
   }
 }
 
