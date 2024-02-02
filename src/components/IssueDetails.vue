@@ -25,6 +25,20 @@ export default {
         ? "141414"
         : "transparent";
     },
+    async addLabel() {
+      // https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28#set-labels-for-an-issue
+      const res = await this.$axios({
+        method: "put",
+        url: "https://api.github.com/repos/rancher/dashboard/issues/10116/labels",
+        headers: {
+          Authorization: `Bearer ${process.env.VUE_APP_API_TOKEN}`,
+        },
+        data: {
+          labels: ["my-label"],
+        },
+      });
+      console.log("RES", res);
+    },
   },
 };
 </script>
@@ -36,6 +50,9 @@ export default {
       <v-chip class="status-chip">
         {{ currentIssue.state }}
       </v-chip>
+      <v-btn class="btn-secondary btn-back" outlined @click="addLabel">
+        Add label
+      </v-btn>
       <span class="author-date">
         {{ currentIssue.user?.login }} on
         <span class="author-date__date">{{
