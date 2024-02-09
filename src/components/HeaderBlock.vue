@@ -1,16 +1,10 @@
 <script>
 import { mapGetters } from "vuex";
-import { getGitHubUrl } from "../utils/github-oauth";
 
 export default {
   name: "HeaderBlock",
   computed: {
     ...mapGetters(["localUser"]),
-  },
-  methods: {
-    githubUrl() {
-      return getGitHubUrl("/");
-    },
   },
 };
 </script>
@@ -22,7 +16,6 @@ export default {
       <h1>Container UX/UI Team Planning Poker</h1>
     </div>
     <div class="flex">
-      <a :href="githubUrl()">LOGIN TO GITHUB</a>
       <img src="@/assets/user-icon.svg" />
       <span>{{ localUser?.username }}</span>
     </div>

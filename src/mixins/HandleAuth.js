@@ -1,5 +1,5 @@
 import { mapGetters } from "vuex";
-import { STORAGE_UID, SERVER_URL } from "../utils/constants";
+import { STORAGE_UID, STORAGE_TOKEN, SERVER_URL } from "../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
@@ -20,43 +20,71 @@ export default {
     },
   },
   async mounted() {
-    // check if room exists first...
-    const res = await this.$axios({
-      method: "post",
-      url: `${SERVER_URL}/api/checkRoom`,
-      data: {
-        room: this.room,
-      },
-    });
+    await this.validateToken();
 
-    this.loading = false;
-
-    if (!res.data) {
-      this.loading = true;
-      this.$router.push({ name: "notFound" });
-    } else {
-      // update session name
-      this.sessionName = res.data.sessionName;
-
-      // check for user existance on this session
-      const userFound = res.data.users.find(
-        (user) => user.userId === this.userId
-      );
-
-      // reconnect user if he has been there
-      if (userFound && !this.connection) {
-        this.$store.dispatch("connectUser", {
-          role: userFound.role,
-          username: userFound.username,
-          userId: this.userId,
-          room: this.room,
-        });
-
-        localStorage.setItem(STORAGE_UID, this.userId);
-        // you're a new user... setup your user info for connection
-      } else if (!this.connection) {
-        this.showNotLoggedDialog = true;
-      }
+    if (this.$route.name === "room" && this.$route.name === "issue") {
+      await this.validateRoom();
     }
+  },
+  methods: {
+    async validateToken() {
+      const token = localStorage.getItem(STORAGE_TOKEN) || "";
+
+      if (!token) {
+        this.$router.push({ name: "login" });
+      }
+
+      const res = await this.$axios({
+        method: "post",
+        url: `${SERVER_URL}/api/validateToken`,
+        data: {
+          token,
+        },
+      });
+
+      if (!res.data) {
+        return this.$router.push({ name: "login" });
+      }
+    },
+    async validateRoom() {
+      // check if room exists first...
+      const res = await this.$axios({
+        method: "post",
+        url: `${SERVER_URL}/api/checkRoom`,
+        data: {
+          room: this.room,
+        },
+      });
+
+      this.loading = false;
+
+      if (!res.data) {
+        this.loading = true;
+        this.$router.push({ name: "notFound" });
+      } else {
+        // update session name
+        this.sessionName = res.data.sessionName;
+
+        // check for user existance on this session
+        const userFound = res.data.users.find(
+          (user) => user.userId === this.userId
+        );
+
+        // reconnect user if he has been there
+        if (userFound && !this.connection) {
+          this.$store.dispatch("connectUser", {
+            role: userFound.role,
+            username: userFound.username,
+            userId: this.userId,
+            room: this.room,
+          });
+
+          localStorage.setItem(STORAGE_UID, this.userId);
+          // you're a new user... setup your user info for connection
+        } else if (!this.connection) {
+          this.showNotLoggedDialog = true;
+        }
+      }
+    },
   },
 };
