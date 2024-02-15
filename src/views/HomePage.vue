@@ -1,6 +1,7 @@
 <script>
-import HandleAuth from "../mixins/HandleAuth";
 import JoinSession from "../components/JoinSession";
+import HandleAuth from "../mixins/HandleAuth";
+import { STORAGE_TOKEN } from "../utils/constants";
 
 export default {
   name: "HomePage",
@@ -9,9 +10,27 @@ export default {
   },
   mixins: [HandleAuth],
   data() {
+    if (this.$route.query?.error) {
+      return this.$router.push({
+        name: "login",
+        query: {
+          error: this.$route.query?.error,
+        },
+      });
+    }
+
     return {
+      sessionToken: this.$route.query.sessionToken,
+      username: this.$route.query.username,
+      avatar: this.$route.query.avatar,
       disconnected: this.$route.query.disconnected,
     };
+  },
+  mounted() {
+    if (this.sessionToken) {
+      localStorage.setItem(STORAGE_TOKEN, this.sessionToken);
+      this.$router.replace("/");
+    }
   },
   methods: {},
 };

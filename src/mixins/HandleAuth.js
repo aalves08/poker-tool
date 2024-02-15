@@ -1,5 +1,10 @@
 import { mapGetters } from "vuex";
-import { STORAGE_UID, STORAGE_TOKEN, SERVER_URL } from "../utils/constants";
+import {
+  STORAGE_UID,
+  STORAGE_TOKEN,
+  ROLES,
+  SERVER_URL,
+} from "../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
@@ -7,10 +12,9 @@ export default {
   data() {
     return {
       sessionName: "",
-      username: "",
+      token: localStorage.getItem(STORAGE_TOKEN) || "",
       userId: localStorage.getItem(STORAGE_UID) || uuidv4(),
       loading: true,
-      showNotLoggedDialog: false,
     };
   },
   computed: {
@@ -20,31 +24,43 @@ export default {
     },
   },
   async mounted() {
-    await this.validateToken();
+    if (this.$route.name !== "login") {
+      const res = await this.validateToken();
 
-    if (this.$route.name === "room" && this.$route.name === "issue") {
+      if (!res) {
+        return this.$router.push({
+          name: "login",
+          query: {
+            error: "invalid_token",
+          },
+        });
+      }
+    }
+
+    if (this.$route.name === "room" || this.$route.name === "issue") {
       await this.validateRoom();
     }
   },
   methods: {
     async validateToken() {
-      const token = localStorage.getItem(STORAGE_TOKEN) || "";
-
-      if (!token) {
-        this.$router.push({ name: "login" });
-      }
-
       const res = await this.$axios({
         method: "post",
         url: `${SERVER_URL}/api/validateToken`,
         data: {
-          token,
+          token: this.token,
         },
       });
 
       if (!res.data) {
-        return this.$router.push({ name: "login" });
+        return false;
       }
+
+      this.$store.dispatch("updateLocalUserInfo", {
+        username: res.data.username,
+        avatar: res.data.avatar,
+      });
+
+      return true;
     },
     async validateRoom() {
       // check if room exists first...
@@ -70,20 +86,15 @@ export default {
           (user) => user.userId === this.userId
         );
 
-        // reconnect user if he has been there
-        if (userFound && !this.connection) {
-          this.$store.dispatch("connectUser", {
-            role: userFound.role,
-            username: userFound.username,
-            userId: this.userId,
-            room: this.room,
-          });
+        this.$store.dispatch("connectUser", {
+          role: userFound?.role || ROLES.USER,
+          username: userFound?.username || this.localUser?.username,
+          avatar: userFound?.avatar || this.localUser?.avatar,
+          userId: this.userId,
+          room: this.room,
+        });
 
-          localStorage.setItem(STORAGE_UID, this.userId);
-          // you're a new user... setup your user info for connection
-        } else if (!this.connection) {
-          this.showNotLoggedDialog = true;
-        }
+        localStorage.setItem(STORAGE_UID, this.userId);
       }
     },
   },

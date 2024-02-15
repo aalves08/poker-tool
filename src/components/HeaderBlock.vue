@@ -15,8 +15,9 @@ export default {
       <img src="@/assets/rancher-icon.svg" />
       <h1>Container UX/UI Team Planning Poker</h1>
     </div>
-    <div class="flex">
-      <img src="@/assets/user-icon.svg" />
+    <div v-if="localUser" class="flex">
+      <img v-if="localUser.avatar" class="avatar" :src="localUser.avatar" />
+      <img v-else src="@/assets/user-icon.svg" />
       <span>{{ localUser?.username }}</span>
     </div>
   </div>
@@ -34,6 +35,9 @@ export default {
 
   img {
     margin-right: 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
   }
 }
 </style>

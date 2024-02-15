@@ -1,20 +1,23 @@
 <script>
 import { STORAGE_UID, ROLES } from "../utils/constants";
+import { mapGetters } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
   name: "JoinSession",
   data() {
     return {
-      username: "",
       sessionName: "",
       createDisabled: false,
       showOverlay: false,
     };
   },
+  computed: {
+    ...mapGetters(["localUser"]),
+  },
   methods: {
     createRoom() {
-      if (!this.createDisabled && this.username && this.sessionName) {
+      if (!this.createDisabled && this.localUser && this.sessionName) {
         this.createDisabled = true;
         this.showOverlay = true;
         const room = uuidv4();
@@ -22,7 +25,8 @@ export default {
 
         this.$store.dispatch("connectUser", {
           role: ROLES.ADMIN,
-          username: this.username,
+          username: this.localUser.username,
+          avatar: this.localUser.avatar,
           userId,
           sessionName: this.sessionName,
           room,
@@ -51,11 +55,6 @@ export default {
 
 <template>
   <div>
-    <v-text-field
-      @keydown.enter.prevent="createRoom"
-      v-model="username"
-      label="Username"
-    ></v-text-field>
     <v-text-field
       @keydown.enter.prevent="createRoom"
       v-model="sessionName"
