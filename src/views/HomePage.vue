@@ -26,7 +26,8 @@ export default {
       disconnected: this.$route.query.disconnected,
     };
   },
-  mounted() {
+  // needs to be "beforeMount" because HandleAuth uses "mounted" and this needs to run before
+  beforeMount() {
     if (this.sessionToken) {
       localStorage.setItem(STORAGE_TOKEN, this.sessionToken);
       this.$router.replace("/");
@@ -37,14 +38,21 @@ export default {
 </script>
 
 <template>
-  <div class="homepage-container">
-    <div class="homepage-content">
-      <h1 v-if="disconnected">
-        You have been disconnected from your previous session! Create a new
-        session:
-      </h1>
-      <h1 v-else>Welcome to the UX/UI planning tool! Create a session:</h1>
-      <JoinSession />
+  <div>
+    <!-- loading -->
+    <v-overlay :value="loadingValidateToken">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+    <!-- welcome to room -->
+    <div v-if="!loadingValidateToken" class="homepage-container">
+      <div class="homepage-content">
+        <h1 v-if="disconnected">
+          You have been disconnected from your previous session! Create a new
+          session:
+        </h1>
+        <h1 v-else>Welcome to the UX/UI planning tool! Create a session:</h1>
+        <JoinSession />
+      </div>
     </div>
   </div>
 </template>

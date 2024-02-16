@@ -87,6 +87,9 @@ export default {
   toggleVotingVisibility({ commit }, votingVisibility) {
     commit("toggleVotingVisibility", votingVisibility);
   },
+  updateAdminCurrRoute({ state }, data) {
+    state.connection.emit("updateAdminCurrRoute", data);
+  },
   disconnectFromRoom({ state }) {
     state.connection.emit("disconnectFromRoom", state.connection.id);
   },

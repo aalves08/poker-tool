@@ -48,11 +48,11 @@ export default {
 <template>
   <div>
     <!-- loading -->
-    <v-overlay :value="loading">
+    <v-overlay :value="loadingValidateRoom">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <!-- welcome to room -->
-    <div v-if="!loading">
+    <div v-if="!loadingValidateRoom">
       <div v-if="currentIssue">
         <div class="controls-block">
           <v-btn

@@ -12,13 +12,12 @@ export default {
   data() {
     return {
       sessionName: "",
-      token: localStorage.getItem(STORAGE_TOKEN) || "",
-      userId: localStorage.getItem(STORAGE_UID) || uuidv4(),
-      loading: true,
+      loadingValidateRoom: true,
+      loadingValidateToken: true,
     };
   },
   computed: {
-    ...mapGetters(["localUser", "connection"]),
+    ...mapGetters(["localUser", "isUserAdmin", "connection"]),
     room() {
       return this.$route.params.roomId;
     },
@@ -26,6 +25,7 @@ export default {
   async mounted() {
     if (this.$route.name !== "login") {
       const res = await this.validateToken();
+      this.loadingValidateToken = false;
 
       if (!res) {
         return this.$router.push({
@@ -47,7 +47,7 @@ export default {
         method: "post",
         url: `${SERVER_URL}/api/validateToken`,
         data: {
-          token: this.token,
+          token: localStorage.getItem(STORAGE_TOKEN) || "",
         },
       });
 
@@ -72,29 +72,37 @@ export default {
         },
       });
 
-      this.loading = false;
+      this.loadingValidateRoom = false;
 
       if (!res.data) {
-        this.loading = true;
+        this.loadingValidateRoom = true;
         this.$router.push({ name: "notFound" });
       } else {
+        const userId = localStorage.getItem(STORAGE_UID) || uuidv4();
+
         // update session name
         this.sessionName = res.data.sessionName;
 
         // check for user existance on this session
-        const userFound = res.data.users.find(
-          (user) => user.userId === this.userId
-        );
+        const userFound = res.data.users.find((user) => user.userId === userId);
 
         this.$store.dispatch("connectUser", {
           role: userFound?.role || ROLES.USER,
           username: userFound?.username || this.localUser?.username,
           avatar: userFound?.avatar || this.localUser?.avatar,
-          userId: this.userId,
+          userId,
           room: this.room,
         });
 
-        localStorage.setItem(STORAGE_UID, this.userId);
+        localStorage.setItem(STORAGE_UID, userId);
+      }
+
+      // propagate admin route
+      if (this.isUserAdmin) {
+        this.$store.dispatch("updateAdminCurrRoute", {
+          name: this.$route.name,
+          issueId: this.$route?.params?.issueId || "",
+        });
       }
     },
   },
