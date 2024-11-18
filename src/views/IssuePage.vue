@@ -1,6 +1,5 @@
 <script>
 import { mapGetters } from "vuex";
-import NotLoggedDialog from "../components/NotLoggedDialog.vue";
 import VotingBlock from "../components/VotingBlock.vue";
 import IssueDetails from "../components/IssueDetails.vue";
 
@@ -9,7 +8,6 @@ import HandleAuth from "../mixins/HandleAuth";
 export default {
   name: "IssuePage",
   components: {
-    NotLoggedDialog,
     VotingBlock,
     IssueDetails,
   },
@@ -35,9 +33,6 @@ export default {
     },
   },
   methods: {
-    updateDialogVisibility(val) {
-      this.showNotLoggedDialog = val;
-    },
     backToPlanning() {
       this.$router.push({
         name: "room",
@@ -53,17 +48,11 @@ export default {
 <template>
   <div>
     <!-- loading -->
-    <v-overlay :value="loading">
+    <v-overlay :value="loadingValidateRoom">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <!-- welcome to room -->
-    <div v-if="!loading">
-      <NotLoggedDialog
-        :showNotLoggedDialog="showNotLoggedDialog"
-        :sessionName="sessionName"
-        :userId="userId"
-        @updateShowNotLoggedDialog="updateDialogVisibility"
-      />
+    <div v-if="!loadingValidateRoom">
       <div v-if="currentIssue">
         <div class="controls-block">
           <v-btn

@@ -35,7 +35,7 @@ export default {
       return this.currentIssue.votes || [];
     },
     userVote() {
-      return this.votes.find((v) => v.userId === this.localUser.userId) || {};
+      return this.votes.find((v) => v.userId === this.localUser?.userId) || {};
     },
     isUserVotingInProgress() {
       return this.currentIssue.votingInProgress;

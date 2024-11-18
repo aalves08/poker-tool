@@ -1,84 +1,58 @@
 <script>
-import { STORAGE_UID, ROLES } from "../utils/constants";
-import { v4 as uuidv4 } from "uuid";
+import JoinSession from "../components/JoinSession";
+import HandleAuth from "../mixins/HandleAuth";
+import { STORAGE_TOKEN } from "../utils/constants";
 
 export default {
   name: "HomePage",
+  components: {
+    JoinSession,
+  },
+  mixins: [HandleAuth],
   data() {
+    if (this.$route.query?.error) {
+      return this.$router.push({
+        name: "login",
+        query: {
+          error: this.$route.query?.error,
+        },
+      });
+    }
+
     return {
-      username: "",
-      sessionName: "",
-      createDisabled: false,
-      showOverlay: false,
+      sessionToken: this.$route.query.sessionToken,
+      username: this.$route.query.username,
+      avatar: this.$route.query.avatar,
       disconnected: this.$route.query.disconnected,
     };
   },
-  methods: {
-    createRoom() {
-      if (!this.createDisabled && this.username && this.sessionName) {
-        this.createDisabled = true;
-        this.showOverlay = true;
-        const room = uuidv4();
-        const userId = localStorage.getItem(STORAGE_UID) || uuidv4();
-
-        this.$store.dispatch("connectUser", {
-          role: ROLES.ADMIN,
-          username: this.username,
-          userId,
-          sessionName: this.sessionName,
-          room,
-        });
-
-        // save sessionId has local storage, so that we can reconnect him later
-        // if he wants to join the same room/session
-        localStorage.setItem(STORAGE_UID, userId);
-
-        setTimeout(() => {
-          // reset data
-          this.username = "";
-          this.createDisabled = false;
-          this.showOverlay = false;
-
-          this.$router.push({
-            name: "room",
-            params: { roomId: room },
-          });
-        }, 1500);
-      }
-    },
+  // needs to be "beforeMount" because HandleAuth uses "mounted" and this needs to run before
+  beforeMount() {
+    if (this.sessionToken) {
+      localStorage.setItem(STORAGE_TOKEN, this.sessionToken);
+      this.$router.replace("/");
+    }
   },
+  methods: {},
 };
 </script>
 
 <template>
-  <div class="homepage-container">
-    <div class="homepage-content">
-      <h1 v-if="disconnected">
-        You have been disconnected from your previous session! Create a new
-        session:
-      </h1>
-      <h1 v-else>Welcome to the UX/UI planning tool! Create a session:</h1>
-      <div>
-        <v-text-field
-          @keydown.enter.prevent="createRoom"
-          v-model="username"
-          label="Username"
-        ></v-text-field>
-        <v-text-field
-          @keydown.enter.prevent="createRoom"
-          v-model="sessionName"
-          label="Session name"
-        ></v-text-field>
-        <v-btn
-          class="btn-primary"
-          @click="createRoom"
-          :disabled="createDisabled"
-          >Create a new room</v-btn
-        >
+  <div>
+    <!-- loading -->
+    <v-overlay :value="loadingValidateToken">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+    <!-- welcome to room -->
+    <div v-if="!loadingValidateToken" class="homepage-container">
+      <div class="homepage-content">
+        <h1 v-if="disconnected">
+          You have been disconnected from your previous session! Create a new
+          session:
+        </h1>
+        <h1 v-else>Welcome to the UX/UI planning tool! Create a session:</h1>
+        <JoinSession />
       </div>
-      <v-overlay :value="showOverlay">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
     </div>
   </div>
 </template>

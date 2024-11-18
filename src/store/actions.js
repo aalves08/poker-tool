@@ -10,16 +10,17 @@ function registerWsEvents(data) {
     const localUser = state.localUser;
 
     const currUserUpdate = data.users.find(
-      (u) => u.userId === localUser.userId
+      (u) => u.userId === localUser?.userId
     );
 
-    // update localUser if role has changed
+    // update localUser? if role has changed
     if (currUserUpdate && currUserUpdate.role !== localUser.role) {
       commit("updateLocalUser", {
-        username: localUser.username,
-        room: localUser.room,
+        username: currUserUpdate?.username,
+        avatar: currUserUpdate?.avatar,
+        room: localUser?.room,
         role: currUserUpdate.role,
-        userId: localUser.userId,
+        userId: localUser?.userId,
       });
     }
 
@@ -50,12 +51,13 @@ function registerWsEvents(data) {
 
 export default {
   connectUser({ commit, dispatch, state }, userData) {
-    const { role, username, userId, sessionName, room } = userData;
+    const { role, username, userId, avatar, sessionName, room } = userData;
 
     const socketInstance = io(SERVER_URL, {
       query: {
         role,
         username,
+        avatar,
         userId,
         sessionName,
         room,
@@ -66,6 +68,7 @@ export default {
 
     commit("updateLocalUser", {
       username,
+      avatar,
       room,
       role,
       userId,
@@ -78,8 +81,14 @@ export default {
       commit,
     });
   },
+  updateLocalUserInfo({ commit }, data) {
+    commit("updateLocalUser", data);
+  },
   toggleVotingVisibility({ commit }, votingVisibility) {
     commit("toggleVotingVisibility", votingVisibility);
+  },
+  updateAdminCurrRoute({ state }, data) {
+    state.connection.emit("updateAdminCurrRoute", data);
   },
   disconnectFromRoom({ state }) {
     state.connection.emit("disconnectFromRoom", state.connection.id);

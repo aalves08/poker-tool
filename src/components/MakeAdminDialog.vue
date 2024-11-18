@@ -47,6 +47,7 @@ export default {
           Do you want to make <span class="bold">{{ user.username }}</span> an
           admin of this session?
         </p>
+        <p>You will lose your admin privileges!</p>
         <div class="dialog-controls">
           <v-btn class="btn-secondary" @click="cancel">Cancel</v-btn>
           <v-btn class="btn-primary" @click="resetIssue">Confirm</v-btn>

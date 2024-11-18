@@ -1,6 +1,5 @@
 <script>
 import { mapGetters } from "vuex";
-import NotLoggedDialog from "../components/NotLoggedDialog.vue";
 import UserList from "../components/UserList.vue";
 import IssuesList from "../components/IssuesList.vue";
 import SessionBlock from "../components/SessionBlock.vue";
@@ -11,7 +10,6 @@ import HandleAuth from "../mixins/HandleAuth";
 export default {
   name: "RoomPage",
   components: {
-    NotLoggedDialog,
     UserList,
     IssuesList,
     SessionBlock,
@@ -29,9 +27,6 @@ export default {
     },
   },
   methods: {
-    updateDialogVisibility(val) {
-      this.showNotLoggedDialog = val;
-    },
     // sample logic to add a label to an issue - needs permissions from the repo
     // async addLabelToIssue() {
     //   this.$axios({
@@ -53,17 +48,11 @@ export default {
 <template>
   <div>
     <!-- loading -->
-    <v-overlay :value="loading">
+    <v-overlay :value="loadingValidateRoom">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <!-- welcome to room -->
-    <div v-if="!loading">
-      <NotLoggedDialog
-        :showNotLoggedDialog="showNotLoggedDialog"
-        :sessionName="sessionName"
-        :userId="userId"
-        @updateShowNotLoggedDialog="updateDialogVisibility"
-      />
+    <div v-if="!loadingValidateRoom">
       <div>
         <!-- <v-btn outlined class="btn-danger" @click="addLabelToIssue()">
           add label
