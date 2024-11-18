@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-app theme="dark">
     <HeaderBlock></HeaderBlock>
-    <v-main class="router-block">
+    <v-main class="router-block theme--dark" theme="dark">
       <router-view />
     </v-main>
   </v-app>
@@ -20,6 +20,7 @@ export default {
 
 <style lang="scss">
 @import "./styles/global.scss";
+@import url("https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap");
 </style>
 
 <style lang="scss" scoped>

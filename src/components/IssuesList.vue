@@ -204,8 +204,9 @@ export default {
 
   .v-card.issue-card {
     width: 100%;
-    border-radius: 0;
-    border-color: var(--grey-82);
+    border-radius: 20px;
+    background-color: var(--bg-120);
+    border: solid 1px var(--bg-90);
     display: grid;
     grid-template-rows: auto 1fr auto;
     display: flex;
@@ -220,6 +221,8 @@ export default {
     h3 {
       line-height: 20px;
       margin-bottom: 0.5rem;
+      color: var(--body-text);
+      font-weight: 500;
     }
 
     .issue-number {
@@ -232,7 +235,7 @@ export default {
     }
 
     .author-date {
-      color: var(--grey-46);
+      color: var(--fog-60);
       font-size: 14px;
       line-height: 14px;
       font-weight: 400;
@@ -250,14 +253,15 @@ export default {
     flex: 1;
   }
   .issue-text {
-    max-height: 200px;
-    overflow: auto;
+    display: -webkit-box;
     color: var(--body-text);
-    font-weight: 300;
+    font-weight: 400;
     margin-bottom: 0;
-    .issue-text {
-      text-overflow: ellipsis;
-    }
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    line-clamp: 6;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .v-card__actions {
     padding: 0;
@@ -266,7 +270,7 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 1rem;
+    padding: 0 1rem 1.25rem 1rem;
     padding-top: 0;
   }
 }

@@ -73,8 +73,11 @@ export default {
 <template>
   <div class="header-container">
     <div class="flex">
-      <img src="@/assets/rancher-icon.svg" />
-      <h1>Planning Poker</h1>
+      <img
+        class="header-container__logo"
+        alt="SUSE Planning Poker tool"
+        src="@/assets/SUSE_PokerTool.svg"
+      />
     </div>
     <div
       v-if="isAdminRouteVisible"
@@ -109,6 +112,10 @@ export default {
     white-space: nowrap;
   }
 
+  .header-container__logo {
+    width: auto;
+  }
+
   .admin-route-container {
     width: 100%;
     height: 46px;
@@ -138,7 +145,7 @@ export default {
   }
 
   img {
-    margin-right: 24px;
+    margin-right: 1rem;
     width: 24px;
     height: 24px;
     border-radius: 24px;

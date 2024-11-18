@@ -59,6 +59,7 @@ export default {
       @keydown.enter.prevent="createRoom"
       v-model="sessionName"
       label="Session name"
+      theme="dark"
     ></v-text-field>
     <v-btn class="btn-primary" @click="createRoom" :disabled="createDisabled"
       >Create a new room</v-btn
@@ -71,6 +72,6 @@ export default {
 
 <style lang="scss" scoped>
 .btn-primary {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 </style>

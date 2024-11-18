@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<template>
+<template theme="dark">
   <div class="login-container">
     <h3 class="login-disclaimer">
       You need to belong to the Rancher organisation in order to login to the

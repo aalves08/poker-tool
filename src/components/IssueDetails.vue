@@ -47,8 +47,10 @@ export default {
         target="_blank"
         rel="noopener noreferrer nofollow"
         class="issue-number"
-        ><span>Check in Github</span> <img src="@/assets/icon-link.svg"
-      /></a>
+      >
+        <span>Check in Github</span>
+        <img class="icon-link" src="@/assets/icon-link.svg" />
+      </a>
     </div>
     <div class="issue-details-block">
       <Markdown class="issue-description" :text="currentIssue?.body"></Markdown>
@@ -100,7 +102,7 @@ export default {
   }
 
   .author-date {
-    color: var(--grey-46);
+    color: var(--fog-60);
     font-size: 14px;
     line-height: 14px;
     font-weight: 400;
@@ -155,7 +157,7 @@ export default {
   align-items: center;
   font-weight: 500;
   border: solid 1px transparent;
-  color: #000000;
+  color: var(--fog);
 }
 .status-chip {
   text-transform: capitalize;
@@ -166,5 +168,9 @@ export default {
 
 h3 {
   margin-bottom: 0.25rem;
+}
+
+.icon-link {
+  width: 16px;
 }
 </style>

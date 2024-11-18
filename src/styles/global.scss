@@ -1,10 +1,62 @@
 /* Color variables */
 :root {
-  --primary: #2F68DF;
-  --primary-bg: #f4f6ff;
-  --primary-hover: #3472F7;
+  --pine: #0c322c;
+  --midnight: #192072;
+ 
+  --jungle-160: var(--pine);
+  --jungle-140: #025937;
+  --jungle-120: #008657;
+  --jungle: #30ba78;
+  --jungle-80: #42d29f;
+  --jungle-60: #83e1be;
+  --jungle-40: #c0efde;
+  --jungle-20: #eafaf4;
+
+  --persimmon-160: #47190d;
+  --persimmon-140: #8e2810;
+  --persimmon-120: #bd3314;
+  --persimmon-100: #ff5a2b;
+  --persimmon: #fe7c3f;
+  --persimmon-60: #ffb184;
+  --persimmon-40: #ffd3bd;
+  --persimmon-20: #ffefe9;
+
+  --waterhole-160: #0a112b;
+  --waterhole-140: var(--midnight);
+  --waterhole-120: #0b41b7;
+  --waterhole: #2453ff;
+  --waterhole-80: #3c8eef;
+  --waterhole-60: #81aefc;
+  --waterhole-40: #c8dafc;
+  --waterhole-20: #e6edfe;
+
+  --mint-160: var(--pine);
+  --mint-140: #01564a;
+  --mint-120: #008878;
+  --mint-100: #00bda7;
+  --mint-80: #38d5b4;
+  --mint: #90ebcd;
+  --mint-40: #bff1ea;
+  --mint-20: #eafaf8;
+
+  --fog-160: #1d1d1d;
+  --fog-140: #3e3e3e;
+  --fog-120: #525252;
+  --fog-100: #6f6f6f;
+  --fog-80: #999999;
+  --fog-60: #bababa;
+  --fog-40: #dcdbdc;
+  --fog: #efefef;
+
+  --background: hsl(240, 18%, 20%);
+  --bg-120: hsl(240, 18%, 30%);
+  --bg-90: hsl(240, 18%, 15%);
+
+  --primary: var(--jungle-80);
+  --primary-bg: var(--jungle-80);
+  --primary-hover: #121316;
   --secondary-hover: #dbeaff;
-  --body-text: #141419;
+  --body-text: #FFFFFF;
 
   --grey-95: #eeeff4;
   --grey-91: #DCDEE7;
@@ -12,21 +64,78 @@
   --grey-80: #BDBDBE;
   --grey-46: #6C6C76;
 
-  --danger-foreground: #b30000;
-  --danger-background: #fbe2dc;
+  --danger: #fa5e55;
+  --danger-foreground: var(--persimmon-120);
+  --danger-background: var(--grey-46);
 
   --success-foreground: #034A35;
   --success-background: #DAEFE9;
+  --chip-bg: var(--bg-120);
+
+  --link-color: var(--waterhole-60);
 }
 
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--fog-80) !important;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--fog-140) !important;
+}
 
 .v-application {
   max-width: 1600px;
   margin: 0 auto;
+
+  /***** THIS IS JUST A PATCH   ******/
+  &.theme--light {
+    background-color: var(--background);
+    color: white;
+  }
+  /***********************/
+
+  .primary--text {
+    color: white !important;
+  }
+
+  .v-main a {
+    color: var(--link-color);
+  }
 }
 
-h1, h2, h3, h4, h5, h6, p, span {
+.v-main.theme--dark {
+  color: white;
+
+  .v-input, input {
+    color: white !important;
+  }
+  .v-text-field .v-label {
+    color: var(--fog);
+  }
+  .v-text-field .v-label.v-label--active {
+    color: white !important;;
+  }
+  .v-text-field > .v-input__control > .v-input__slot:before {
+    border-color: white;
+  }
+  .v-text-field:not(.v-input--has-state):hover > .v-input__control > .v-input__slot:before {
+    border-color: white;
+  }
+}
+
+body {
   font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "SUSE", sans-serif;
+  font-optical-sizing: auto;
 }
 
 h1 {
@@ -39,7 +148,7 @@ h1 {
 
 h2 {
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 1.5rem;
   letter-spacing: 1.25px;
   text-align: left;
@@ -72,30 +181,31 @@ p {
   letter-spacing: 0.75px !important;
   text-transform: none !important;
   font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-width: 2px !important;
 }
 
 .btn-danger {
-  background-color: var(--danger-background) !important;
-  color: var(--danger-foreground) !important;
-  border-color: var(--danger-background) !important;
+  background-color: var(--background) !important;
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
 }
 
 .v-btn.btn-primary {
-  background-color: var(--primary) !important;
-  color: white !important;
+  background-color: var(--primary-bg) !important;
+  color: var(--background) !important;
   border-color: var(--primary) !important;
 }
 
 .v-btn.btn-secondary {
-  color: var(--primary) !important;
-  border-color: var(--grey-91) !important;
-  border-width: 2px !important;
+  color: var(--jungle-60) !important;
+  border-color: var(--jungle-60) !important;
 }
 
 .v-chip.user-chip {
   position: relative !important;
-  background-color: var(--grey-95) !important;
-  border: solid 1px var(--body-text) !important;
+  background-color: var(--chip-bg) !important;
+  border: none !important;
   color: var(--body-text) !important;
 }
 
@@ -125,11 +235,11 @@ p {
 
 .placeholder-text {
   font-size: 40px;
-  font-weight: 500;
+  font-weight: 200;
   line-height: 60px;
   letter-spacing: 1.25px;
   text-align: left;
-  color: var(--grey-80);
+  color: var(--fog);
 }
 
 .dialog-content {

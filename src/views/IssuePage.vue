@@ -66,6 +66,7 @@ export default {
           <v-switch
             v-if="isUserAdmin"
             v-model="votingHidden"
+            theme="dark"
             class="toggle"
             hide-details
             :true-value="true"
@@ -95,6 +96,10 @@ h1 {
   .toggle {
     margin-top: 0;
     padding: 0 0 0 1rem;
+
+    .v-label {
+      color: var(--body-text) !important;
+    }
   }
 }
 </style>
