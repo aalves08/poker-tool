@@ -72,22 +72,25 @@ export default {
 
 <template>
   <div class="header-container">
-    <div class="flex">
-      <img src="@/assets/rancher-icon.svg" />
-      <h1>Planning Poker</h1>
+    <div class="flex logo">
+      <img
+        class="header-container__logo"
+        alt="SUSE Planning Poker tool"
+        src="@/assets/SUSE_PokerTool.svg"
+      />
     </div>
     <div
       v-if="isAdminRouteVisible"
       class="admin-route-container"
       :class="{ clickable: !isSameRouteAsAdmin }"
     >
-      <p v-if="isSameRouteAsAdmin">Admin currently here</p>
+      <p v-if="isSameRouteAsAdmin">Admin currently <strong>HERE</strong></p>
       <p v-else @click="goToAdminRoute">
         Admin currently on:
-        <span>{{ currAdminRoutePath }}</span>
+        <a class="link-to-admin-view">{{ currAdminRoutePath }}</a>
       </p>
     </div>
-    <div v-if="localUser" class="flex">
+    <div v-if="localUser" class="flex user-block">
       <img v-if="localUser.avatar" class="avatar" :src="localUser.avatar" />
       <img v-else src="@/assets/user-icon.svg" />
       <span>{{ localUser?.username }}</span>
@@ -97,51 +100,66 @@ export default {
 
 <style lang="scss" scoped>
 .header-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "logo router user";
   padding: 24px 32px 0;
+  width: 100%;
+
   .flex {
     display: flex;
     align-items: center;
+  }
+
+  .logo {
+    grid-area: logo;
   }
 
   h1 {
     white-space: nowrap;
   }
 
+  .header-container__logo {
+    width: auto;
+  }
+
   .admin-route-container {
-    width: 100%;
-    height: 46px;
-    margin: 0 2rem;
-    padding: 0 1rem;
-    border: 1px solid;
-    border-color: var(--primary);
-    background-color: var(--primary-bg);
+    grid-area: router;
+    margin: 0 1.5rem 0 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    background-color: var(--bg-90);
     display: flex;
     align-items: center;
+    flex: 1;
+    max-width: 100%;
 
     &.clickable:hover {
       cursor: pointer;
 
-      span {
+      .link-to-admin-view {
         text-decoration: underline;
       }
     }
 
     p {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 0.5rem;
       margin-bottom: 0;
-    }
-
-    span {
-      color: var(--primary);
     }
   }
 
   img {
-    margin-right: 24px;
+    margin-right: 1rem;
     width: 24px;
     height: 24px;
     border-radius: 24px;
+  }
+
+  .user-block {
+    grid-area: user;
+    flex-shrink: 0;
   }
 }
 </style>

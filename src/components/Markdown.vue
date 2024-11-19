@@ -82,11 +82,10 @@ export default {
 
   pre {
     overflow-x: auto;
-    background: rgb(246, 248, 250);
-    color: #000;
-    padding: 2rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
+    background: var(--bg-90);
+    color: var(--fog);
+    padding: 1rem;
+    margin: 1rem 0;
 
     code {
       padding: 0;
@@ -94,7 +93,14 @@ export default {
       line-height: 1rem;
       word-wrap: normal;
       background-color: transparent !important;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 14px;
+      font-weight: 500;
     }
+  }
+
+  a {
+    word-break: break-all;
   }
 }
 </style>

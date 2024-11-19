@@ -38,7 +38,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div theme="dark">
     <!-- loading -->
     <v-overlay :value="loadingValidateToken">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -46,6 +46,7 @@ export default {
     <!-- welcome to room -->
     <div v-if="!loadingValidateToken" class="homepage-container">
       <div class="homepage-content">
+        <img class="hero-img" src="@/assets/SUSE_Illustration_Train.svg" />
         <h1 v-if="disconnected">
           You have been disconnected from your previous session! Create a new
           session:
@@ -62,13 +63,21 @@ export default {
   display: flex;
   justify-content: center;
 
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
   .homepage-content {
-    margin-top: 4rem;
+    margin-top: 2rem;
     width: 500px;
 
     .btn-primary {
       margin-top: 1.5rem;
     }
+  }
+
+  .hero-img {
+    margin-bottom: 2rem;
   }
 }
 </style>

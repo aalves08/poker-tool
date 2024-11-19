@@ -41,13 +41,13 @@ export default {
     <v-dialog v-model="dialogVisibility" width="500" persistent>
       <div class="dialog-content">
         <h3>User: {{ user.username }}</h3>
-        <p>
+        <p class="dialog-text">
           Are you sure you want to kick the user
-          <span class="bold">{{ user.username }}</span> from this session?
+          <strong>{{ user.username }}</strong> from this session?
         </p>
         <div class="dialog-controls">
-          <v-btn class="btn-secondary" @click="cancel">Cancel</v-btn>
-          <v-btn class="btn-danger" @click="kickUser">Kick user</v-btn>
+          <v-btn outlined class="btn-secondary" @click="cancel">Cancel</v-btn>
+          <v-btn outlined class="btn-danger" @click="kickUser">Kick user</v-btn>
         </div>
       </div>
     </v-dialog>

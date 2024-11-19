@@ -60,7 +60,7 @@ export default {
         <v-btn
           v-if="isUserAdmin && !isEditing"
           @click="startEdit"
-          elevation="2"
+          elevation="0"
           fab
           class="edit-btn"
         >
@@ -99,8 +99,16 @@ export default {
   .edit-btn {
     width: 32px;
     height: 32px;
-    background-color: white;
-    margin-left: 1rem;
+    background-color: transparent;
+    margin-left: 0.5rem;
+
+    img {
+      width: 18px;
+    }
+
+    &:hover {
+      border: solid 1px var(--waterhole-20);
+    }
   }
 
   .change-name-input {

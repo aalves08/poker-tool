@@ -43,13 +43,17 @@ export default {
     <v-dialog v-model="dialogVisibility" width="500" persistent>
       <div class="dialog-content">
         <h3>Reset this issue</h3>
-        <p>
-          If you reset the issue you will lose all of the estimations. Are you
-          sure?
+        <p class="dialog-text">
+          <span>
+            If you reset the issue you will lose all of the estimations.
+          </span>
+          <span>Are you sure?</span>
         </p>
         <div class="dialog-controls">
-          <v-btn class="btn-secondary" @click="cancel">Cancel</v-btn>
-          <v-btn class="btn-danger" @click="resetIssue">Yes, reset issue</v-btn>
+          <v-btn outlined class="btn-secondary" @click="cancel">Cancel</v-btn>
+          <v-btn outlined class="btn-danger" @click="resetIssue">
+            Yes, reset issue
+          </v-btn>
         </div>
       </div>
     </v-dialog>

@@ -136,7 +136,7 @@ export default {
   .points {
     display: flex;
     align-items: flex-end;
-    color: var(--grey-46);
+    color: var(--body-text);
 
     .points-number {
       font-size: 20px;
@@ -157,6 +157,6 @@ export default {
 
 .tip-text {
   margin-top: 0.5rem;
-  color: var(--grey-46);
+  color: var(--grey-91);
 }
 </style>

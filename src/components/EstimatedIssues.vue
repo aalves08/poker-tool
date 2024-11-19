@@ -65,17 +65,17 @@ export default {
 
   .estimated-issues-card {
     padding: 16px;
-    border: 1px solid var(--grey-82);
+    border-radius: 10px;
+    background-color: var(--bg-90);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     cursor: pointer;
-    box-shadow: 0px 0px 0px 0px var(--grey-82);
-    transition: box-shadow ease 150ms;
+    transition: all ease 100ms;
 
     &:hover {
-      box-shadow: 0px 2px 10px 0px var(--grey-82),
-        0px 1px 1px 0px var(--grey-46);
+      box-shadow: 0px 2px 10px 0px var(--bg-90), 0px 1px 1px 0px var(--bg-90);
+      background-color: var(--bg-120);
     }
 
     .estimated-card__title {

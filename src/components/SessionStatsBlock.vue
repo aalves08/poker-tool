@@ -61,7 +61,7 @@ export default {
     .stat-value {
       font-size: 48px;
       line-height: 42px;
-      font-weight: 200;
+      font-weight: 300;
       margin-right: 8px;
     }
     .stat-text {

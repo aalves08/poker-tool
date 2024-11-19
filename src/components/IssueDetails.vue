@@ -47,12 +47,14 @@ export default {
         target="_blank"
         rel="noopener noreferrer nofollow"
         class="issue-number"
-        ><span>Check in Github</span> <img src="@/assets/icon-link.svg"
-      /></a>
+      >
+        <span>Check in Github</span>
+        <img class="icon-link" src="@/assets/icon-link.svg" />
+      </a>
     </div>
     <div class="issue-details-block">
       <Markdown class="issue-description" :text="currentIssue?.body"></Markdown>
-      <div class="labels-block">
+      <div class="issue-metadata">
         <div class="issue-metadata-block">
           <h3>Labels</h3>
           <div class="labels-list" v-if="currentIssue.labels?.length">
@@ -100,7 +102,7 @@ export default {
   }
 
   .author-date {
-    color: var(--grey-46);
+    color: var(--fog-60);
     font-size: 14px;
     line-height: 14px;
     font-weight: 400;
@@ -125,19 +127,12 @@ export default {
 }
 
 .issue-details-block {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 
-  .issue-description {
-    width: 80%;
-  }
-
-  .labels-block {
-    width: 20%;
-    padding-left: 2rem;
-
-    .issue-metadata-block {
-      margin-bottom: 2rem;
-    }
+  .issue-metadata-block {
+    margin-bottom: 2rem;
   }
 }
 
@@ -148,14 +143,15 @@ export default {
 }
 
 .label-chip {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border-radius: 30px;
-  height: 30px;
-  padding: 0 1rem;
-  display: flex;
-  align-items: center;
+  padding: 1px 8px;
+  font-size: 14px;
   font-weight: 500;
-  border: solid 1px transparent;
-  color: #000000;
+  color: var(--fog);
 }
 .status-chip {
   text-transform: capitalize;
@@ -166,5 +162,9 @@ export default {
 
 h3 {
   margin-bottom: 0.25rem;
+}
+
+.icon-link {
+  width: 16px;
 }
 </style>
