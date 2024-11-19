@@ -80,7 +80,7 @@ export default {
       />
     </div>
     <div
-      v-if="isAdminRouteVisible"
+      v-if="isAdminRouteVisible && adminRoute.name"
       class="admin-route-container"
       :class="{ clickable: !isSameRouteAsAdmin }"
     >

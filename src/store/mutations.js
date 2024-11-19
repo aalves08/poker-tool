@@ -11,4 +11,7 @@ export default {
   toggleVotingVisibility(state, val) {
     state.isVotingHidden = val;
   },
+  updateAdminCurrRouteBrowser(state, val) {
+    state.adminRoute = val;
+  },
 };

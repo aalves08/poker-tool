@@ -6,7 +6,7 @@ export default {
   session: (state) => state.session,
   users: (state) => state.session.users,
   issues: (state) => state.session.issues,
-  adminRoute: (state) => state.session.adminRoute,
+  adminRoute: (state) => state.adminRoute,
   localUser: (state) => state.localUser,
   isVotingHidden: (state) => state.isVotingHidden,
 };
