@@ -71,7 +71,6 @@ export default {
     flex-direction: column;
     gap: 1rem;
     cursor: pointer;
-    //box-shadow: 0px 0px 0px 0px var(--grey-82);
     transition: all ease 100ms;
 
     &:hover {
