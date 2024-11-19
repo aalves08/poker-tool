@@ -43,12 +43,8 @@ export default {
   },
   methods: {
     async validateToken() {
-      const res = await this.$axios({
-        method: "post",
-        url: `${SERVER_URL}/api/validateToken`,
-        data: {
-          token: localStorage.getItem(STORAGE_TOKEN) || "",
-        },
+      const res = await this.$axios.post(`${SERVER_URL}/api/validateToken`, {
+        token: localStorage.getItem(STORAGE_TOKEN) || "",
       });
 
       if (!res.data) {
@@ -64,12 +60,8 @@ export default {
     },
     async validateRoom() {
       // check if room exists first...
-      const res = await this.$axios({
-        method: "post",
-        url: `${SERVER_URL}/api/checkRoom`,
-        data: {
-          room: this.room,
-        },
+      const res = await this.$axios.post(`${SERVER_URL}/api/checkRoom`, {
+        room: this.room,
       });
 
       this.loadingValidateRoom = false;
