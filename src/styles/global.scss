@@ -90,42 +90,21 @@
 }
 
 .v-application {
-  max-width: 1600px;
-  margin: 0 auto;
-
-  /***** THIS IS JUST A PATCH   ******/
-  &.theme--light {
+  &.theme--dark {
     background-color: var(--background);
-    color: white;
-  }
-  /***********************/
 
-  .primary--text {
-    color: white !important;
+    .v-text-field .v-label.v-label--active {
+      color: white !important;
+    }
+    .v-label {
+      color: var(--fog);
+      font-weight: 300;
+    }
   }
 
-  .v-main a {
-    color: var(--link-color);
-  }
-}
-
-.v-main.theme--dark {
-  color: white;
-
-  .v-input, input {
-    color: white !important;
-  }
-  .v-text-field .v-label {
-    color: var(--fog);
-  }
-  .v-text-field .v-label.v-label--active {
-    color: white !important;;
-  }
-  .v-text-field > .v-input__control > .v-input__slot:before {
-    border-color: white;
-  }
-  .v-text-field:not(.v-input--has-state):hover > .v-input__control > .v-input__slot:before {
-    border-color: white;
+  .v-application--wrap {
+    max-width: 1800px;
+    margin: 0 auto;
   }
 }
 
@@ -160,7 +139,6 @@ h3 {
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  letter-spacing: 1.25px;
   text-align: left;
 }
 
@@ -182,11 +160,10 @@ p {
   text-transform: none !important;
   font-size: 1rem !important;
   font-weight: 700 !important;
-  border-width: 2px !important;
+  border-width: 1px;
 }
 
 .btn-danger {
-  background-color: var(--background) !important;
   color: var(--danger) !important;
   border-color: var(--danger) !important;
 }
@@ -243,15 +220,35 @@ p {
 }
 
 .dialog-content {
-  background-color: white;
+  background-color: var(--bg-120);
   padding: 20px;
+  border-radius: 10px;
 
-  p {
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  p.dialog-text {
     margin: 1rem 0 2rem 0;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+
+  span {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
   }
 
   .dialog-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
+    gap: 1rem;
   }
+}
+
+.v-btn__content .v-icon.v-icon--left.button-icon {
+  font-size: 24px;
 }

@@ -55,12 +55,8 @@ export default {
     <div v-if="!loadingValidateRoom">
       <div v-if="currentIssue">
         <div class="controls-block">
-          <v-btn
-            class="btn-secondary btn-back"
-            outlined
-            @click="backToPlanning"
-          >
-            <v-icon start icon="mdi-arrow-left"></v-icon>
+          <v-btn class="btn-secondary btn-back" text @click="backToPlanning">
+            <v-icon dense left>mdi-arrow-left</v-icon>
             Back to Planning
           </v-btn>
           <v-switch
@@ -86,6 +82,8 @@ export default {
 h1 {
   font-size: 20px;
   margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 .controls-block {

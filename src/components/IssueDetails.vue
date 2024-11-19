@@ -54,7 +54,7 @@ export default {
     </div>
     <div class="issue-details-block">
       <Markdown class="issue-description" :text="currentIssue?.body"></Markdown>
-      <div class="labels-block">
+      <div class="issue-metadata">
         <div class="issue-metadata-block">
           <h3>Labels</h3>
           <div class="labels-list" v-if="currentIssue.labels?.length">
@@ -127,19 +127,12 @@ export default {
 }
 
 .issue-details-block {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 
-  .issue-description {
-    width: 80%;
-  }
-
-  .labels-block {
-    width: 20%;
-    padding-left: 2rem;
-
-    .issue-metadata-block {
-      margin-bottom: 2rem;
-    }
+  .issue-metadata-block {
+    margin-bottom: 2rem;
   }
 }
 
@@ -150,13 +143,14 @@ export default {
 }
 
 .label-chip {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border-radius: 30px;
-  height: 30px;
-  padding: 0 1rem;
-  display: flex;
-  align-items: center;
+  padding: 1px 8px;
+  font-size: 14px;
   font-weight: 500;
-  border: solid 1px transparent;
   color: var(--fog);
 }
 .status-chip {

@@ -124,6 +124,9 @@ export default {
       }
       return cardText;
     },
+    hasCardText(vote) {
+      return this.getCardText(vote) !== "";
+    },
   },
 };
 </script>
@@ -151,50 +154,38 @@ export default {
           @click="startVotingIssue"
           v-if="!isUserVotingInProgress"
         >
-          <v-icon start icon="mdi-play"></v-icon>START VOTING</v-btn
+          <v-icon class="button-icon" left>mdi-play</v-icon>START VOTING</v-btn
         >
         <v-btn class="btn-secondary" outlined @click="stopVotingIssue" v-else
-          >STOP VOTING</v-btn
+          ><v-icon class="button-icon" left>mdi-stop</v-icon>STOP VOTING</v-btn
         >
       </div>
       <!-- general copy -->
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
-        <img
-          class="text-icon checkmark-icon"
-          src="@/assets/start-voting-icon.svg"
-        />
+        <v-icon class="subtext-icon" dark small>mdi-button-pointer</v-icon>
         Voting is closed! Now choose the FINAL ESTIMATION
       </p>
       <p v-else-if="isFinalVoteCast">
-        <img
-          class="text-icon checkmark-icon"
-          src="@/assets/start-voting-icon.svg"
-        />
+        <v-icon class="subtext-icon" dark small>mdi-check-circle</v-icon>
         Voting is closed!
       </p>
     </div>
     <!-- *** user-only *** -->
     <div v-else>
       <p v-if="!isUserVotingInProgress && !isUserVotingFinished">
-        <img class="text-icon wait-icon" src="@/assets/hourglass.svg" />
+        <v-icon class="subtext-icon" dark small>mdi-timer-sand</v-icon>
         Wait for the admin to start the voting
       </p>
       <p v-else-if="isUserVotingInProgress">
-        <img
-          class="text-icon checkmark-icon"
-          src="@/assets/start-voting-icon.svg"
-        />
+        <v-icon class="subtext-icon" dark small>mdi-check-circle</v-icon>
         You can vote now!!!
       </p>
       <p v-else-if="isUserVotingFinished && !isFinalVoteCast">
-        <img class="text-icon wait-icon" src="@/assets/start-voting-icon.svg" />
+        <v-icon class="subtext-icon" dark small>mdi-timer-sand</v-icon>
         Waiting for FINAL ESTIMATION from the Admin
       </p>
       <p v-else-if="isFinalVoteCast">
-        <img
-          class="text-icon checkmark-icon"
-          src="@/assets/start-voting-icon.svg"
-        />
+        <v-icon class="subtext-icon" dark small>mdi-check-circle</v-icon>
         Voting is closed!
       </p>
     </div>
@@ -221,15 +212,17 @@ export default {
         <v-btn
           v-for="(vote, i) in config.voteValues"
           :key="i"
-          class="btn-secondary voting-card"
+          class="voting-card"
           outlined
           @click="castVote(vote)"
           :disabled="isVotingBtnDisabled(vote)"
           :class="{ hasVoted: checkVote(vote) }"
         >
-          <div class="vote-content">
+          <div class="vote-content" :class="{ hasText: hasCardText(vote) }">
             <span class="vote-number" v-html="vote.label"></span>
-            <span class="vote-text">{{ getCardText(vote) }}</span>
+            <span class="vote-text">
+              {{ getCardText(vote) }}
+            </span>
           </div>
         </v-btn>
       </div>
@@ -256,18 +249,24 @@ export default {
   flex-wrap: wrap;
 
   .voting-card {
-    box-sizing: border-box;
-    height: auto;
-    background: white;
-    border-width: 1px;
-    border-color: var(--grey-82);
-    border-radius: 0;
-    padding: 1rem 1rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    background: var(--bg-120);
+    border-width: 3px;
+    border-color: transparent !important;
+    border-radius: 10px;
+    padding: 0 1rem;
+    color: var(--link-color);
 
     .vote-content {
       display: flex;
       align-items: flex-end;
-      gap: 0.25rem;
+
+      &.hasText {
+        gap: 0.25rem;
+      }
     }
 
     .vote-number {
@@ -281,8 +280,8 @@ export default {
     }
 
     &.hasVoted {
-      border-color: transparent !important;
-      background-color: var(--primary);
+      border-color: white !important;
+      //background-color: var(--primary);
 
       .vote-content {
         color: white;
@@ -300,6 +299,12 @@ export default {
 
 .issue-stats {
   margin-bottom: 2rem;
+}
+
+.subtext-icon {
+  position: relative;
+  top: -2px;
+  margin-right: 2px;
 }
 
 .text-icon {
