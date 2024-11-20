@@ -117,9 +117,7 @@ export default {
 
 <style lang="scss" scoped>
 .points-block {
-  flex: 1;
   display: flex;
-  align-self: end;
 
   &.space-between {
     justify-content: space-between;
