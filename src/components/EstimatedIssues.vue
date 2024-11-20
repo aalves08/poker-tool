@@ -69,6 +69,7 @@ export default {
     background-color: var(--bg-90);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 1rem;
     cursor: pointer;
     transition: all ease 100ms;
@@ -83,11 +84,11 @@ export default {
       flex-direction: column;
       .issue-number {
         font-size: 1rem;
-        font-weight: 400;
+        font-weight: 500;
       }
       .issue-name {
         font-size: 14px;
-        font-weight: 300;
+        font-weight: 400;
         line-height: 20px;
       }
     }

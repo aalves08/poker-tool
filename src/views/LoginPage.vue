@@ -69,7 +69,7 @@ export default {
 
   .login-error {
     margin-top: 2em;
-    color: red;
+    color: var(--danger);
   }
 
   .login-link {

@@ -119,6 +119,7 @@ export default {
 .points-block {
   flex: 1;
   display: flex;
+  align-self: end;
 
   &.space-between {
     justify-content: space-between;

@@ -142,7 +142,8 @@ export default {
   flex-wrap: wrap;
 }
 
-.label-chip {
+.label-chip,
+.status-chip {
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -154,10 +155,11 @@ export default {
   color: var(--fog);
 }
 .status-chip {
-  text-transform: capitalize;
-  color: var(--success-foreground);
+  height: auto;
   background-color: var(--success-background) !important;
+  color: var(--success-foreground);
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 h3 {
