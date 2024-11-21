@@ -112,6 +112,7 @@ export default {
       });
 
       this.finalVote = null;
+      this.$router.push({ path: `/${this.localUser.room}` });
     },
     getCardText(vote) {
       let cardText = "";
