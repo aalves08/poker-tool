@@ -1,10 +1,8 @@
 FROM node:16
-
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm install
-
+RUN yarn install
 COPY . .
-
-RUN npm run build
+RUN yarn run build
+EXPOSE 4002
+# CMD ["yarn", "run", "serve"]
