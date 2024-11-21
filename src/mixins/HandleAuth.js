@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     async validateToken() {
+      console.log("SERVER_URL", SERVER_URL);
       const res = await this.$axios.post(`${SERVER_URL}/api/validateToken`, {
         token: localStorage.getItem(STORAGE_TOKEN) || "",
       });
