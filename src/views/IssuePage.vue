@@ -62,7 +62,6 @@ export default {
           <v-switch
             v-if="isUserAdmin"
             v-model="votingHidden"
-            theme="dark"
             class="toggle"
             hide-details
             :true-value="true"
