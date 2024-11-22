@@ -20,6 +20,7 @@ export default {
     }
 
     return {
+      githubToken: this.$route.query.githubToken,
       sessionToken: this.$route.query.sessionToken,
       username: this.$route.query.username,
       avatar: this.$route.query.avatar,
@@ -28,6 +29,10 @@ export default {
   },
   // needs to be "beforeMount" because HandleAuth uses "mounted" and this needs to run before
   beforeMount() {
+    if (this.githubToken) {
+      this.$store.dispatch("updateGithubApiToken", this.githubToken);
+    }
+
     if (this.sessionToken) {
       localStorage.setItem(STORAGE_TOKEN, this.sessionToken);
       this.$router.replace("/");

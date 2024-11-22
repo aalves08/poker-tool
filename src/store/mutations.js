@@ -11,4 +11,7 @@ export default {
   toggleVotingVisibility(state, val) {
     state.isVotingHidden = val;
   },
+  updateGithubApiToken(state, val) {
+    state.githubApiToken = val;
+  },
 };

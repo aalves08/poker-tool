@@ -134,4 +134,7 @@ export default {
   updateSessionInfo({ commit }, val) {
     commit("updateSessionInfo", val);
   },
+  updateGithubApiToken({ commit }, val) {
+    commit("updateGithubApiToken", val);
+  },
 };
