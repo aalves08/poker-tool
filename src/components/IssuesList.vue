@@ -14,7 +14,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["issues", "localUser", "isUserAdmin"]),
+    ...mapGetters(["issues", "localUser", "isUserAdmin", "githubApiToken"]),
     issuesToEstimate() {
       if (this.issues?.length) {
         return this.issues?.filter((issue) => !issue.finalVote);
@@ -43,7 +43,7 @@ export default {
         const axiosInstance = this.$axios.create({
           baseURL: "https://api.github.com",
           headers: {
-            Authorization: `Bearer ${process.env.VUE_APP_API_TOKEN}`,
+            Authorization: `Bearer ${this.githubApiToken}`,
           },
         });
 

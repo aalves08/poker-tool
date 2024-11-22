@@ -74,6 +74,7 @@ export default new Vuex.Store({
     connection: null,
     session: {},
     isVotingHidden: true,
+    githubApiToken: null,
   },
   getters: { ...getters },
   mutations: { ...mutations },
