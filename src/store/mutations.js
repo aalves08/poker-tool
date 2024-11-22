@@ -14,4 +14,7 @@ export default {
   updateAdminCurrRouteBrowser(state, val) {
     state.adminRoute = val;
   },
+  updateGithubApiToken(state, val) {
+    state.githubApiToken = val;
+  },
 };

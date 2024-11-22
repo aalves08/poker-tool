@@ -51,6 +51,8 @@ export default {
         return false;
       }
 
+      this.$store.dispatch("updateGithubApiToken", res.data.githubToken);
+
       this.$store.dispatch("updateLocalUserInfo", {
         username: res.data.username,
         avatar: res.data.avatar,

@@ -18,7 +18,7 @@ export default {
 
   mixins: [HandleAuth],
   computed: {
-    ...mapGetters(["isUserAdmin", "issues"]),
+    ...mapGetters(["isUserAdmin", "issues", "githubApiToken"]),
     estimatedIssues() {
       if (this.issues?.length) {
         return this.issues?.filter((issue) => issue.finalVote);
@@ -32,7 +32,7 @@ export default {
     //   this.$axios({
     //     method: "post",
     //     headers: {
-    //       Authorization: `Bearer ${process.env.VUE_APP_API_TOKEN}`,
+    //       Authorization: `Bearer ${this.githubApiToken}`,
     //       "X-GitHub-Api-Version": "2022-11-28",
     //     },
     //     url: `https://api.github.com/repos/rancher/dashboard/issues/8087/labels`,
