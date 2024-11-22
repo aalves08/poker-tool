@@ -15,6 +15,9 @@ export default {
   components: {
     HeaderBlock,
   },
+  mounted() {
+    console.log("Server URL:", process.env.VUE_APP_SERVER_URL);
+  },
 };
 </script>
 

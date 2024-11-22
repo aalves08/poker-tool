@@ -4,12 +4,14 @@ import IssueStatsBlock from "./IssueStatsBlock";
 import UserVotes from "./UserVotes";
 import ConfirmStopVotingDialog from "./ConfirmStopVotingDialog";
 import ResetIssueDialog from "./ResetIssueDialog";
+import NeedFinalVoteDialog from "./NeedFinalVoteDialog";
 
 export default {
   name: "VotingBlock",
   components: {
     IssueStatsBlock,
     ResetIssueDialog,
+    NeedFinalVoteDialog,
     ConfirmStopVotingDialog,
     UserVotes,
   },
@@ -18,6 +20,7 @@ export default {
       finalVote: null,
       showStopVotingDialog: false,
       showResetIssueDialog: false,
+      showNeedFinalVoteDialog: false,
     };
   },
   computed: {
@@ -63,6 +66,9 @@ export default {
     updateResetIssueDialogVisibility(val) {
       this.showResetIssueDialog = val;
     },
+    updateShowNeedFinalVoteDialogVisibility(val) {
+      this.showNeedFinalVoteDialog = val;
+    },
     isVotingBtnDisabled(vote) {
       if (!this.isUserVotingInProgress && !this.isUserVotingFinished) {
         return true;
@@ -106,13 +112,17 @@ export default {
       }
     },
     finalizeVoting() {
-      this.$store.dispatch("finalizeVoting", {
-        issueId: this.currentIssue?.number,
-        vote: this.finalVote,
-      });
+      if (this.finalVote === null) {
+        this.showNeedFinalVoteDialog = true;
+      } else {
+        this.$store.dispatch("finalizeVoting", {
+          issueId: this.currentIssue?.number,
+          vote: this.finalVote,
+        });
 
-      this.finalVote = null;
-      this.$router.push({ path: `/${this.localUser.room}` });
+        this.finalVote = null;
+        this.$router.push({ path: `/${this.localUser.room}` });
+      }
     },
     getCardText(vote) {
       let cardText = "";
@@ -144,6 +154,10 @@ export default {
       :showResetIssueDialog="showResetIssueDialog"
       :issueId="currentIssue?.number"
       @updateShowResetIssueDialog="updateResetIssueDialogVisibility"
+    />
+    <NeedFinalVoteDialog
+      :showNeedFinalVoteDialog="showNeedFinalVoteDialog"
+      @updateShowNeedFinalVoteDialog="updateShowNeedFinalVoteDialogVisibility"
     />
     <!-- *** admin-only *** -->
     <div class="admin-controls" v-if="isUserAdmin">
