@@ -21,6 +21,15 @@ RUN echo "VUE_APP_API_TOKEN=$VUE_APP_API_TOKEN" > .env && \
     echo "VUE_APP_GITHUB_CLIENT_SECRET=$VUE_APP_GITHUB_CLIENT_SECRET" >> .env && \
     echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env
 
+
+RUN echo "bananas bananas bananas bananas bananas "
+
+RUN ls -la .env
+
+RUN echo "bananas bananas bananas bananas bananas "
+RUN echo "bananas bananas bananas bananas bananas "
+RUN echo "bananas bananas bananas bananas bananas "
+
 RUN set -a && source .env && npm run build -- --mode production
 
 # Serve stage
