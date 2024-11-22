@@ -1,7 +1,7 @@
 <template>
-  <v-app theme="dark">
+  <v-app>
     <HeaderBlock></HeaderBlock>
-    <v-main class="router-block theme--dark" theme="dark">
+    <v-main class="router-block">
       <router-view />
     </v-main>
   </v-app>

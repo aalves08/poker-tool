@@ -38,7 +38,7 @@ export default {
 </script>
 
 <template>
-  <div theme="dark">
+  <div>
     <!-- loading -->
     <v-overlay :value="loadingValidateToken">
       <v-progress-circular indeterminate size="64"></v-progress-circular>

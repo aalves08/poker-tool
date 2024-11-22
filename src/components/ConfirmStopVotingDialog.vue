@@ -47,7 +47,7 @@ export default {
         <p class="dialog-text">This action cannot be reverted!</p>
         <div class="dialog-controls">
           <v-btn outlined class="btn-secondary" @click="cancel">Cancel</v-btn>
-          <v-btn outlined class="btn-danger" @click="stopVoting">
+          <v-btn outlined class="btn-primary" @click="stopVoting">
             Stop voting
           </v-btn>
         </div>

@@ -44,12 +44,14 @@ export default {
       <div class="dialog-content">
         <h3>User: {{ user.username }}</h3>
         <p class="dialog-text">
-          <span>
+          <span class="dialog-text__line">
             Do you want to make
             <strong>{{ user.username }}</strong>
             an admin of this session?
           </span>
-          <span>You will lose your admin privileges!</span>
+          <span class="dialog-text__line">
+            You will lose your admin privileges!
+          </span>
         </p>
         <div class="dialog-controls">
           <v-btn outlined class="btn-secondary" @click="cancel">Cancel</v-btn>

@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<template theme="dark">
+<template>
   <div class="login-container">
     <h3 class="login-disclaimer">
       You need to belong to the Rancher organisation in order to login to the
@@ -69,7 +69,7 @@ export default {
 
   .login-error {
     margin-top: 2em;
-    color: red;
+    color: var(--danger);
   }
 
   .login-link {

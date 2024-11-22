@@ -49,6 +49,7 @@
   --fog: #efefef;
 
   --background: hsl(240, 18%, 20%);
+  --bg-125: hsl(240, 18%, 35%);
   --bg-120: hsl(240, 18%, 30%);
   --bg-90: hsl(240, 18%, 15%);
 
@@ -68,8 +69,8 @@
   --danger-foreground: var(--persimmon-120);
   --danger-background: var(--grey-46);
 
-  --success-foreground: #034A35;
-  --success-background: #DAEFE9;
+  --success-foreground: var(--pine);
+  --success-background: var(--jungle-40);
   --chip-bg: var(--bg-120);
 
   --link-color: var(--waterhole-60);
@@ -98,7 +99,7 @@
     }
     .v-label {
       color: var(--fog);
-      font-weight: 300;
+      font-weight: 400;
     }
   }
 
@@ -201,8 +202,8 @@ p {
 }
 
 .content-block {
-  margin-top: 1rem !important;
-  margin-bottom: 2rem !important;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .placeholder-block {
@@ -236,7 +237,7 @@ p {
     font-size: 1rem;
   }
 
-  span {
+  .dialog-text__line {
     display: block;
     margin-bottom: 0.25rem;
     font-size: 1rem;

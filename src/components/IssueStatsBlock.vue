@@ -117,7 +117,6 @@ export default {
 
 <style lang="scss" scoped>
 .points-block {
-  flex: 1;
   display: flex;
 
   &.space-between {

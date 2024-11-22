@@ -112,6 +112,7 @@ export default {
       });
 
       this.finalVote = null;
+      this.$router.push({ path: `/${this.localUser.room}` });
     },
     getCardText(vote) {
       let cardText = "";
@@ -171,7 +172,7 @@ export default {
       </p>
     </div>
     <!-- *** user-only *** -->
-    <div v-else>
+    <div v-else class="non-admin-info-text">
       <p v-if="!isUserVotingInProgress && !isUserVotingFinished">
         <v-icon class="subtext-icon" dark small>mdi-timer-sand</v-icon>
         Wait for the admin to start the voting
@@ -242,8 +243,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.content-block {
+  margin-bottom: 3rem;
+}
+
 .voting-controls {
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0;
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
@@ -294,10 +299,11 @@ export default {
   margin-bottom: 16px;
 }
 .admin-controls {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .issue-stats {
+  margin-top: 2rem;
   margin-bottom: 2rem;
 }
 
@@ -325,5 +331,9 @@ export default {
 
 .user-votes-block {
   margin-top: 2rem !important;
+}
+
+.non-admin-info-text {
+  margin-bottom: 2rem;
 }
 </style>

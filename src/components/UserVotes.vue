@@ -80,11 +80,14 @@ export default {
           <span v-if="showUserVotes" class="user-voted-points">
             {{ userVote(user.userId) }}
           </span>
-          <img
+          <v-icon
             v-if="hasUserVoted(user.userId)"
-            class="vote-checkmark"
-            src="@/assets/voted.svg"
-          />
+            class="subtext-icon"
+            light
+            small
+          >
+            mdi-check-circle
+          </v-icon>
           <span v-else class="pending-vote-dots"> ··· </span>
         </v-chip>
       </li>
@@ -106,13 +109,13 @@ export default {
 
 .pending-vote-dots {
   font-size: 24px;
-  margin-left: 4px;
+  margin-left: 8px;
 }
 
-.vote-checkmark {
-  width: 20px;
-  height: 20px;
-  margin-left: 4px;
+.subtext-icon {
+  font-size: 22px !important;
+  color: var(--success-foreground) !important;
+  margin-left: 3px;
 }
 
 .hasVoted {
