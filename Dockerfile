@@ -23,6 +23,13 @@ RUN echo "VUE_APP_API_TOKEN=$VUE_APP_API_TOKEN" > .env \
 
 RUN cat .env
 
+RUN echo "bananas bananas bananas bananas"
+RUN echo "bananas bananas bananas bananas"
+RUN echo "bananas bananas bananas bananas"
+RUN echo "bananas bananas bananas bananas"
+
+RUN cat /.env
+
 RUN npm run build -- --mode production
 
 # Serve stage
