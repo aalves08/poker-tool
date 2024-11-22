@@ -30,7 +30,7 @@ RUN echo "bananas bananas bananas bananas bananas "
 RUN echo "bananas bananas bananas bananas bananas "
 RUN echo "bananas bananas bananas bananas bananas "
 
-RUN set -a && source .env && npm run build -- --mode production
+RUN /bin/bash -c "set -a && source .env && npm run build -- --mode production"
 
 # Serve stage
 FROM nginx:alpine
