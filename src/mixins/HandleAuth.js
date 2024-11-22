@@ -23,6 +23,11 @@ export default {
     },
   },
   async mounted() {
+    console.log("STORAGE_UID", STORAGE_UID);
+    console.log("STORAGE_TOKEN", STORAGE_TOKEN);
+    console.log("ROLES", ROLES);
+    console.log("SERVER_URL", SERVER_URL);
+
     if (this.$route.name !== "login") {
       const res = await this.validateToken();
       this.loadingValidateToken = false;
@@ -43,7 +48,6 @@ export default {
   },
   methods: {
     async validateToken() {
-      console.log("SERVER_URL", SERVER_URL);
       const res = await this.$axios.post(`${SERVER_URL}/api/validateToken`, {
         token: localStorage.getItem(STORAGE_TOKEN) || "",
       });
