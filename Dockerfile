@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+COPY run.sh ./
 
 # # Inject environment variables into the build process
 # ARG VUE_APP_API_TOKEN
@@ -37,7 +38,7 @@ RUN npm run build -- --mode production
 # Serve stage
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY --from=builder /app/run.sh /run.sh
+COPY --from=builder /app/run.sh /
 EXPOSE 92
 
 CMD ["/run.sh"]
