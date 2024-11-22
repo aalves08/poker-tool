@@ -8,8 +8,6 @@ import axios from "./plugins/axios";
 
 Vue.config.productionTip = false;
 
-console.log("SERVER URL", process.env.VUE_APP_SERVER_URL);
-
 export const app = new Vue({
   router,
   store,
