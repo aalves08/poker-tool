@@ -7,10 +7,4 @@ export const ROLES = {
   ADMIN: "admin",
 };
 
-let SERVER_URL;
-if (process.env.NODE_ENV === "production") {
-  SERVER_URL = process.env.VUE_APP_SERVER_URL;
-} else {
-  SERVER_URL = "http://localhost:8080";
-}
-export { SERVER_URL };
+export const SERVER_URL = process.env.VUE_APP_SERVER_URL;
