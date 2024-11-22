@@ -37,6 +37,7 @@ RUN npm run build -- --mode production
 # Serve stage
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/run.sh /run.sh
 EXPOSE 92
 
-CMD ["env", "&&", "nginx", "-g", "daemon off;"]
+CMD ["/run.sh"]
