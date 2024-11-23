@@ -4,7 +4,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-COPY run.sh ./
 
 # # Inject environment variables into the build process
 # ARG VUE_APP_SERVER_URL
@@ -18,15 +17,6 @@ COPY run.sh ./
 #     echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && \
 #     echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env
 
-
-# RUN echo "bananas bananas bananas bananas bananas "
-
-# RUN ls -la .env
-
-# RUN echo "bananas bananas bananas bananas bananas "
-# RUN echo "bananas bananas bananas bananas bananas "
-# RUN echo "bananas bananas bananas bananas bananas "
-
 # RUN /bin/bash -c "set -a && source .env && npm run build -- --mode production"
 
 RUN npm run build -- --mode production
@@ -34,7 +24,5 @@ RUN npm run build -- --mode production
 # Serve stage
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY --from=builder /app/run.sh /
 EXPOSE 92
-
-CMD ["/run.sh"]
+CMD ["nginx", "-g", "daemon off;"]
