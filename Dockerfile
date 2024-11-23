@@ -15,11 +15,9 @@ RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
 
 # RUN npm run build -- --mode production
 
-RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && \
-    echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && \
-    echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env
-
-RUN /bin/bash -c "set -a && source .env && cat .env && npm run build -- --mode production"
+# You cannot save a variable for later use in other Dockerfile commands (if that is your intention). This is because each RUN happens in a new shell.
+# https://stackoverflow.com/a/34215313
+RUN /bin/bash -c 'echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env && set -a && source .env && cat .env && npm run build -- --mode production'
 
 # Serve stage
 FROM nginx:alpine
