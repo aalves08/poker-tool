@@ -5,13 +5,15 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
-# # Inject environment variables into the build process
-# ARG VUE_APP_SERVER_URL
-# ARG VUE_APP_GITHUB_CLIENT_ID
-# ARG VUE_APP_GITHUB_CALLBACK_URL
+# Inject environment variables into the build process
+ARG VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL
+ARG VUE_APP_GITHUB_CLIENT_ID
+ARG VUE_APP_GITHUB_CALLBACK_URL
 
-# # Debug echo
-# RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
+# Debug echo
+RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
+
+# RUN printf '#!/bin/sh\necho "test"' >> /scripts/test.sh
 
 # RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && \
 #     echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && \
