@@ -13,6 +13,8 @@ ARG VUE_APP_GITHUB_CALLBACK_URL
 # Debug echo
 RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
 
+RUN cat package.json
+
 # RUN printf '#!/bin/sh\necho "test"' >> /scripts/test.sh
 
 # RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && \
