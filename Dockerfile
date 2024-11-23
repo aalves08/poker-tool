@@ -13,6 +13,8 @@ ARG VUE_APP_GITHUB_CALLBACK_URL
 # Debug echo
 RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
 
+# RUN npm run build -- --mode production
+
 RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && \
     echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && \
     echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env
