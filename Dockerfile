@@ -13,9 +13,11 @@ ARG VUE_APP_GITHUB_CALLBACK_URL
 # Debug echo
 RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
 
-RUN cat ./app/package.json
+# RUN cat ./app/package.json
 RUN cat app/package.json
 RUN cat ./package.json
+RUN cat package.json
+RUN printf package.json
 # RUN npm run build -- --mode production
 
 
