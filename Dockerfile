@@ -19,7 +19,7 @@ ARG VUE_APP_GITHUB_CALLBACK_URL
 # https://stackoverflow.com/a/34215313
 # RUN /bin/bash -c 'echo "VUE_APP_SERVER_URL=${$VUE_APP_SERVER_URL}" > .env && echo "VUE_APP_GITHUB_CLIENT_ID=${$VUE_APP_GITHUB_CLIENT_ID}" >> .env && echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env && set -a && source .env && cat .env && npm run build -- --mode production'
 
-RUN export VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL && VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID && VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL && npm run build -- --mode production
+RUN export VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL && export VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID && export VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL && npm run build -- --mode production
 
 # Serve stage
 FROM nginx:alpine
