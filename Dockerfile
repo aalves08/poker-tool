@@ -13,17 +13,17 @@ ARG VUE_APP_GITHUB_CALLBACK_URL
 # Debug echo
 RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL"
 
-RUN cat package.json
+RUN cat ./app/package.json
+RUN cat app/package.json
+RUN cat ./package.json
+# RUN npm run build -- --mode production
 
-# RUN printf '#!/bin/sh\necho "test"' >> /scripts/test.sh
 
-# RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && \
-#     echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && \
-#     echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env
+RUN echo "VUE_APP_SERVER_URL=$VUE_APP_SERVER_URL" > .env && \
+    echo "VUE_APP_GITHUB_CLIENT_ID=$VUE_APP_GITHUB_CLIENT_ID" >> .env && \
+    echo "VUE_APP_GITHUB_CALLBACK_URL=$VUE_APP_GITHUB_CALLBACK_URL" >> .env
 
-# RUN /bin/bash -c "set -a && source .env && npm run build -- --mode production"
-
-RUN npm run build -- --mode production
+RUN /bin/bash -c "set -a && source .env && npm run build -- --mode production"
 
 # Serve stage
 FROM nginx:alpine
