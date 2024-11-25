@@ -30,7 +30,7 @@ export default {
         let validVotesCount = 0;
 
         this.issue.votes.forEach((v) => {
-          if (typeof v.vote.value === "number") {
+          if (v.vote.deterministic) {
             total += v.vote.value;
             validVotesCount++;
           }
@@ -50,7 +50,7 @@ export default {
         let validVotesCount = 0;
 
         this.issue.votes.forEach((v) => {
-          if (typeof v.vote.value === "number") {
+          if (v.vote.deterministic) {
             total += v.vote.value;
             validVotesCount++;
           }
@@ -61,7 +61,7 @@ export default {
           let variance = 0;
 
           this.issue.votes.forEach((v) => {
-            if (typeof v.vote.value === "number") {
+            if (v.vote.deterministic) {
               variance += (v.vote.value - median) * (v.vote.value - median);
             }
           });

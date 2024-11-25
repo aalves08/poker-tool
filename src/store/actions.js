@@ -47,6 +47,11 @@ function registerWsEvents(data) {
   socketInstance.on("disconnect", () => {
     app.$router.push({ name: "home", query: { disconnected: true } });
   });
+
+  // updating admin route in the browser (data not persistent)
+  socketInstance.on("updateAdminCurrRoute", (data) => {
+    commit("updateAdminCurrRouteBrowser", data);
+  });
 }
 
 export default {

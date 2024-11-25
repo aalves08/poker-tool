@@ -43,12 +43,8 @@ export default {
   },
   methods: {
     async validateToken() {
-      const res = await this.$axios({
-        method: "post",
-        url: `${SERVER_URL}/api/validateToken`,
-        data: {
-          token: localStorage.getItem(STORAGE_TOKEN) || "",
-        },
+      const res = await this.$axios.post(`${SERVER_URL}/api/validateToken`, {
+        token: localStorage.getItem(STORAGE_TOKEN) || "",
       });
 
       if (!res.data) {
@@ -66,12 +62,8 @@ export default {
     },
     async validateRoom() {
       // check if room exists first...
-      const res = await this.$axios({
-        method: "post",
-        url: `${SERVER_URL}/api/checkRoom`,
-        data: {
-          room: this.room,
-        },
+      const res = await this.$axios.post(`${SERVER_URL}/api/checkRoom`, {
+        room: this.room,
       });
 
       this.loadingValidateRoom = false;
@@ -88,23 +80,32 @@ export default {
         // check for user existance on this session
         const userFound = res.data.users.find((user) => user.userId === userId);
 
-        this.$store.dispatch("connectUser", {
+        const connectionData = {
           role: userFound?.role || ROLES.USER,
           username: userFound?.username || this.localUser?.username,
           avatar: userFound?.avatar || this.localUser?.avatar,
           userId,
+          sessionName: this.sessionName,
           room: this.room,
-        });
+        };
 
         localStorage.setItem(STORAGE_UID, userId);
-      }
 
-      // propagate admin route
-      if (this.isUserAdmin) {
-        this.$store.dispatch("updateAdminCurrRoute", {
-          name: this.$route.name,
-          issueId: this.$route?.params?.issueId || "",
-        });
+        this.$store.dispatch("connectUser", connectionData);
+
+        // propagate admin route to all other clients connected to the room
+        if (
+          this.isUserAdmin &&
+          (this.$route.name === "room" || this.$route.name === "issue")
+        ) {
+          setTimeout(() => {
+            this.$store.dispatch("updateAdminCurrRoute", {
+              name: this.$route.name,
+              roomId: this.$route?.params?.issueId || "",
+              issueId: this.$route?.params?.issueId || "",
+            });
+          }, 200);
+        }
       }
     },
   },

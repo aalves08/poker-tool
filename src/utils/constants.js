@@ -6,5 +6,4 @@ export const ROLES = {
   USER: "user",
   ADMIN: "admin",
 };
-
 export const SERVER_URL = process.env.VUE_APP_SERVER_URL;
